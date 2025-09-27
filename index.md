@@ -5,8 +5,7 @@ title: About Me
 # layout: single
 classes: wide
 ---
-Currently, I'm working as a 3rd year PhD student in [Florian Jug](https://humantechnopole.it/en/people/florian-jug/)'s lab. 
-My PhD project is an image decomposition task of splitting a superimposed image into its constituent channels. 
+I am currently a Postdoctoral Fellow in [Florian Jug](https://humantechnopole.it/en/people/florian-jug/)'s lab at Human Technopole. I earned my PhD in Computer Science from TU Dresden, where I also conducted research in his lab. My PhD project was an image decomposition task of splitting a superimposed image into its constituent channels. 
 
 I received B.Tech+M.Tech in [Computer Science](https://www.cse.iitd.ernet.in/) in 2015, from the IIT Delhi. 
 I worked as a Data Scientist at [Qplum](https://attck.com/work/qplum/),  an online investment advisory firm, from Dec 2015 to Dec 2018.
