@@ -1,13 +1,5 @@
 ---
-layout: single
-author_profile: true
 title: My Learnings at Qplum- 3 Years Zipped into a 10 Min Read
-toc: true
-header:
-    overlay_image: /assets/images/austin-distel-DfjJMVhwH_8-unsplash.jpg
-    overlay_filter: 0.5
-    # image_description: My learnings at Qplum- 3 years zipped into a 10 min read
-    caption: "Photo credit: [**Unsplash: Austin-Distel**](https://unsplash.com/@austindistel)"
 
 ---
 
@@ -34,7 +26,7 @@ genius intelligence and ultimate authority, think that for the user ABC, we shou
 For every order, execution system looks at price data at minisecond/microsecond granularity and decides upon the best
 time in near future to execute the order. If it is a buy order, the system attempts to execute the order at the time
 when the price is locally low. For a sell order, aim is naturally to sell at a locally higher price.
-<img src="../assets/images/price_minima_maxima.jpg" alt="drawing" width="550"
+<img src="/assets/images/price_minima_maxima.jpg" alt="drawing" width="550"
 title="At Maxima(Minima) aim is to Sell(Buy)"/>
 
 ### Order Routing Server (ORS)
@@ -43,5 +35,5 @@ one and translates it to the other. A buy order request, sell order request, ord
 some examples of messages which Trading system sends to Exchange. Order confirmation notification, order cancellation
 notification etc. are few examples of messages sent by the exchange.
 
-<img src="../assets/images/ORS.jpg" alt="drawing" width="500"
+<img src="/assets/images/ORS.jpg" alt="drawing" width="500"
 title="ORS acts as an interpreter between Execution system and Exchange"/>

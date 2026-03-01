@@ -1,0 +1,29 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "Ashesh"
+  description: "Recent paper's title is μSplit:efficient image decomposition for microscopy data."
+  site-url: "https://ashesh-0.github.io/"
+  navbar:
+    left:
+      - href: index.md
+        text: Home
+      - href: projects.md
+        text: Projects
+      - href: resume.md
+        text: Resume
+      - href: papers.md
+        text: Papers
+    right:
+      - icon: github
+        href: https://github.com/ashesh-0/
+      - icon: linkedin
+        href: https://www.linkedin.com/in/ashesh0/
+
+format:
+  html:
+    theme: default
+    css: styles.css
+    toc: true

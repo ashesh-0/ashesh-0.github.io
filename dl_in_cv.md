@@ -1,8 +1,5 @@
 ---
-layout: single
-author_profile: true
 title: Deep Learning in Computer Vision
-toc: true
 ---
 
 Coursera courses, if done **honestly** and **thoroghly** equips one with all the necessary concepts and practical tips for doing a project in that field. After doing 10 courses related to deep learning, I can vouch for this fact.

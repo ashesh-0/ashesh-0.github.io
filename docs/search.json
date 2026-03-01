@@ -1,0 +1,576 @@
+[
+  {
+    "objectID": "structural_noise_removal.html",
+    "href": "structural_noise_removal.html",
+    "title": "Structural Noise Removal using Contrastive Learning",
+    "section": "",
+    "text": "The focus was to remove structured noise arising in CT scans due to insufficient sampling of orientations. Used contrastive learning to divide the latent space into two parts: one for the noise and the other for the signal. Given a noisy image, replacing its noise representation in latent space with the noise representation of a clean image led to noise removal from the noisy image."
+  },
+  {
+    "objectID": "structural_noise_removal.html#super-short-summary",
+    "href": "structural_noise_removal.html#super-short-summary",
+    "title": "Structural Noise Removal using Contrastive Learning",
+    "section": "",
+    "text": "The focus was to remove structured noise arising in CT scans due to insufficient sampling of orientations. Used contrastive learning to divide the latent space into two parts: one for the noise and the other for the signal. Given a noisy image, replacing its noise representation in latent space with the noise representation of a clean image led to noise removal from the noisy image."
+  },
+  {
+    "objectID": "structural_noise_removal.html#overview-of-the-methodolgy",
+    "href": "structural_noise_removal.html#overview-of-the-methodolgy",
+    "title": "Structural Noise Removal using Contrastive Learning",
+    "section": "Overview of the methodolgy",
+    "text": "Overview of the methodolgy\n\nData\nWe use the same mathematics involving Radon transforms and fourier transform which is used in reconstructing CT scan volumes from multiple projections to reconstruct a single image from multiple projections. The less the number of projections we take, more is the noise in the reconstructed image.\nIn short, given a clean image, we have a deterministic function which adds noise to it and the noise is a function of the clean image itself.\n\n\nTraining\nHierarchical Variational autoencoders were used. During training time, we have (a) VAE loss (KL divergence + reconstruction) and (b) contrastive loss (triplet loss). Use of contrastive loss ensures that the latent space is divided into two parts: one for the noise and the other for the signal, as shown in the figure below.\n\n\n\n\n\nInference\nDuring inference, we have a noisy image. We encode it to get the latent representation. We then swap the noise representation in the latent space with the noise representation of a clean image. We don’t cherrypick the clean image but pick a random one from the dataset. We then decode the new latent representation to get the denoised image. The figure below shows the inference architecture."
+  },
+  {
+    "objectID": "structural_noise_removal.html#results",
+    "href": "structural_noise_removal.html#results",
+    "title": "Structural Noise Removal using Contrastive Learning",
+    "section": "Results",
+    "text": "Results\nWe trained our setup on 3 datasets separately: (a) CIFAR-10, (b) notMNIST and (c) Places dataset.\nOn the notMNIST dataset, we also show the qualitative results of both noise injection and noise removal. First column shows a noisy image and second column shows its reconstruction with the trained Hierarchical VAE. Next two columns shows the same, but for a clean image. In the next two columns, we show the reconstruction after swapping the noise representation in the latent space. To inspect the quality of noise injection, the last column shows the groundtruth version of how noisy version of the clean image (col 3) would look like. It is worth noting that the this structural noise is a function of the clean content. So, the fact that noise injection generates an image which looks a lot like actual noisy image indicates that the network may have implicitly learnt the noise generation process. This is even more impressive when we observe that the network was not explicitly trained to do this. The results are shown below.\n\n\n\nWe also show the noise removal results on CIFAR-10 and Places dataset. The results are shown below.\n\n\n\n\n \n\n\nRemoving structural noise from CIFAR-10 dataset."
+  },
+  {
+    "objectID": "pages/siu_tang.html",
+    "href": "pages/siu_tang.html",
+    "title": "Perpetual Motion: Generating Unbounded Human Motion",
+    "section": "",
+    "text": "Paper Link\nThis paper generates long sequences of human motion. Novelty here is its ability to predict long sequences (72K frames) by taking input very few sequences. In terms of a high level understanding, body pose and overall body translation feeds into each other thereby attaining the required correspondence between them which makes the predicted motion look natural. Technically, two-stream Variational autoencoders are used alongside RNNs."
+  },
+  {
+    "objectID": "pages/siu_tang.html#super-short-description",
+    "href": "pages/siu_tang.html#super-short-description",
+    "title": "Perpetual Motion: Generating Unbounded Human Motion",
+    "section": "",
+    "text": "Paper Link\nThis paper generates long sequences of human motion. Novelty here is its ability to predict long sequences (72K frames) by taking input very few sequences. In terms of a high level understanding, body pose and overall body translation feeds into each other thereby attaining the required correspondence between them which makes the predicted motion look natural. Technically, two-stream Variational autoencoders are used alongside RNNs."
+  },
+  {
+    "objectID": "pages/siu_tang.html#brief-overview-of-workings-of-the-paper",
+    "href": "pages/siu_tang.html#brief-overview-of-workings-of-the-paper",
+    "title": "Perpetual Motion: Generating Unbounded Human Motion",
+    "section": "Brief Overview of Workings of the Paper",
+    "text": "Brief Overview of Workings of the Paper\n\nHuman Motion Representation\nPaper defines human motion in terms of two more basic concepts. First is Human pose which in naive english translates to how the different parts of the person are oriented and positioned with respect to each other. Second is the Body Translation which naturally means the displacement of person as a whole. Technical description of their representation is noted below: 1. Human Pose (\\[\\theta_i\\]): SMPL kinematic tree is used. It has 22 joints with each having 6 DOF. Pose therefore is 132 sized vector. 2. Body Translation (\\[t_i\\]): 3D pelvis location is used.\n\n\nArchitecture\n Architecture is depicted in figure shown above. Few notable points: 1. There are 2 auto-encoder networks, one for pose and one for body translation. 2. Output of last fc layer is the predicted change. \\[\\alpha\\]-weighted average of this along with original state is done to yield next state. 3. Use of RNN in encoder ensures proper modelling of the posterior model \\[ q_{\\alpha}(Z_{2:i}\\|X_{1:i-1}) \\]. It is so as at the time of predicting \\[Z_i\\], the \\[i^{th}\\] time step latent variable, RNN already has seen \\[X_{1:i-1}\\] \\[(==\\{x_1,x_2..,x_{i-1}\\})\\] in previous time steps 4. Similarly, use of RNN in generator ensures proper modelling of the generation model \\[p_{\\beta}(x_i\\|Z_{2:i},X_{1:i-1})\\]\n\n\nLoss\nTheir loss \\[L\\] is weighed sum of three components: 1. Reconstruction Loss \\[L_{rec}\\]: It is shown in figure below. To understand the last term, note that if prediction is exactly target, then \\[\\theta_{3:i} - (\\hat{\\theta_{3:i}} - \\hat{\\theta_{2:i-1}})\\] should be equal to \\[\\theta_{2:i-1}\\]. This is exactly what the term enforces.  2. Pose naturalness loss \\[L_{vp}\\]: A pre-trained model is used to estimate ‘un-naturalness’ of the generated body pose which is then minimized in the loss. 3. The KL-Divergence loss \\[L_{kl}\\]: In the image describing this component below, \\[\\Psi\\] is the interesting piece. \\[\\Psi(s) = \\sqrt{1 + s^2}\\]. They show that due to introduction of \\[\\Psi\\], this component has temporal components."
+  },
+  {
+    "objectID": "pages/ender_konukoglu.html",
+    "href": "pages/ender_konukoglu.html",
+    "title": "Joint Reconstruction and Bias Field Correction for Undersampled MR Imaging",
+    "section": "",
+    "text": "Paper Link\nThis paper works on MRI images. Idea is to use undersampling while taking MRI thereby speeding up the MRI process and subsequently using deep learning to faithfully reconstruct the scans to high dimension. Novelty here is its claimed ability to maintain reconstruction quality even with domain shifts arising due to hardware variations."
+  },
+  {
+    "objectID": "pages/ender_konukoglu.html#super-short-description",
+    "href": "pages/ender_konukoglu.html#super-short-description",
+    "title": "Joint Reconstruction and Bias Field Correction for Undersampled MR Imaging",
+    "section": "",
+    "text": "Paper Link\nThis paper works on MRI images. Idea is to use undersampling while taking MRI thereby speeding up the MRI process and subsequently using deep learning to faithfully reconstruct the scans to high dimension. Novelty here is its claimed ability to maintain reconstruction quality even with domain shifts arising due to hardware variations."
+  },
+  {
+    "objectID": "pages/ender_konukoglu.html#overview-of-the-adopted-approach",
+    "href": "pages/ender_konukoglu.html#overview-of-the-adopted-approach",
+    "title": "Joint Reconstruction and Bias Field Correction for Undersampled MR Imaging",
+    "section": "Overview of the adopted approach",
+    "text": "Overview of the adopted approach\n\nNomenclature:\n\n\\[x\\]: True MRI image. This is the target.\n\\[y\\]: undersampled data.\nRelationship between \\[y\\] and \\[x\\]: \\[y = Ex + \\eta\\]\n\n\n\nMethodology\n\nThey first train a Variational autoencoder on true MRI images patches (on \\[x\\]). ELBO of an estimate \\[x^t\\] computed on this trained VAE would be an indicator of how ‘real’ does this estimate look like.\nThey state bias field as something which fluctuates the pixel intensity. They introduce a pixelwise multiplier \\[B\\] which explicitly models the bias field thereby decoupling it with the content. Both \\[B\\] and the estimate \\[x\\] are obtained using the following equation:\n\n\n\\[Bx\\] is the predicted estimate.\n\nFor doing the above mentioned optimization, they follow an iterative approach where they move the estimate along the direction of gradient of ELBO. This will necessarily make sure that the ELBO score increases and therefore the ‘naturalness’ of the estimate increases. This transformation is named as Prior projection (\\[P_{prior}\\])\nHowever, this process may change the content of the the estimate. Therefore they compute how much deviation has occured in the estimate from \\[y\\] and then subtract out that deviation from the estimate. They name it as data consistency projection \\[(P_{DC})\\]. They also briefly mention another projection named as phase projection which they directly take from another paper. estimation of \\[B\\] is done using algorithm developed in another paper."
+  },
+  {
+    "objectID": "pages/nicholas_ayachi.html",
+    "href": "pages/nicholas_ayachi.html",
+    "title": "Learning a Generative Motion Model from Image Sequences based on a Latent Motion Matrix",
+    "section": "",
+    "text": "Paper Link\nGiven a sequence of images, this paper learns to predict a motion model. It predicts warping parameters for each element in the sequence. Simply stated, when the first image of the sequence is warped with say predicted warping parameters of \\[5^{th}\\] element, then \\[5^{th}\\] image of the sequence should get formed. It uses conditional VAE for this. For having a non-fluctuating motion model, a temporal convolutional network is used. For making the model capable of generating consistant warping parameters for missing images in the sequence, temporal dropout is introduced in training. Further, the paper also shows the capability of transport: applying the motion of one object on another."
+  },
+  {
+    "objectID": "pages/nicholas_ayachi.html#super-short-description",
+    "href": "pages/nicholas_ayachi.html#super-short-description",
+    "title": "Learning a Generative Motion Model from Image Sequences based on a Latent Motion Matrix",
+    "section": "",
+    "text": "Paper Link\nGiven a sequence of images, this paper learns to predict a motion model. It predicts warping parameters for each element in the sequence. Simply stated, when the first image of the sequence is warped with say predicted warping parameters of \\[5^{th}\\] element, then \\[5^{th}\\] image of the sequence should get formed. It uses conditional VAE for this. For having a non-fluctuating motion model, a temporal convolutional network is used. For making the model capable of generating consistant warping parameters for missing images in the sequence, temporal dropout is introduced in training. Further, the paper also shows the capability of transport: applying the motion of one object on another."
+  },
+  {
+    "objectID": "pages/nicholas_ayachi.html#brief-overview-of-the-methodology",
+    "href": "pages/nicholas_ayachi.html#brief-overview-of-the-methodology",
+    "title": "Learning a Generative Motion Model from Image Sequences based on a Latent Motion Matrix",
+    "section": "Brief Overview of the Methodology",
+    "text": "Brief Overview of the Methodology\n\nEncoder\nEncoder consists of a feature extraction module and a Temporal Convolutional Network (TCN). An image pair is passed to the feature extractor to get a latent representation. Each element of the input sequence is coupled with the first element of the sequence to create image pairs. The latent representation encodes the relative motion between the two frames. TCN comprises of 1D convolutions. The latent representations are convolved with TCN so as to achieve temporal regularization. The output \\[(\\mu,\\sigma)\\] is the mean and the standard deviation of the posterior distribution. Motion matrix \\[z\\] is sampled from the posterior. ### Decoder Decoder takes as input the motion matrix and the first image of the input sequence and generate the deformations (warping parameters) for each element in the sequence. They are then applied on the first image of the input sequence to get generated images. The aim of the paper is that these generated images should closely match the images from the input sequence (starting from the second image).\n\n\n\nProposed Architecture (Credits: https://arxiv.org/pdf/2011.01741.pdf).\n\n\n\n\nGenerating Missing Images in the Input Sequence.\nA zero vector is taken as the output of the feature extractor for those images in the sequence which are absent. One needs to appreciate the TCN, since it is TCN which still is able to provide a meaningful posterior mean and standard deviation comprising all elements of the sequence. Additionally, temporal dropout in the training procedure also helped the model to do such things. In temporal dropout, some of the feature representations were intentionally left out randomly during training. This forced the model to learn to interpolate for the missing element.\n\n\nTransport\nIt flows naturally from the structure of the model. The motion matrix \\[z\\] of one object is taken and is fed to the decoder with the first image of the input sequence of another object."
+  },
+  {
+    "objectID": "pages/vedaldi.html",
+    "href": "pages/vedaldi.html",
+    "title": "Self-supervised Learning of Interpretable Key Points from Unlabelled Videos",
+    "section": "",
+    "text": "Paper Link\nNovelty of the paper is its ability to estimate pose from a single image. Another novelty of the paper is that it is unsupervised and it learns from unlabelled videos. It makes a crucial observation that in image to image translation networks, appearance information seeps into the pose representation and it discritizes the pose to handle that."
+  },
+  {
+    "objectID": "pages/vedaldi.html#super-short-introduction",
+    "href": "pages/vedaldi.html#super-short-introduction",
+    "title": "Self-supervised Learning of Interpretable Key Points from Unlabelled Videos",
+    "section": "",
+    "text": "Paper Link\nNovelty of the paper is its ability to estimate pose from a single image. Another novelty of the paper is that it is unsupervised and it learns from unlabelled videos. It makes a crucial observation that in image to image translation networks, appearance information seeps into the pose representation and it discritizes the pose to handle that."
+  },
+  {
+    "objectID": "pages/vedaldi.html#brief-overview-of-the-approach-taken",
+    "href": "pages/vedaldi.html#brief-overview-of-the-approach-taken",
+    "title": "Self-supervised Learning of Interpretable Key Points from Unlabelled Videos",
+    "section": "Brief Overview of the Approach Taken",
+    "text": "Brief Overview of the Approach Taken\n\nDefinitions\nPose: Pose is defined in two ways: as a skeleton image and as a set of 2D points. Pose is defined for a face image and for whole body as well.\n\nSkeletal Image Representation of Pose \nKeypoint Representation of Pose. \n\n\n\nEncoder\nEncoder is an image to image translation network \\[\\Phi\\] which takes input a video frame image and outputs pictorial representation of pose image.\n\n\nDiscriminator\nThe unsupervised approach necessitates the use of Discriminator. This module is trained to discriminate the skeletal image generated by the encoder \\[\\Phi\\] and the ‘true’ skeletal images obtained from images. Note that there is no one to one correspondence between image and its ground truth skeletal image. Discriminator makes sure that skeletal images distribution generated by \\[\\Phi\\] gets similar to true skeletal image distribution.\n\n\nDual Representation of Pose\nAs defined in Definitions, pose is defined in two ways. The first definition is its repsentation as the skeleton image. Paper argues that the appearance information is still present in this representation in the form of structured noise. Evidence is that one is able to do the reconstruction of the original image from the pose image. Another evidence is that one is able to visually see the appearnce information if one applies \\[log()\\] on the pose representation. It is shown in figure below. It is due to these reasons that, they come up with a discrete Keypoint representation which consists of simply 2D keypoints.\n\n\n\nConditional Decoder\nThis module takes input the skeletal representation of pose and an input image containing the pose’s object. Note that the pose of the object in the input image is different from the input pose. This module then ‘applies’ the input pose on the input image thereby generating a new image which has the object in that specific pose which was given as input. Another point to note is that this skeletal representation of pose is derieved analytically from the keypoint representation of pose. Keypoint representation of the pose is inturn derieved analytically from output of the encoder."
+  },
+  {
+    "objectID": "pages/VisCorresEM.html",
+    "href": "pages/VisCorresEM.html",
+    "title": "Visual Correspondences for Unsupervised Domain Adaptation on Electron Microscopy Images",
+    "section": "",
+    "text": "Paper Link\nIt is aimed towards better domain adaptation in segmenting Electron Microscopy images. Highlight of the paper is that it works with unlabelled target domain images. Paper establishes visual correspondences between labelled images (source domain) and unlabelled images of target domain. Using the pixel correspondence and labelling of pixels of source domain images, paper generates noisy labels for target domain image pixels. Paper builds two approaches using these correspondences. In the first, using Multiple Instance Learning, the paper uses these noisy labels to adapt to target domain. In the second approach, paper aggregates the correspondences on target domain volume to get something like a heatmap which it shows to be quite close to actual annotations. The map is then used in domain adaptation and yields superior performance in general over the first method."
+  },
+  {
+    "objectID": "pages/VisCorresEM.html#super-short-introduction",
+    "href": "pages/VisCorresEM.html#super-short-introduction",
+    "title": "Visual Correspondences for Unsupervised Domain Adaptation on Electron Microscopy Images",
+    "section": "",
+    "text": "Paper Link\nIt is aimed towards better domain adaptation in segmenting Electron Microscopy images. Highlight of the paper is that it works with unlabelled target domain images. Paper establishes visual correspondences between labelled images (source domain) and unlabelled images of target domain. Using the pixel correspondence and labelling of pixels of source domain images, paper generates noisy labels for target domain image pixels. Paper builds two approaches using these correspondences. In the first, using Multiple Instance Learning, the paper uses these noisy labels to adapt to target domain. In the second approach, paper aggregates the correspondences on target domain volume to get something like a heatmap which it shows to be quite close to actual annotations. The map is then used in domain adaptation and yields superior performance in general over the first method."
+  },
+  {
+    "objectID": "pages/VisCorresEM.html#brief-summary-of-main-ideas",
+    "href": "pages/VisCorresEM.html#brief-summary-of-main-ideas",
+    "title": "Visual Correspondences for Unsupervised Domain Adaptation on Electron Microscopy Images",
+    "section": "Brief Summary of Main Ideas",
+    "text": "Brief Summary of Main Ideas\n\nFew Definitions\n\nSource domain: Set of images for which we have labelled annotations.\nTarget domain: Set of images for which we just have images. We don’t have annotations or labels. The aim of the paper is to do well on this set.\nLabels: In a given domain (source or target), there is a single class. So, for each pixel, a binary label is used denoting whether the pixel belongs to the background or the foreground (belongs to an instantiation of that class).\nNCC: Normalized cross correlation. It is the metric which is used to compute similarity between voxels for establishing correspondences. ### Establishing Correspondences\nFew +ve and -ve voxels are sampled from source domain. This procedure is described in the next heading.\nFor each voxel, a surrounding patch is taken. Using NCC, a similarity score is computed between the patch and every voxel in the target domain image. This is done repeatedly for different orientations of the patch and highest similarity measure for each target domain location is retained.\nSome of the correspondences are removed by doing non-maximum suppression. Those which have lower NCC value are also removed. &gt; In this way, for every sampled voxel from source domain, there is a set of corresponding voxels in the target domain.\n\n\n\n\nEstablishing Correspondences. Here one source voxel has 2 target domain correspondences. (Credits: https://ieeexplore.ieee.org/document/8863400).\n\n\n\n\nSampling Intelligently from Source Domain\nFor having resource and time efficiency, one needs to intelligently sample few voxels from source domain for finding correspondences. #### What is done * Volume is divided into same sized patches by defining a grid. Centroid of each patch is a candidate for sampling. * Different methodology is used for sampling from foreground and from background regions. * Foreground region sampling: More sampling done from border regions of the target structures. * Background region sampling: It has two components. In the first, more sampling is done from border regions of the target structures. In the second, those background voxels are also selected which give high NCC score with foreground voxels.\n\n\n\nDivision of the region into patches (Credits: https://ieeexplore.ieee.org/document/8863400).\n\n\n\nSome Intuition\n\nIf we select two nearby voxels for sampling then it would be inefficient as they would have overlapping patches. Therefore the grid is constructed and only centroids could get sampled. This naturally spaces out the choices.\nTo better discriminate between foreground and background, information is required on how the texture and pattern changes at the boundary and so boundary regions are preferred.\nSampling confusing voxels from background would improve the quality of correspondences. In case the target domain also has such ‘confusing’ voxels, then without including these in training data, it would be more likely that foreground voxels of the source domain make the correspondence with them.\n\n\n\n\nMultiple Instance Learning (MIL)\n\nFor doing domain adaptation, paper learns a new set of weights for the new domain. This is achieved through MIL. Note that for learning the classification model on source domain, supervised learning approach is used.\nUse of Huber loss ensures that large differences are given relatively less importance.\nsoftmin computes the loss between a source domain voxel and all its correspondences in the target domain. It is this one to many aspect in the loss which makes this a MIL setting. It is designed to ignore large differing correspondences. One can infer this by observing that \\[e^{-r*x_i}\\] goes to 0 pretty quickly when the x_i large.\n\n\n\n\nMIL formulation. (Credits: https://ieeexplore.ieee.org/document/8863400).\n\n\nHere, \\[\\theta^t\\] and \\[\\theta^s\\] are the parameters of the model for target domain and source domain respectively. \\[v_i^s\\] is the source voxel and \\[v^t_{i,j}\\] is the jth correspondence of \\[v_i^s\\] in the target volume. \\[f^s()\\] is the binary classifier. L is Huber loss.\n\n\nConsensus Heatmaps\nIdea is to aggregate the correspondences over all the sampled voxels of source domain to generate a heatmap on target domain volume. This heatmap is claimed to be a more robust source of information for segmenting foreground and background regions since it is empirically shown to be similar to annotations. NCC score and the shape of the annotation of the corresponding voxel on source domain volume are the two things which are used for its creation. They form this heatmap in two ways. * Gaussian Mixture Model: For every source voxel, the distribution of location of correspondence in target volume is modelled using GMM. Mean parameters are the location of detected correspondence points. Covariance matrix is based on the shape of the annotation of the source domain voxel and the best orientation. * Label Driven Model: For every target domain correspondence point, there may be multiple source domain points which corresponds to it. This model first aggregates the annotation of each such source domain point by taking into account the orientation. Thresholding and normalizing it yields a mask. All correspondences which lie outside the mask are ignored."
+  },
+  {
+    "objectID": "pages/pietro_lio.html",
+    "href": "pages/pietro_lio.html",
+    "title": "A Deep Spatiotemporal Graph Learning Architecture for Brain Connectivity Analysis",
+    "section": "",
+    "text": "Paper Link\nTechnical domain is Geometric Deep Learning and its application is on fMRI (brain) data. They present a methodology of incorporating spatial relationships between brain regions with the temporal variations in fMRI data of different brain regions. They show its effectiveness on a binary classification task of predicting sex from brain data."
+  },
+  {
+    "objectID": "pages/pietro_lio.html#super-short-description",
+    "href": "pages/pietro_lio.html#super-short-description",
+    "title": "A Deep Spatiotemporal Graph Learning Architecture for Brain Connectivity Analysis",
+    "section": "",
+    "text": "Paper Link\nTechnical domain is Geometric Deep Learning and its application is on fMRI (brain) data. They present a methodology of incorporating spatial relationships between brain regions with the temporal variations in fMRI data of different brain regions. They show its effectiveness on a binary classification task of predicting sex from brain data."
+  },
+  {
+    "objectID": "pages/pietro_lio.html#brief-overview-of-workings-of-the-paper",
+    "href": "pages/pietro_lio.html#brief-overview-of-workings-of-the-paper",
+    "title": "A Deep Spatiotemporal Graph Learning Architecture for Brain Connectivity Analysis",
+    "section": "Brief Overview of Workings of the Paper",
+    "text": "Brief Overview of Workings of the Paper\n\nConventions and Nomenclatures:\n\nDifferent brain regions are termed as nodes (count: \\[N\\]).\nInput data is \\[ N * T \\] where \\[T\\], denoting the timeseries length, is 1200.\nNeighbourhood information: Dense adjacency matrix (\\[N*N\\]). Their architecture also can handle sparse neighbourhood information. \n\n\n\nStep by Step Procedure:\n\nTemporal feature extraction: For each node, they use module composed of 1D CNN to extract features from the temporal data. Output is termed as Activation matrix (\\[H(1)\\]). Input output relationship: \\[N*T =&gt; N*256\\]\nGCN Operations: Message passing is used to incorporate the information in the activation matrix from neighboriing nodes’ activation matrices. Activation matrix’s shape remains the same. Input output relationship: \\[N*256 =&gt; N*256\\]\nFor feature aggregation over multiple nodes, two methods are used. Simpler one is the average pooling across nodes. Input output relationship: \\[N*256 =&gt; 1*256\\]\nHierarchical Pooling: The other method used is Differential pooling which is taken from a different paper. The procedure runs in multiple iterations. At each iteration, it clusters nodes present in previous iteration into a smaller number of clusters. This way, at the end one is left with just one node. While the final output dimension is same as Average pooling, in this procedure one has effectively given different weights to different nodes and this has been achieved in a hierarchical way. Input output relationship: \\[N*256 =&gt; 1*256\\]"
+  },
+  {
+    "objectID": "pages/radar_based_localization.html",
+    "href": "pages/radar_based_localization.html",
+    "title": "Self-Supervised Localisation between Range Sensors and Overhead Imagery",
+    "section": "",
+    "text": "Paper Link\nThe goal is to pixelwise align image generated from live range sensor (radar/lidar) data with the overhead satellite image. Rotation angle and translation offset in x and y direction are the target to be predicted. Following previous work, the paper finds the rotation angle first and then finds the x,y translations. Key contribution is the unsupervised methodology for both angle and translation estimation."
+  },
+  {
+    "objectID": "pages/radar_based_localization.html#super-short-description",
+    "href": "pages/radar_based_localization.html#super-short-description",
+    "title": "Self-Supervised Localisation between Range Sensors and Overhead Imagery",
+    "section": "",
+    "text": "Paper Link\nThe goal is to pixelwise align image generated from live range sensor (radar/lidar) data with the overhead satellite image. Rotation angle and translation offset in x and y direction are the target to be predicted. Following previous work, the paper finds the rotation angle first and then finds the x,y translations. Key contribution is the unsupervised methodology for both angle and translation estimation."
+  },
+  {
+    "objectID": "pages/radar_based_localization.html#summary-of-papers-methodology",
+    "href": "pages/radar_based_localization.html#summary-of-papers-methodology",
+    "title": "Self-Supervised Localisation between Range Sensors and Overhead Imagery",
+    "section": "Summary of Paper’s Methodology",
+    "text": "Summary of Paper’s Methodology\nAs mentioned in the description above, the goal here to predict the rotation angle \\[\\theta\\] and the translation vector \\[\\alpha\\] which, when applied on the range sensor generated image, would align it with the given satellite image. Here, we will call range sensor generated image as modality B and satellite image as modality A\n\n\nEstimating \\[\\theta\\]\nThey build on a previous work. There, a deep network \\[f_R\\] was used. Let \\[I_A\\] and \\[I_B\\] denote the image of modality A and B respectively. A number of rotated versions of \\[I_B\\] were made. Each version was then concatenated with \\[I_A\\]. All this was given input to the network. The network generated a weighted average of rotated \\[I_B\\] images with largest weight being expected to be given to the correctly rotated version.\nNote that in this paper, they don’t know the correct rotation angle. They came up with a method involving two passes through the network \\[f_R\\]. First pass is identical to what is mentioned above. Lets call the output of first pass as \\[I_{B\\theta}\\]. For the second pass, they make several rotated versions of the \\[I_A\\] instead and club it together with \\[I_{B\\theta}\\]. This$ time, they predict weighted average of rotated \\[I_A\\] images. Target for the output of the second pass is made to be \\[I_A\\]. This makes sense intuitively. If \\[f_R\\] is trained correctly, then for \\[I_{B\\theta}\\], A is the aligned satellite image. It can be inferred as \\[I_{B\\theta}\\] is the output of the first pass. Therefore \\[I_A\\] should be predicted in the second pass.\n\n\nEstimating \\[\\alpha\\]: PASED Module\nFor this task, input is \\[I_A\\] and \\[I_{B\\theta}\\] generated from the previous module. These two images are rotationally aligned and only the translation offset needs to be found.\nFor doing that, they needed following modules: 1. \\[E_a\\]: Encoder network to encode the appearance and content of \\[I_{B\\theta}\\] 2. \\[E_p\\]: Encoder network to encode the pose (\\[\\alpha\\]) between two translationally variants of \\[I_{B\\theta}\\] 3. \\[D\\]: Decoder network which generates an image of modality B by taking appearance and pose latent vectors as input. 4. \\[E_p^*\\]: Encoder network to encode the pose (\\[\\alpha\\]) between \\[I_{B\\theta}\\] and \\[I_A\\]\nThey train it in two phases. In the first phase, they train \\[E_a\\],\\[E_p\\] and \\[D\\]. &gt; For training \\[E_a\\],\\[E_p\\] and \\[D\\], they capture pose from a pair of translationally differing images and apply the inferred pose on another image.\n\nLet \\[B^1,B^2\\] be images from the domain \\[B\\theta\\]. They randomly pick a translation offset \\[\\gamma\\]. They get the appearance of \\[B^1\\] as \\[E_a(B^1)\\]. They get the embedding for \\[\\gamma\\] as \\[E_p(B^2,B^2_{\\gamma})\\]. Here, \\[B^2_{\\gamma}\\] is the translated version of \\[B^2\\]. Feeding above two appearance and pose embeddings in D, they train it end to end to get \\[B^1_{\\gamma}\\].\nThey use the trained \\[E_a\\],\\[E_p\\] and \\[D\\] to train \\[E_p^*\\] in the second step. &gt; For training \\[E_p^*\\] in an unsupervised fashion, which is equivalent to estimating the translational offset \\[\\alpha\\] across different modalities,they utilize the additive property of the translation: Composition of two translations is equivalent in effect to a single translation with \\[\\alpha\\] being the vector addition of the previous two \\[{\\alpha}s\\]."
+  },
+  {
+    "objectID": "pages/CLOPS.html",
+    "href": "pages/CLOPS.html",
+    "title": "CLOPS: Continual Learning of Physiological Signals",
+    "section": "",
+    "text": "Paper Link\nBroad theme is Continual learning(CL) based setup on medical dataset. Objective is to mitigate the drastic forgetfulness about previous tasks while learning the current task. Novelty of the paper is in the way to create replay buffer and to fetch a subset of data from replay buffer. The paper saves those examples which are most easiest to train for each task. For data augmentation, paper fetches those examples from replay buffer for which the model is getting highly confused."
+  },
+  {
+    "objectID": "pages/CLOPS.html#super-short-description",
+    "href": "pages/CLOPS.html#super-short-description",
+    "title": "CLOPS: Continual Learning of Physiological Signals",
+    "section": "",
+    "text": "Paper Link\nBroad theme is Continual learning(CL) based setup on medical dataset. Objective is to mitigate the drastic forgetfulness about previous tasks while learning the current task. Novelty of the paper is in the way to create replay buffer and to fetch a subset of data from replay buffer. The paper saves those examples which are most easiest to train for each task. For data augmentation, paper fetches those examples from replay buffer for which the model is getting highly confused."
+  },
+  {
+    "objectID": "pages/CLOPS.html#background",
+    "href": "pages/CLOPS.html#background",
+    "title": "CLOPS: Continual Learning of Physiological Signals",
+    "section": "Background",
+    "text": "Background\n\nContinual Learning(CL)\nIn CL setting, there are multiple tasks which are given to the model sequentially. The primary goal is to retain the performance on previously learnt tasks as much as possible while learning to solve new tasks. Naturally, the tasks are related to each other. One can contrue a CL based approach for say price prediction of stocks and bonds by binning the recent history into different tasks. In every such task, the price moves in a slightly different way. In other words there is a covariate shift in the data across tasks.\nOne popular way to solve it is to have a replay buffer where one keeps a subset of training data for each of the previous tasks. This replay buffer is then used to augment the training data for the current task. This is also the approach taken in this paper."
+  },
+  {
+    "objectID": "pages/CLOPS.html#summary-of-papers-methodology",
+    "href": "pages/CLOPS.html#summary-of-papers-methodology",
+    "title": "CLOPS: Continual Learning of Physiological Signals",
+    "section": "Summary of Paper’s Methodology",
+    "text": "Summary of Paper’s Methodology\n\nData Addition in Replay Buffer\nPaper uses weighted average of individual data point losses. There weights are learnable parameters termed as \\[\\beta\\] and is defined for every data point of every task. Since individual losses are strictly positive, the weights have a natural inclination to go towards 0 (we are minimizing the loss). Paper prevents this by introducing another loss term which penalizes their distance from 1. Also, the outliers in the training data (or the examples which are harder to train) would have learnt lower weights thereby reducing their contribution to the loss. So the examples which are easier to train would have relatively higher weights. Paper takes a fraction of the dataset which has larger averaged \\[\\beta\\], average taken over epochs. This fraction of the dataset is added to the replay buffer.\n\n\nData Retrieval from Replay Buffer\nThis paper does not use all of the data present in Replay buffer to augment the training. It selects a subset of the data for each learnt task from the Replay buffer. It doesnot use the label information for selecting the data points. It selects those datapoints for which the model currently has gotten most confused about. Note that these datapoints were the easiest learning datapoints for the respective tasks.So the introduced confusion is directly related to forgetfulness of the model towards previously learnt tasks. &gt;This confusion or the uncertainty is captured by estimating the entropy in the posterior distribution of labels with the help of dropout.\nIn naive terms, they pass the input through the network multiple times. Due to dropout, the predicted probablity distribution over labels is different in each forward pass.They estimate the fluctuation in the probablity distribution. Larger the fluctuation, more confused is the model.  In above figure, one can look at the performance of CLOPS. The new task learning begins after every 20 epochs. Task which is getting learnt has a bold line. Shaded area represents the one standard deviation. It is evident that CLOPS has lesser average detoriation on already learnt tasks when a new task is being learnt. It also has lesser fluctuation around the mean for already learnt tasks (from shaded area comparison)."
+  },
+  {
+    "objectID": "pages/Alison_Noble.html",
+    "href": "pages/Alison_Noble.html",
+    "title": "Self-Supervised Representation Learning For Ultrasound Video",
+    "section": "",
+    "text": "Paper Link\nThis paper works on UltraSound (US) video. Focus is to learn anatomically congnizant representation of fetal US video frames in an unsupervised way. To achieve that, they train the network to predict 2 transformations which they introduce in the input video at training time: affine transformation and jumbling the order of frames."
+  },
+  {
+    "objectID": "pages/Alison_Noble.html#super-short-description",
+    "href": "pages/Alison_Noble.html#super-short-description",
+    "title": "Self-Supervised Representation Learning For Ultrasound Video",
+    "section": "",
+    "text": "Paper Link\nThis paper works on UltraSound (US) video. Focus is to learn anatomically congnizant representation of fetal US video frames in an unsupervised way. To achieve that, they train the network to predict 2 transformations which they introduce in the input video at training time: affine transformation and jumbling the order of frames."
+  },
+  {
+    "objectID": "pages/Alison_Noble.html#concise-overview-on-approach-taken",
+    "href": "pages/Alison_Noble.html#concise-overview-on-approach-taken",
+    "title": "Self-Supervised Representation Learning For Ultrasound Video",
+    "section": "Concise Overview on Approach Taken",
+    "text": "Concise Overview on Approach Taken\nAs mentioned above, the focus is to learn a representation which captures the anatomy present in US frames. To do that in unsupervised way, they introduce spatial and temporal transformations. To unearth these transformations from the modified input would require the model to have an understanding of the anatomy of the content of US frames.\n\nTemporal-Order Correction\nThey use 4 video frames as input. The formulate it as a classification problem with \\[4!/2 = 12\\] classes. Note that forward and backward video flow is considered to be same class. \n\n\nSpatio-Temporal Transform Prediction\nThey use several affine transformations like rotation, scale, shear etc and train another network to predict the transformation parameters. Note that transformation is applied to all frames. \n\n\nCombining Above Two Tasks:\nThey employ two strategies. In the first strategy, they use two networks with shared weights and train both task parallely. In this strategy, there are two inputs: one having frames reshuffled and one with spatio-temporal transformation. In the second strategy, they apply modifications sequentialy on the input, feed it to a single network and train it to predict both temporal ordering and affine transformation parameters."
+  },
+  {
+    "objectID": "pages/proprioceptive.html",
+    "href": "pages/proprioceptive.html",
+    "title": "Task-driven hierarchical deep neural network models of the proprioceptive pathway",
+    "section": "",
+    "text": "Paper Link\nBroad goal of the paper is to model the proprioceptive system. Specifically, the work aims to classify what has be written by hand using spindle (present in hand muscles) firing rates. It creates a synthetic dataset on which the study is done. Classification target set is 20 english characters. Using multiple existing models, an existing pen-tip trajectories data is converted into muscle length configurations data which is inturn converted into spindle firing rates. Activations of intermediate layers of trained neural network show similarity with biological proprioceptive systems thereby lending credibility to the fact that the created models are indeed somewhat similar to the actual proprioceptive system."
+  },
+  {
+    "objectID": "pages/proprioceptive.html#super-short-description",
+    "href": "pages/proprioceptive.html#super-short-description",
+    "title": "Task-driven hierarchical deep neural network models of the proprioceptive pathway",
+    "section": "",
+    "text": "Paper Link\nBroad goal of the paper is to model the proprioceptive system. Specifically, the work aims to classify what has be written by hand using spindle (present in hand muscles) firing rates. It creates a synthetic dataset on which the study is done. Classification target set is 20 english characters. Using multiple existing models, an existing pen-tip trajectories data is converted into muscle length configurations data which is inturn converted into spindle firing rates. Activations of intermediate layers of trained neural network show similarity with biological proprioceptive systems thereby lending credibility to the fact that the created models are indeed somewhat similar to the actual proprioceptive system."
+  },
+  {
+    "objectID": "pages/proprioceptive.html#brief-overview-of-the-methodology",
+    "href": "pages/proprioceptive.html#brief-overview-of-the-methodology",
+    "title": "Task-driven hierarchical deep neural network models of the proprioceptive pathway",
+    "section": "Brief Overview of the Methodology",
+    "text": "Brief Overview of the Methodology\n\nDefinitions\n\nProprioceptive Pathway: This pathway is responsible for sensing the state of the body. It receives information from receptors. Here, we deal with an important receptor type namely muscle spindles. Since our body knows how our fingers are oriented from muscle spindle data, the motivation is to create a ANN (Artificial neural network) model which does the same.\n\n\n\nDataset Creation\nThey start with a dataset of pen-tip trajectories. This data maps a pen-tip trajectory to a character. Here, they use multiple data augmentation techniques on the trajectory (scaling, rotating, shearing, changing the speed) to generate more data. Assuming some initial posture of human upper limb, joint-angle trajectories were computed using optimiziation. Also, the letter was placed in different planes in the 3D space so as to have more variety in the angle trajectories. A model of human upper limb is used to get equilibrium muscle lengths for 25 muscles from the joint-angle trajectories. Finally, another pre-existing model is used to convert the muscle length configuration to spindle firing rates.\n\n\nChallenging Task\nA t-SNE plot of spindle firing rates show that one cannot visually discriminate different characters. Low performance of SVM trained on spindle firing rates also support the claim.\n\n\n\nChallenging Task to classify characters from spindle firing rates (Credits: https://www.biorxiv.org/content/10.1101/2020.05.06.081372v1).\n\n\n\n\nNeural Network models.\nTwo family of models were developed. The first family is called spatial-temporal. Note that different muscle spindles is the spatial dimension and then there is a time component to it. In Spatial-temporal family, there is sequential processing of information across spatial dimension followed by temporal dimension. They use one dimensional kernels to process information along one dimension at a time. The second family, called spatiotemporal, uses two dimensional kernels and therefore process information across both dimensions simultaneously.\n\n\n\nOne observes discrimnative representation with ANN (Credits: https://www.biorxiv.org/content/10.1101/2020.05.06.081372v1).\n\n\n\n\nFew Interesting observations.\n\nIn trained ANNs, character identity was represented in distributed way. It was not that a single node in last layer of ANN was completely responsible for the prediction for some character.\nSimilar to biological proprioceptive pathway, direction tuning was found in ANN. Interestingly, it was even found in the un-optimized networks. However, invariance of directional tuning (to non-relevant variables) was only found in trained networks."
+  },
+  {
+    "objectID": "pages/class_relations_hstorr.html",
+    "href": "pages/class_relations_hstorr.html",
+    "title": "Rethinking Class Relations: Absolute-Relative Few-Shot Learning",
+    "section": "",
+    "text": "Paper Link\nThis paper is about improving the feature representation which consequently improves the classification performance on multiple datasets under K-shot learning paradigm. They have two components in their architecture: one of them learns to find similarity between pair of images and the other explicitly learns to capture the properties of classes. For similarity module, they use semantic embedding (Word2Vec and feature_attributes) so as to move to soft labels from 0-1 binary similarity. For Absolute module, they explicitly predict semantic embeddings along with class labels using parallel network branches built on top of their feature encoder. This setup enables feature encoder to encoder better representation."
+  },
+  {
+    "objectID": "pages/class_relations_hstorr.html#super-short-description",
+    "href": "pages/class_relations_hstorr.html#super-short-description",
+    "title": "Rethinking Class Relations: Absolute-Relative Few-Shot Learning",
+    "section": "",
+    "text": "Paper Link\nThis paper is about improving the feature representation which consequently improves the classification performance on multiple datasets under K-shot learning paradigm. They have two components in their architecture: one of them learns to find similarity between pair of images and the other explicitly learns to capture the properties of classes. For similarity module, they use semantic embedding (Word2Vec and feature_attributes) so as to move to soft labels from 0-1 binary similarity. For Absolute module, they explicitly predict semantic embeddings along with class labels using parallel network branches built on top of their feature encoder. This setup enables feature encoder to encoder better representation."
+  },
+  {
+    "objectID": "pages/class_relations_hstorr.html#a-concise-overview-on-approach-taken",
+    "href": "pages/class_relations_hstorr.html#a-concise-overview-on-approach-taken",
+    "title": "Rethinking Class Relations: Absolute-Relative Few-Shot Learning",
+    "section": "A Concise Overview on Approach Taken",
+    "text": "A Concise Overview on Approach Taken\n\nSimilarity Network\nIt consists of two subnetworks: a feature encoder which yields embeddings from input image and the relation network which yields the similarity score between two input image embeddings. Mathematically, relation network input-output is described as following: \\[ SI(\\phi,\\phi^*; P) = r(v(\\phi,\\phi^*);P)\\]. Here, \\[\\phi,\\phi*\\] are the feature embeddings of two images, v represents the concatenation operator and r denotes the relation network.\n\n\nRelative Learning\nRelative learning builds on Similarity network. Difference lies in the target. Unlike in most similarity networks, here, the target is not boolean but soft. They first obtain a semantic embedding for the two classes belonging to the two input images. wordVec and feature_attributes are two variations tried for the class semantic embedding. They then employ a similarity measure on the embedding to yield a real valued similarity, which works as ‘soft’ similarity.\n\n \n\nTwo similarity measures. Credits: https://arxiv.org/abs/2001.03919.\n\n\n\n\nAbsolute Learning\nAn Object info predictor branch is attached on top of feature encoder which predicts semantic embeddings (wordVec and attributes). Note that semantic embedding along with similarity measure was used in Relative learning to make the relation labels soft. Another thing to note here is that target of Relation network is binary and not soft. Authors integrate these two components in next section. Interestingly, for the binary target, MSE is used. \n\n\nAbsolute-Relative Learning\nAs can be seen below, all components mentioned above have been integrated into one network which is jointly learnt. We have a soft-labelled relation network which uses wordToVec, attributes and class labels to estimate similarity separately and subsequently use a voting procedure to yield final prediction. We then have 3 absolute learning branches predicting wordToVec, attributes and class labels."
+  },
+  {
+    "objectID": "gaze_estimation.html",
+    "href": "gaze_estimation.html",
+    "title": "360-Degree Gaze Estimation in the Wild Using Multiple Zoom Scales",
+    "section": "",
+    "text": "Paper Link\nThis work of mine solves the problem of estimating gaze of a person in unconstrained environments - variable camera-person distance and full \\[360^\\circ\\] variation in Yaw. Variable camera-person distance is handled via a multi-scale approach where features from multiple scales are aggregated. A full \\[360^\\circ\\] variation in Yaw raises an interesting problem of predicting backward gazes which is improved upon by using a weighted sine-cosine transformation."
+  },
+  {
+    "objectID": "gaze_estimation.html#super-short-introduction",
+    "href": "gaze_estimation.html#super-short-introduction",
+    "title": "360-Degree Gaze Estimation in the Wild Using Multiple Zoom Scales",
+    "section": "",
+    "text": "Paper Link\nThis work of mine solves the problem of estimating gaze of a person in unconstrained environments - variable camera-person distance and full \\[360^\\circ\\] variation in Yaw. Variable camera-person distance is handled via a multi-scale approach where features from multiple scales are aggregated. A full \\[360^\\circ\\] variation in Yaw raises an interesting problem of predicting backward gazes which is improved upon by using a weighted sine-cosine transformation."
+  },
+  {
+    "objectID": "gaze_estimation.html#an-overview-of-the-methodology",
+    "href": "gaze_estimation.html#an-overview-of-the-methodology",
+    "title": "360-Degree Gaze Estimation in the Wild Using Multiple Zoom Scales",
+    "section": "An Overview of the Methodology",
+    "text": "An Overview of the Methodology\n\nDefinitions:\n\nYaw \\[\\theta\\] and Pitch \\[\\phi\\] angle: In polar co-ordinates a normalized 3D vector can be represented by 2 angles. Gaze vector is therefore represented by \\[\\theta\\] (left right orientation) and \\[\\phi\\] (top down orientation).\n\n\n\n\n\n\nSine-Cosine Transformation\nBackward gaze induces discontinuity at \\[\\theta=\\pm\\pi\\] as seen in figure below. Yaw angle is defined with respect to negative z axis. Discontinuity is seen when the projection of gaze vector on XZ plane is very close to positive Z direction. From one side the angle reaches \\[\\pi(3.14)\\] and from the other, it reaches \\[-\\pi(-3.14)\\].\n\n \n\nDiscontinuity in backward gazes (Credits: https://arxiv.org/abs/2009.06924).\n\n\n\nWe solve the issue by applying sine-cosine transformation on target - we predict \\[sin(\\theta)\\], \\[cos(\\theta)\\] and \\[sin(\\phi)\\].\n\nIt is easy to see that in sine-cosine space, there is no discontinuity at \\[\\theta=\\pm\\pi\\]. We predict \\[\\theta\\] from two ways. We estimate Sine-based estimate \\[\\theta_S\\] by using predicted \\[sin(\\theta)\\] and sign of \\[cos(\\theta)\\]. We obtain Cosine-based estimate \\[\\theta_C\\] by using predicted \\[cos(\\theta)\\] and sign of \\[\\sin(\\theta)\\]. Our prediction for yaw is \\[\\theta_{SC} = (\\theta_S + \\theta_C\\])/2\n\n\nWeighted Sine-Cosine Transformation\nWe observe that \\[\\theta_C\\] is not able to predict \\[0^\\circ\\] and \\[\\theta_S\\] is not able to predict \\[\\pm\\pi/2\\] as can be seen in below figure where we look at their distributions.\n\n\n\nWe argue that it is due to low derivative of \\[tanh\\] around \\[\\pm1\\] and high derivative of \\[sin^{-1}\\] and \\[cos{-1}\\] around \\[\\pm\\pi/2\\] and \\[0^\\circ\\] respectively. We fix this by using a weighted average scheme. Our final prediction for yaw,\n\\[\\theta_{WSC} = w*sin(\\theta) + (1-w)*cos(\\theta)\\]\nFinally, we note that there is no ambiguity in estimating \\[\\phi\\] from \\[sin(\\phi)\\] since \\[\\phi \\in [-\\pi/2,\\pi/2]\\] ### Multi-Crop Approach We take this approach to do efficient feature extraction over varying head sizes appearing in the dataset as shown below.\n\n\n\nVarying head sizes in the dataset. Top row has large head sizes and bottom row has smaller head sizes (Credits: https://arxiv.org/abs/2009.06924).\n\n\nWe use multiple cropsizes. We centercrop the input image with each cropsize and resize it subsequently. This yields a set of images with different scales. We then pass it through a common backbone network to yeild multi-scale embeddings. These embeddings are aggregated using an aggregation module and subsequently passed though dense layer to yield the target. For sequence model (using video as input), instead of a single input, we have multiple input images and we apply one centercropping operation to each input. Subsequent portions are identical.\n\n  \n\nLeft: Static Model, Center: Sequence Model, Right: Multi-Zoom Aggregator (Credits: https://arxiv.org/abs/2009.06924)."
+  },
+  {
+    "objectID": "qplum.html",
+    "href": "qplum.html",
+    "title": "My Learnings at Qplum- 3 Years Zipped into a 10 Min Read",
+    "section": "",
+    "text": "A typical trading pipeline has 3 major components. I had the fortune to work on all the three. 1. Portfolio Management System: It runs every Nth day and decides what to buy/sell for each user. 2. Execution System: It decides when and how to execute each order. 3. Order Routing Server: Facilitates information flow between execution system and the exchange (broker, to be precise).\n\n\nPMS allocates user’s money to multiple strategies by taking into account user’s appetite for risk. Some strategies are high-risk high-reward type, some are low-risk low-reward and the rest fall in between the two extremes. Each strategy constitutes of a methodology to manage money, and hyper parameter values controling the risk and other metrics. The methodology, built on lines of some traditional trading ideas like momentum, mean reversion, market neutral often employs machine learning techniques for prediction. &gt; With the help of market simulators, strategies in PMS are tested on historical data.\nOnly best performing strategies are picked to be run in PMS for managing users’ money. PMS predicts the desired allocation to products for each user. Using currrent allocation and the prediction, orders are then generated and sent to Execution System for execution.\n\n\n\nAs we have seen, PMS says something like “After looking at the prices of stocks and etfs of past few days, I, in my genius intelligence and ultimate authority, think that for the user ABC, we should buy n1 shares of APPL, sell n2 shares of VTI and so on and so forth”. It sends these orders to execution system.\nFor every order, execution system looks at price data at minisecond/microsecond granularity and decides upon the best time in near future to execute the order. If it is a buy order, the system attempts to execute the order at the time when the price is locally low. For a sell order, aim is naturally to sell at a locally higher price. \n\n\n\nExchange speaks a different language. Trading system speaks another. ORS is the interpreter which receives messages from one and translates it to the other. A buy order request, sell order request, order price modification request etc are some examples of messages which Trading system sends to Exchange. Order confirmation notification, order cancellation notification etc. are few examples of messages sent by the exchange."
+  },
+  {
+    "objectID": "qplum.html#trading-pipeline-overview",
+    "href": "qplum.html#trading-pipeline-overview",
+    "title": "My Learnings at Qplum- 3 Years Zipped into a 10 Min Read",
+    "section": "",
+    "text": "A typical trading pipeline has 3 major components. I had the fortune to work on all the three. 1. Portfolio Management System: It runs every Nth day and decides what to buy/sell for each user. 2. Execution System: It decides when and how to execute each order. 3. Order Routing Server: Facilitates information flow between execution system and the exchange (broker, to be precise).\n\n\nPMS allocates user’s money to multiple strategies by taking into account user’s appetite for risk. Some strategies are high-risk high-reward type, some are low-risk low-reward and the rest fall in between the two extremes. Each strategy constitutes of a methodology to manage money, and hyper parameter values controling the risk and other metrics. The methodology, built on lines of some traditional trading ideas like momentum, mean reversion, market neutral often employs machine learning techniques for prediction. &gt; With the help of market simulators, strategies in PMS are tested on historical data.\nOnly best performing strategies are picked to be run in PMS for managing users’ money. PMS predicts the desired allocation to products for each user. Using currrent allocation and the prediction, orders are then generated and sent to Execution System for execution.\n\n\n\nAs we have seen, PMS says something like “After looking at the prices of stocks and etfs of past few days, I, in my genius intelligence and ultimate authority, think that for the user ABC, we should buy n1 shares of APPL, sell n2 shares of VTI and so on and so forth”. It sends these orders to execution system.\nFor every order, execution system looks at price data at minisecond/microsecond granularity and decides upon the best time in near future to execute the order. If it is a buy order, the system attempts to execute the order at the time when the price is locally low. For a sell order, aim is naturally to sell at a locally higher price. \n\n\n\nExchange speaks a different language. Trading system speaks another. ORS is the interpreter which receives messages from one and translates it to the other. A buy order request, sell order request, order price modification request etc are some examples of messages which Trading system sends to Exchange. Order confirmation notification, order cancellation notification etc. are few examples of messages sent by the exchange."
+  },
+  {
+    "objectID": "pages/qualilty_control_mri.html",
+    "href": "pages/qualilty_control_mri.html",
+    "title": "Deep Generative Model-based Quality Control for Cardiac MRI Segmentation",
+    "section": "",
+    "text": "Paper Link\nGiven an MRI image and its segmentation, the paper’s focus is to obtain a measure denoting quality of the segmentation. Paper uses VAE for first learning (by synthesis) what good segmentation looks like. Afterwards, given an image and its segmentation, the paper projects the segmentation and image pair onto a space of ‘good quality manifolds’. A measure of difference between the obtained ‘good quality’ segmentation-image pair and the input segmentation-image pair is the paper’s final output denoting how good the input segmentation was."
+  },
+  {
+    "objectID": "pages/qualilty_control_mri.html#super-short-introduction",
+    "href": "pages/qualilty_control_mri.html#super-short-introduction",
+    "title": "Deep Generative Model-based Quality Control for Cardiac MRI Segmentation",
+    "section": "",
+    "text": "Paper Link\nGiven an MRI image and its segmentation, the paper’s focus is to obtain a measure denoting quality of the segmentation. Paper uses VAE for first learning (by synthesis) what good segmentation looks like. Afterwards, given an image and its segmentation, the paper projects the segmentation and image pair onto a space of ‘good quality manifolds’. A measure of difference between the obtained ‘good quality’ segmentation-image pair and the input segmentation-image pair is the paper’s final output denoting how good the input segmentation was."
+  },
+  {
+    "objectID": "pages/qualilty_control_mri.html#brief-description-of-main-ideas",
+    "href": "pages/qualilty_control_mri.html#brief-description-of-main-ideas",
+    "title": "Deep Generative Model-based Quality Control for Cardiac MRI Segmentation",
+    "section": "Brief Description of Main Ideas",
+    "text": "Brief Description of Main Ideas\n\nGood-Quality Manifold\nThe paper first learns what a good quality manifold is. Set of image and ground truth segmentation tuples constitutes the good quality manifold. A VAE takes in as input an image \\[I\\] and its ground truth segmentation \\[S_{gt}\\] and learns to generate it back. Decoder \\[G\\] of the trained VAE can generate both image and its segmentation given the latent vector \\[z\\] generated by VAE’s encoder.\n\n\nIterative-Search in the Latent Space\nPaper aims to find a latent vector \\[z_{sur}\\] which, when passed through the generator \\[G\\] yields a good quality image-segmentation pair \\[X\\] (\\[X=(I,S)\\]). For doing that it uses the fact that since VAE has been trained on good quality image-segmentation pairs, the reconstruction loss for such a pair would be low. Paper first gets an initial latent vector \\[z_0\\] by passing the input (I,S) through VAE’s encoder. Main idea now is to find a latent vector \\[z_{sur}\\] near to \\[z_0\\] which has a lower loss. Paper finds such a latent vector using gradient of the reconstruction loss in an iterative fashion. The iteration stops when then loss plateaus around some value. Paper indirectly shows that this latent vector indeed generates good quality image-segmentation pair by demonstrating the effectiveness of the quality control done using this method.\n\n\n\nIterative Approach (Credits: https://arxiv.org/pdf/2006.13379.pdf)."
+  },
+  {
+    "objectID": "pages/deep_mri_prior.html",
+    "href": "pages/deep_mri_prior.html",
+    "title": "Time-Dependent Deep Image Prior for Dynamic MRI",
+    "section": "",
+    "text": "Paper Link\nThis work is about generating 2D MRI image temporal sequence from sinograms. The interesting part is that the approach is unsupervised, a generative model is used and piecewise linear interpolation in generative model’s input latent space maps to temporal interpolation in the image space."
+  },
+  {
+    "objectID": "pages/deep_mri_prior.html#super-short-description",
+    "href": "pages/deep_mri_prior.html#super-short-description",
+    "title": "Time-Dependent Deep Image Prior for Dynamic MRI",
+    "section": "",
+    "text": "Paper Link\nThis work is about generating 2D MRI image temporal sequence from sinograms. The interesting part is that the approach is unsupervised, a generative model is used and piecewise linear interpolation in generative model’s input latent space maps to temporal interpolation in the image space."
+  },
+  {
+    "objectID": "pages/deep_mri_prior.html#brief-overview-of-the-methodology",
+    "href": "pages/deep_mri_prior.html#brief-overview-of-the-methodology",
+    "title": "Time-Dependent Deep Image Prior for Dynamic MRI",
+    "section": "Brief Overview of the Methodology",
+    "text": "Brief Overview of the Methodology\n\nInitial Points to Note\n\nIn Dynamic MRI, the image which is being scanned changes with time. So the objective is to recover \\[x_t\\] at time \\[t\\].\nActual input to the model is golden angle radial lines. However, using NuFFT, it is converted to sinograms.\nFor every new MRI sequence reconstruction, the model needs to be retrained from scratch.\n\n\n\nTraining Procedure\n\nTwo latent variables \\[z_0\\] and \\[z_T\\] (64 dimensional) are sampled from a uniform distribution. They correspond to start time 0 and end time \\[T\\] of the sequence to be predicted. For any intermediate time \\[t\\], the latent variable is obtained by a simple linear interpolation. &gt;\\[z_t = \\alpha_tz_0 + (1-\\alpha_t)z_T\\]\n\n\n\nInterpolation of latent variable (Credits: https://arxiv.org/abs/1910.01684).\n\n\nThe latent variable \\[z_t\\] is fed to a deep CNN model which outputs MRI image \\[x_t\\] at time \\[t\\]. Note that information regarding the temporal aspect is only present in the latent variable. CNN model is jointly optimized over all time points. Thus, CNN model just by itself does not know for which timestamp does it need to generate the MRI image.\nSimilar to what gets done to actual MRI image, output of CNN model is operated upon using NuFFT. This converts it to an estimate of sinogram. As we have the actual sinogram data for different time points, this procedure is used to train the CNN model so that the predicted sinogram gets maximally close to target sinogram.\n\n\n\n\nOverall Architecture (Credits: https://arxiv.org/abs/1910.01684).\n\n\n\nOnce the training is done, MRI image at time \\[t\\] is obtained by feeding \\[z_t\\] as input to the CNN model."
+  },
+  {
+    "objectID": "pages/fast_xray_tb.html",
+    "href": "pages/fast_xray_tb.html",
+    "title": "Efficient Deep Network Architectures for Fast Chest X-Ray Tuberculosis Screening and Visualization",
+    "section": "",
+    "text": "Paper Link\nThis paper proposes a novel CNN network tailored for predicting Tuberculosis from X-Ray images. Highlights of the paper is that it achieves comparable performance w.r.t other approaches while having a super small architecture and using much small training data. This also gives the advantage of speed. Another highlight is intuitive visualization especially with saliency map which looks quite helpful for medical professionals."
+  },
+  {
+    "objectID": "pages/fast_xray_tb.html#super-short-introduction",
+    "href": "pages/fast_xray_tb.html#super-short-introduction",
+    "title": "Efficient Deep Network Architectures for Fast Chest X-Ray Tuberculosis Screening and Visualization",
+    "section": "",
+    "text": "Paper Link\nThis paper proposes a novel CNN network tailored for predicting Tuberculosis from X-Ray images. Highlights of the paper is that it achieves comparable performance w.r.t other approaches while having a super small architecture and using much small training data. This also gives the advantage of speed. Another highlight is intuitive visualization especially with saliency map which looks quite helpful for medical professionals."
+  },
+  {
+    "objectID": "pages/fast_xray_tb.html#overview-of-main-ideas",
+    "href": "pages/fast_xray_tb.html#overview-of-main-ideas",
+    "title": "Efficient Deep Network Architectures for Fast Chest X-Ray Tuberculosis Screening and Visualization",
+    "section": "Overview of Main Ideas",
+    "text": "Overview of Main Ideas\n\nDefinitions\n\nSaliency Map: Derivative of output class score w.r.t input image. It has the same resolution as the input image. It shows relative importance of input pixels in the decision making.\ngrad-CAMs: Derivative of output class score w.r.t a feature map from a deeper layer. It has lower resolution than input image but has better localization. ### Network Structure Architecture is shown below. \\[a * b/c\\] format is used in multiple blocks shown below where a and be are the spatial kernel dimensions and c is the stride. \\[\\bigoplus\\] means addition and GAP is global average pooling.\n\n\n\nProposed Architecture (Credits: https://www.nature.com/articles/s41598-019-42557-4).\n\n\n\nOne interesting this about this architecture is the higher stride (4) in the first block. Paper notes that performance did not degrade when stride was increased from 2 to 4. Paper suggests that this may be due to the fact that it is easier to compute simple features like edges (which is what first few layers do) and so strided convolutions did not degrade the performance.\n\n\nVisualization\nPaper claims that Saliency maps were visually quite intuitive (one of the authors is expert in inspection of X-ray images). Lower resolution in case of grad-CAMs made them less useful. Motivation for visualization is to give the clinician another piece of information besides the classification’s prediction values. As seen below, it is easy to agree with the paper that the saliency maps have important visual queues which the clinicians would understand.\n\n\n\nSaliency map overlayed on original X-ray scan. This example has TB and the model correctly predicted it. (Credits: https://www.nature.com/articles/s41598-019-42557-4)."
+  },
+  {
+    "objectID": "pages/RELATE.html",
+    "href": "pages/RELATE.html",
+    "title": "RELATE: Physically Plausible Multi-Object Scene Synthesis Using Structured Latent Spaces",
+    "section": "",
+    "text": "Paper Link\nThis paper does unsupervised scene generation using GAN based setup. Major novelty here is that they are able to enforce real world relationships between objects and also between objects and background. (eg: A generated ball should be inside the generated bowl). It does so by handling object identity and its position separately. It is able to extend this approach in temporal dimension so as to generate videos."
+  },
+  {
+    "objectID": "pages/RELATE.html#super-short-description",
+    "href": "pages/RELATE.html#super-short-description",
+    "title": "RELATE: Physically Plausible Multi-Object Scene Synthesis Using Structured Latent Spaces",
+    "section": "",
+    "text": "Paper Link\nThis paper does unsupervised scene generation using GAN based setup. Major novelty here is that they are able to enforce real world relationships between objects and also between objects and background. (eg: A generated ball should be inside the generated bowl). It does so by handling object identity and its position separately. It is able to extend this approach in temporal dimension so as to generate videos."
+  },
+  {
+    "objectID": "pages/RELATE.html#understanding-the-paper",
+    "href": "pages/RELATE.html#understanding-the-paper",
+    "title": "RELATE: Physically Plausible Multi-Object Scene Synthesis Using Structured Latent Spaces",
+    "section": "Understanding the Paper",
+    "text": "Understanding the Paper\nA GAN takes input a latent vector and generate images. In several GAN variations, the latent vector is trained to have a semantic component. In this work, the latent vector is created in a specific way. It has been empirically shown that one can configure number as well as type of objects one wants in the scene. One can also decide upon the type of background. The model takes care of the acceptable relationship between objects and between objects and background.\n\nModel architecture has two modules. First one is Scene composition and rendering module. Firstly, this is responsible for generating latent vectors to decide upon number of objects, kind of background and kind of each object. This is also responsible for generating latent vectors for position of each object. Paper calls these two latent vector sets as appearance and position vectors. All these vectors are generated independently. This module also converts the appearance vectors to 3 dimensional tensors.\nFor ensuring that objects obtain ‘sensible’ positions in the scene, the appearance and position vectors are passed through interaction module. Output of the interaction module are rectified position vectors. These position vectors are then ‘applied’ on the 3 dimensional (appearance) tensors. Finally screen tensor is computed which is the sum of appearance tensors rectified with positions for background and for individual objects. Screen tensor is passed to GAN as input"
+  },
+  {
+    "objectID": "pages/bianca.html",
+    "href": "pages/bianca.html",
+    "title": "End-to-end training of deep probabilistic CCA on paired biomedical observations",
+    "section": "",
+    "text": "Paper Link\nThis paper aims to develop a connection between two modalities : medical image features (tissue image) and the state of the cell (gene expression levels). For each modality they have a latent space representation. Model is trained in a way to maximise the correlation between the two latent space representations. To this end PCCA (probablistic CCA) is used. To encorporate non-linear features, neural network embeddings are used. Model is trained in an end-to-end fashion with encoder-decoder architecture."
+  },
+  {
+    "objectID": "pages/bianca.html#super-short-description",
+    "href": "pages/bianca.html#super-short-description",
+    "title": "End-to-end training of deep probabilistic CCA on paired biomedical observations",
+    "section": "",
+    "text": "Paper Link\nThis paper aims to develop a connection between two modalities : medical image features (tissue image) and the state of the cell (gene expression levels). For each modality they have a latent space representation. Model is trained in a way to maximise the correlation between the two latent space representations. To this end PCCA (probablistic CCA) is used. To encorporate non-linear features, neural network embeddings are used. Model is trained in an end-to-end fashion with encoder-decoder architecture."
+  },
+  {
+    "objectID": "pages/bianca.html#brief-overview-of-the-methodology",
+    "href": "pages/bianca.html#brief-overview-of-the-methodology",
+    "title": "End-to-end training of deep probabilistic CCA on paired biomedical observations",
+    "section": "Brief Overview of the Methodology",
+    "text": "Brief Overview of the Methodology\n\nDefinitions\n\nCCA (Cannonical Correlation Analysis): Input is two mean centered vectors. CCA projects both input vectors into a shared sub-space. It does so by learning a linear (matrix multiplication) operation. The matrix parameters are learned such that there is maximal correlation between the two input vectors in their shared sub-space.\nPCCA (Probablistic CCA): In this case, modality specific variations are also modelled besides modelling the shared information between the two input vectors. &gt;Note that, an encoder-decoder structure is better off with PCCA when compared with just CCA. With PCCA, the dominant modality specific features also get expression in modality specific components.\n\nIn CCA, they have to be ignored since only shared information is captured.\n\n\nEncoder & Decoder\nFor both encoder and decoder, two different types are used for the two modalities. A CNN based architecture is used for image whereas a single dense layer is used for gene expression.\n\n\nData flow\nThe two inputs (image and the gene expression) are passed through their respective encoders to get embeddings. The outputs are subsequently passed on the PCCA module where one gets two modality specific components and one shared component. Using them, the embeddings are first reconstructed. The reconstructed embeddings are then passed to their respective decoders to yeild reconstructed inputs. The flow is shown in the figure below.\n\n\n\nProposed Architecture (Credits: http://auai.org/uai2019/proceedings/papers/340.pdf)."
+  },
+  {
+    "objectID": "pages/jakob_macke.html",
+    "href": "pages/jakob_macke.html",
+    "title": "Teaching deep neural networks to localize single molecules for super-resolution microscopy",
+    "section": "",
+    "text": "Paper Link\nIt is related to single-molecule localization fluorescence microscopy. This paper proposes a novel architecture named DECODE to simultaneously detect and localise fluorophores. In terms of performance, the work significantly outperforms other approaches on all 12 applicable datasets from SMLM2016 challenge. In terms of ideas, firstly they use the temporal information. Secondly, they provide uncertainty estimates for flurophore detection, localization and brightness. Thirdly, for training the model, they introduce Combined Learning which combines Simulator Learning(learning from simulated data) and Variational Auto Encoder learning (using real images)."
+  },
+  {
+    "objectID": "pages/jakob_macke.html#super-short-introduction",
+    "href": "pages/jakob_macke.html#super-short-introduction",
+    "title": "Teaching deep neural networks to localize single molecules for super-resolution microscopy",
+    "section": "",
+    "text": "Paper Link\nIt is related to single-molecule localization fluorescence microscopy. This paper proposes a novel architecture named DECODE to simultaneously detect and localise fluorophores. In terms of performance, the work significantly outperforms other approaches on all 12 applicable datasets from SMLM2016 challenge. In terms of ideas, firstly they use the temporal information. Secondly, they provide uncertainty estimates for flurophore detection, localization and brightness. Thirdly, for training the model, they introduce Combined Learning which combines Simulator Learning(learning from simulated data) and Variational Auto Encoder learning (using real images)."
+  },
+  {
+    "objectID": "pages/jakob_macke.html#summary-of-main-ideas",
+    "href": "pages/jakob_macke.html#summary-of-main-ideas",
+    "title": "Teaching deep neural networks to localize single molecules for super-resolution microscopy",
+    "section": "Summary of Main Ideas",
+    "text": "Summary of Main Ideas\n\nInput-Output Setting of the Proposed Network\n\nInput: A sequence of image frames (\\[ImageCount=3\\]) containing sparsely activated fluorophores.\nOutput: For each pixel location in the input frames, it predicts\n\nthe probablity of it having a fluorophore,\nx,y and z component relative to center of the pixel denoting its location,\nits brightness,\nthe uncertainty estimates in brightness estimation and localization estimation.\n\nThis prediction is delivered by the model by giving output an 9 channel feature map (paper erroneously states it as 8) having the same spatial dimensions as the input frames with each channel corresponding to one output type as described above.\n\n\n\nDECODE network overview\nIt has two submodules. Frame analysis module takes as input one frame and it predicts the feature embeddings. Temporal Context Module takes in these feature embeddings and predict the multi-channel feature maps which is the network’s output.\n\n\n\nProposed Architecture (Credits: https://arxiv.org/abs/1907.00770).\n\n\n\n\nSimulator Learning\nFrom existing literature, the process by which presence of flurophores (our target) give rise to detected image(input to this architecture) is well known. Using randomness to set the independent parameters, a synthetic data was created on which the network was trained. This has also been done in past approaches.\n\n\nLoss Formulation\nSince the paper predicts the mean as well as the standard deviation of properties of interest (location and brightness), this allows them to formulate the loss using Gaussian mixture of models. Naturally, they maximize the likelihood of ground truth positions (generated from simulated data).\n\n\nAuto Encoder learning\nAs stated above, the process (forward model) by which the flurophores get converted into the image (which is the input of this system) is known. However, the parameters of the process (noise distribution and point spread function) may not be aligned with real situations. This is where this auto encoder learning helps. Given an input sequence of frames (real data generated from actual fluorophores), DECODE is used to predict the location and brightnes parameters. This is fed into the forward model to generate an image.By minimizing the difference between generated image and the input image, the setup learns the parameters of both DECODE and the forward model. This ensures that DECODE is using a forward model which is aligned with real situation. This is not the case in Simulator Learning as there the parameters of the forward model are arbitrarily fixed."
+  },
+  {
+    "objectID": "pages/anomaly_detectionXray.html",
+    "href": "pages/anomaly_detectionXray.html",
+    "title": "Anomaly Detection on X-Rays Using Self-Supervised Aggregation Learning",
+    "section": "",
+    "text": "Paper Link\nThis paper does unsupervised anomaly detection using clustering based approach using an autoencoder network. Paper is able to extract prototypical representations of training data in embedding space in a clustered way. Anomaly score is obtained in the embedding space by comparing test embedding with closest prototypical representations from training data. The crux of the paper lies in its different loss components and use of memory bank for time efficiency."
+  },
+  {
+    "objectID": "pages/anomaly_detectionXray.html#super-short-description",
+    "href": "pages/anomaly_detectionXray.html#super-short-description",
+    "title": "Anomaly Detection on X-Rays Using Self-Supervised Aggregation Learning",
+    "section": "",
+    "text": "Paper Link\nThis paper does unsupervised anomaly detection using clustering based approach using an autoencoder network. Paper is able to extract prototypical representations of training data in embedding space in a clustered way. Anomaly score is obtained in the embedding space by comparing test embedding with closest prototypical representations from training data. The crux of the paper lies in its different loss components and use of memory bank for time efficiency."
+  },
+  {
+    "objectID": "pages/anomaly_detectionXray.html#brief-overview-of-the-methodology",
+    "href": "pages/anomaly_detectionXray.html#brief-overview-of-the-methodology",
+    "title": "Anomaly Detection on X-Rays Using Self-Supervised Aggregation Learning",
+    "section": "Brief Overview of the Methodology",
+    "text": "Brief Overview of the Methodology\n\nAn Intuition on Entropy\nMore narrow sharp peaks in the probablity distribution leads to lower entropy. Here, entropy is computed on embedding space and paper aims to minimize it. A sharp peak around a location in embedding space means that lots of images in training data map to that location in the embedding space. This is what leads to clustering.\n\n\nReconstruction Loss\nPaper uses an auto-encoder network and therefore naturally uses a MSE based \\[L_{mse}\\] reconstruction loss. Note that without this loss, all images will learn to map to a single location in embedding space thereby making the entropy component of loss 0. This component ensures that embedding contains most of instance specific information.\n\n\nSample Specific Loss (for augumentation invariance)\nThis is applied on embedding space (output of the encoder). This ensures that augumented versions of the same image have very similar embedding representation. This is achieved by minimizing the entropy in the following way\n\n\n\nSample specific loss (Credits: https://arxiv.org/abs/2010.09856).\n\n\nFor some intuition, note that for minimizing \\[L_{ss}\\] with fixed individual \\[z_i, z_k\\], we need to maximize \\[z_j^Tz_i\\] which would happen when both \\[z_i,z_j\\] are very close to each other. So this loss encourages that.\nTraining happens in two phases. In the first pre-training phase, the network is trained using \\[L_{mse} + L_{ss}\\]. In the second phase, another component \\[L_{agg}\\] is added which ensures that clustering of similar training images happens in the embedding space.\n\n\nMemory Bank\nEmbedding of all examples in training data is saved in this array like structure. Updation is done in a moving average way. This is helpful to get top-k similar embeddings from the training data needed in the \\[L_{agg}\\] described in next section.\n\n \n\nMemory Bank. (Left) Its each entry gets updated with corresponding embeddings computed in each epoch. (Right) Moving average updated methodology (Credits: https://arxiv.org/abs/2010.09856)\n\n\n\n\nAggregation Loss (for clustering)\nIt is very similar to how \\[L_{ss}\\] works. The difference is that dot product in \\[p_{i,j}\\] is computed between embeddings of two similar looking but different images.\n\n\n\nAggregation loss (Credits: https://arxiv.org/abs/2010.09856).\n\n\nHere, \\[N_k(z_i)\\] denote the top-k neighbors of \\[z_i\\] from memory bank. Picking the top-k encourages the model to make the embedding vector \\[z_i\\] very similar to its k neighboring embedding vectors. This leads to progressive clustering."
+  },
+  {
+    "objectID": "pages/deep_eye_fm_2016.html",
+    "href": "pages/deep_eye_fm_2016.html",
+    "title": "Deep eye fixation map learning for calibration-free eye gaze tracking",
+    "section": "",
+    "text": "Paper Link\nNovelty of the paper is its personal calibration procedure using Saliency maps. Here, a CNN based architecture is used to predict saliency maps- probablity of being looked given a image patch. For gaze estimation, regression based model is created for 2D gaze and a model-based analytical modelling is done for 3D gaze. Using the predicted gazes by the gaze model, paper models another version of saliency map by using gaussian mixture models with their mean set to the predicted PoRs (location on the image). Paper is able to estimate parameters of the gaze model by minimizing the KL divergence between the two saliency map distributions."
+  },
+  {
+    "objectID": "pages/deep_eye_fm_2016.html#super-short-introduction",
+    "href": "pages/deep_eye_fm_2016.html#super-short-introduction",
+    "title": "Deep eye fixation map learning for calibration-free eye gaze tracking",
+    "section": "",
+    "text": "Paper Link\nNovelty of the paper is its personal calibration procedure using Saliency maps. Here, a CNN based architecture is used to predict saliency maps- probablity of being looked given a image patch. For gaze estimation, regression based model is created for 2D gaze and a model-based analytical modelling is done for 3D gaze. Using the predicted gazes by the gaze model, paper models another version of saliency map by using gaussian mixture models with their mean set to the predicted PoRs (location on the image). Paper is able to estimate parameters of the gaze model by minimizing the KL divergence between the two saliency map distributions."
+  },
+  {
+    "objectID": "pages/deep_eye_fm_2016.html#an-overview-of-the-methodology",
+    "href": "pages/deep_eye_fm_2016.html#an-overview-of-the-methodology",
+    "title": "Deep eye fixation map learning for calibration-free eye gaze tracking",
+    "section": "An Overview of the Methodology",
+    "text": "An Overview of the Methodology\n\nNotations:\n\nPoRs: Point of regard. In case of 3D gaze estimation, PoR is the intersection of image plane with the visual axis. In simple terms, it is the point on the image screen where the person is looking at.\nx,y: Co-ordinate of a pixel on the screen (which has the image I ).\n\n\n\nEye Fixation Map (Saliency map) Estimation using RCNN\nRCNN architecture comprises of CNN module followed by dense layers. Output of dense layers is regressed to yield a scalar denoting the probablity of input region being looked at. It is trained with a center bias - region closer to center of the image has more probability of being looked at.\n\n\nEye Gaze Estimation\nEye gaze estimation is formulated for both 2D as well as 3D case. For 2D case, regression based approach is taken. Gaze position is modelled to be simply the linear combination of feature vectors, feature vectors being the pupil glint vector. For 3D case, standard eye model is used (assuming the eye as sphere). In this case, the unknown parameter is the angle between visual axis and the optical axis.\n\n\n\n\n\nDistribution Based Calibration\nWe get the eye fixation map using RCNN (\\[p_f(x,y\\|I)\\]) and using the gaze estimation model (\\[p_g(x,y\\|I,\\theta)\\]). For estimating the parameters of the gaze model, the paper minimizes the KL-divergence between these two fixation maps."
+  },
+  {
+    "objectID": "pages/Oatmar_hilliges.html",
+    "href": "pages/Oatmar_hilliges.html",
+    "title": "Category Level Object Pose Estimation via Neural Analysis-by-Synthesis",
+    "section": "",
+    "text": "Paper Link\nPose estimation problem is tackled here. Firstly, a generative module is trained to generate images by taking input image embedding and its 6D pose. At evaluation time, input image embedding is passed through the generative module to yield an image. With the objective to make generated image identical to input image , using gradient descent, the input pose and shape are iteratively updated. Besides the model architecture, other highlight of the paper is its good performance despite not using either a CAD model or depth information for the reference object."
+  },
+  {
+    "objectID": "pages/Oatmar_hilliges.html#super-short-description",
+    "href": "pages/Oatmar_hilliges.html#super-short-description",
+    "title": "Category Level Object Pose Estimation via Neural Analysis-by-Synthesis",
+    "section": "",
+    "text": "Paper Link\nPose estimation problem is tackled here. Firstly, a generative module is trained to generate images by taking input image embedding and its 6D pose. At evaluation time, input image embedding is passed through the generative module to yield an image. With the objective to make generated image identical to input image , using gradient descent, the input pose and shape are iteratively updated. Besides the model architecture, other highlight of the paper is its good performance despite not using either a CAD model or depth information for the reference object."
+  },
+  {
+    "objectID": "pages/Oatmar_hilliges.html#a-concise-overview-on-approach-taken",
+    "href": "pages/Oatmar_hilliges.html#a-concise-overview-on-approach-taken",
+    "title": "Category Level Object Pose Estimation via Neural Analysis-by-Synthesis",
+    "section": "A Concise Overview on Approach Taken",
+    "text": "A Concise Overview on Approach Taken\n\nPose-Aware Image Generator\n\nThis module takes input the image embedding a.k.a the latent code and 6D pose vector and aims to output the same object in a different orientation as defined by the pose vector. It has four steps: 1. 3D feature volume is generated from latent code. 2. Out of plane rotation is applied on the 3D feature volume. This in a way disentangles geometry from appearance. By applying desired out of plane rotations on 3D feature volume, 3D feature volume is encouraged to contain just appearance based info. 3. Rotated 3D feature volume is then projected into 2D space. 4. Generating the image from 2D feature map. At this point, translation and in-plane rotation as defined in the 6D pose vector is applied on the generated image.\n\n\nObject Pose Estimation\n\nThis requires the generation module to be trained. Generation module is trained in Variational autoencoder fashion with latent variable being the image latent code. This module takes as input an image and uses trained image generation module to estimate its pose and latent code. Idea is to feed the generation module some latent code and pose and get a generated image. Use gradient descent iteratively to bring generated image as close to input image by minimizing the perceptual loss and thereby updating the latent code and the pose. Note that Generation module’s weights are fixed for this task. They do this whole process multiple times, starting with a different latent code and pose each time. Among several predictions, they pick the one with the least final perceptual loss. Using trained encoder and the input image, they fetch the mean and variance of the gaussian distribution modeling the latent code and sample from that. They sample pose uniformly from the space of valid poses."
+  },
+  {
+    "objectID": "pages/jh_cole.html",
+    "href": "pages/jh_cole.html",
+    "title": "NEURO-DRAM: A 3D Recurrent Visual Attention Model For Interpretable Neuroimaging Classification",
+    "section": "",
+    "text": "Paper Link\nIt works on 3D MRI data of human brain primarily for prediction of Alzheimer disease. Novelty of the paper is more generalizability, more interpretebility and faster training time, all due to its novel architectural design. A RL agent is trained to find small 3D volumes of interest from which feature are generated which are subsequently assimilated with LSTM. Additionally, it naturally supports other forms of non-imaging input information by incorporating them as LSTM’s initial state."
+  },
+  {
+    "objectID": "pages/jh_cole.html#super-short-introduction",
+    "href": "pages/jh_cole.html#super-short-introduction",
+    "title": "NEURO-DRAM: A 3D Recurrent Visual Attention Model For Interpretable Neuroimaging Classification",
+    "section": "",
+    "text": "Paper Link\nIt works on 3D MRI data of human brain primarily for prediction of Alzheimer disease. Novelty of the paper is more generalizability, more interpretebility and faster training time, all due to its novel architectural design. A RL agent is trained to find small 3D volumes of interest from which feature are generated which are subsequently assimilated with LSTM. Additionally, it naturally supports other forms of non-imaging input information by incorporating them as LSTM’s initial state."
+  },
+  {
+    "objectID": "pages/jh_cole.html#brief-description-of-main-ideas",
+    "href": "pages/jh_cole.html#brief-description-of-main-ideas",
+    "title": "NEURO-DRAM: A 3D Recurrent Visual Attention Model For Interpretable Neuroimaging Classification",
+    "section": "Brief Description of Main Ideas",
+    "text": "Brief Description of Main Ideas\nAn architecture tailor-made for MRI data processing is the main content of this paper. This architecture has been divided into multiple subnetworks as can be seen in image below. They are briefly described in following sections.\n\n\n\nProposed Architecture (Credits: https://arxiv.org/pdf/1910.04721.pdf).\n\n\n\nGlimpse Network\n\nInput: Location vector \\[l_t\\] generated by Location Network and a glimpse \\[x_t\\] (a small 3D volume) around the location.\nOutput: A vector \\[g_t\\] representing what has been seen and where it has been seen.\nInternals: \\[x_t\\] is passed through a 3D CNN to yield \\[g_{x,t}\\]. \\[l_t\\] is passed through a fully connected layer to yield \\[g_{l,t}\\]. The output \\[g_t\\] is the element wise multiplication of the two above mentioned intermediates. &gt;\\[g_t = g_{x,t}\\bigodot g_{l,t}\\]\n\n\n\nRecurrent Network\n\nInput(\\[(t +1)^{th}\\] step): \\[g_t\\], the output of glimpse network. The output of the context netowrk is taken as input in the first step as \\[r_0\\].\nOutput(\\[(t +1)^{th}\\] step): \\[r^{t+1}\\] which has the assimilated information from looking at \\[\\{x_0,..x_t\\}\\]\nInternals: This network assimilates information from all seen glimpses till that point in time.\n\n\n\nOther Sub-Networks\n\nLocation network is a single fully connected network giving output a 3D vector \\[\\mu_t\\]. The location \\[l_{t+1}\\] is sampled from a gaussian distribution with \\[\\mu_t\\] as mean. This randomness improves generalization. Benefit of this network is that one does not have to process all of the 3D data. One can just use small amount of 3D volume (~ a glimpse) to improve the prediction.\nNon-Imaging Context Network takes as input non image based input and generates a representation which gets fed to the Recurrent network.\nClassification network is a single layer fully connected NN with sigmoid activation. Output from the recurrent network is fed to this network as input for predicting the probablity of Alzheimer disease. By not using the output of the Non-imaging context netowrk directly as input, it ensures that MRI data is used as the primary source of knowledge and other data more like a ‘supplimentary info’.\n\n\n\nRL Agent Configuration\n\nInput(\\[(t +1)^{th}\\] step): a new glimpse \\[x_t\\] and a scalar reward \\[r_t\\]. \\[r_t\\] is set to 1 for all timesteps if the classification was done correctly. Otherwise, it is set to 0.\n\n\n\nTraining\nSince they have the classification labels , Classification and Glimpse network parameters (can be and therefore) are trained in a supervised fashion. Sampling the location introduces a discontinuity and so the initials components comprising of Location and Context network are trained via reinforcement learning."
+  },
+  {
+    "objectID": "pages/CLIFER.html",
+    "href": "pages/CLIFER.html",
+    "title": "CLIFER: Continual Learning with Imagination for Facial Expression Recognition",
+    "section": "",
+    "text": "Paper Link\nThis paper works on facial expression recognition (6 expressions. For example: anger, happiness etc). Its novelty lies in its Imagination Model: generating new images of same person with different facial expressions from the orignal image. Another interesting portion is the integration of this Imagination model as a data augmentation module to the main model, the GDM module."
+  },
+  {
+    "objectID": "pages/CLIFER.html#super-short-description",
+    "href": "pages/CLIFER.html#super-short-description",
+    "title": "CLIFER: Continual Learning with Imagination for Facial Expression Recognition",
+    "section": "",
+    "text": "Paper Link\nThis paper works on facial expression recognition (6 expressions. For example: anger, happiness etc). Its novelty lies in its Imagination Model: generating new images of same person with different facial expressions from the orignal image. Another interesting portion is the integration of this Imagination model as a data augmentation module to the main model, the GDM module."
+  },
+  {
+    "objectID": "pages/CLIFER.html#a-short-background",
+    "href": "pages/CLIFER.html#a-short-background",
+    "title": "CLIFER: Continual Learning with Imagination for Facial Expression Recognition",
+    "section": "A Short Background",
+    "text": "A Short Background\n\nFER : Facial expression recognition\nDual memory: Episodic and semantic.\nEpisodic memory example: David Beckham smiling face in last video. This memory should change pretty rapidly.\nSemantic memory example: A typical european smiling face. This memory should change relatively slowly.\nContinual Learning (CL): Methodology with which the model should improve on getting incremental amount of data with time. Similar to online learning in spirit.\nGDM module: A Continual learning model. Implements the human inspired dual memory system using artifical neurons. ## Understanding the Paper ### Imagination Model Model is adapted from ExprGAN. It has two discriminators: \\[D_z\\] to regularize the latent space embedding and \\[D_{img}\\] to regularize the generated images. \\[D_z\\] ensures that latent space embedding of generated images is similar to original image embeddings. This helps to reduce distorting in generated images. \\[D_{img}\\] ensures that generated images actually have the intended face expressions.\n\n\n\nHow does GDM Module Ensure Rapid Non-Overlapping Learning in Episodic Memory\n\nNon overlapping means that each embedding is attempted to get stored as they are. Tendency to encode the common features across embeddings of same face expression type is discouraged.\nLearning rate is high.\nIts objective is to retain the input to a high degree of precision. It is made quite eager to add new neurons.\n\n\n\nHow does GDM Module Ensure Slow Overlapping Learning in Semantic Memory\n\nLearning rate is kept low.\nIt has a relatively higher bar for adding a new neurons.\nThis model takes as input best representations of face latent embeddings from the episodic memory. It uses mode for fixing the feature prototypes for different expression types."
+  },
+  {
+    "objectID": "pages/daniel_c_alexander.html",
+    "href": "pages/daniel_c_alexander.html",
+    "title": "Disentangling Human Error from the Ground Truth in Segmentation of Medical Images",
+    "section": "",
+    "text": "Paper Link\nThis work is on segmentation of medical images. Novelty is that it learns to take into account the errors made by individual annotators. Specifically, given an input image, the paper is able to predict two things jointly: the true segmentation probablity distribution and what each annotator would segment. Annotator specific segmentation probablity distribution is generated by predicting the confusion matrix for each pixel and for each annotator. Another novelty is the non-intuitive theoretically proven loss component which is crucial for this disentanglement of predicted segmentation probablity distribution from predicted spatial confusion matrix. This component minimizes the trace of the confusion matrices."
+  },
+  {
+    "objectID": "pages/daniel_c_alexander.html#super-short-description",
+    "href": "pages/daniel_c_alexander.html#super-short-description",
+    "title": "Disentangling Human Error from the Ground Truth in Segmentation of Medical Images",
+    "section": "",
+    "text": "Paper Link\nThis work is on segmentation of medical images. Novelty is that it learns to take into account the errors made by individual annotators. Specifically, given an input image, the paper is able to predict two things jointly: the true segmentation probablity distribution and what each annotator would segment. Annotator specific segmentation probablity distribution is generated by predicting the confusion matrix for each pixel and for each annotator. Another novelty is the non-intuitive theoretically proven loss component which is crucial for this disentanglement of predicted segmentation probablity distribution from predicted spatial confusion matrix. This component minimizes the trace of the confusion matrices."
+  },
+  {
+    "objectID": "pages/daniel_c_alexander.html#brief-overview-of-the-methodology",
+    "href": "pages/daniel_c_alexander.html#brief-overview-of-the-methodology",
+    "title": "Disentangling Human Error from the Ground Truth in Segmentation of Medical Images",
+    "section": "Brief Overview of the Methodology",
+    "text": "Brief Overview of the Methodology\n\nNotations and Definitions\n\nAnnotator specific spatial confusion matrix (\\[A^{(r)}_{\\phi}\\]): For annotator \\[r\\], this is a confusion matrix for each pixel in the input image over \\[L\\] target labels.\nEstimated True label distribution (\\[\\hat{p}_{\\theta}(x)\\]): For every pixel, it contains the probablity distribution over labels.\nEstimated Annotator distribution (\\[\\hat{p}^{(r)}_{\\theta}(x)\\]): It estimates the answer to the following question— If annotator \\[r\\] had to segment the image \\[x\\], then what would his/her estimate of per-pixel true probablity distribution over labels be?\nSegmentation CNN: CNN network which predicts \\[\\hat{p}_{\\theta}(x)\\] and takes MRI image as input.\nAnnotation CNN: CNN network which predicts \\[A^{(r)}_{\\phi}\\] and takes as input a MRI image.\n\n\n\nArchitecture Description\n\nInput: An MRI image \\[x\\].\nOutput: 1. \\[\\hat{p}_{\\theta}(x)\\], 2. \\[A^{(r)}_{\\phi} ~\\forall r \\].\nFlow: \\[x\\] is passed through the Segmentation CNN to yield segmentation probablities \\[\\hat{p}_{\\theta}(x)\\]. At inference time, this is the final prediction. \\[x\\] is also passed through Annotation CNN to get \\[A^{(r)}_{\\phi}\\] for each annotator \\[r\\]. Using the confusion matrix and the label distribution, using matrix multiplication, it is straight forward to compute estimated annotator distribution: the label distribution as the annotator \\[r\\] would have felt (\\[\\hat{p}^{(r)}_{\\theta}(x)\\]). At training time, the loss is computed using them and not using \\[\\hat{p}_{\\theta}(x)\\]. It makes sense becase in the training data, we donot have true label distribution. We only have labels annotated by specific annotators.\n\n\n\nOverall Architecture description (Credits: https://proceedings.neurips.cc/paper/2020/file/b5d17ed2b502da15aa727af0d51508d6-Paper.pdf).\n\n\n\n\n\nLoss Components\nIt has two components. * The first component aims to minimize the difference between estimated annotator distribution and ground truth annotator distribution. This is done for each annotator. * The second component aims to minimize the trace of spatial confusion matrix for all annotators. Paper claims that this component leads to separation of annotation noise from true label distribution. Paper proposes a theorem for it. The theorem assumes that the estimated annotator distribution is identical to actual annotator distribution. It also assumes that both the actual and the predicted confusion matrices are diagonally dominant on average. Both assumptions are plausible which is explained below: 1. First assumption is plausible as the CNN based models generally achieve very low errors. 2. Second assumption concerning actual confusion matrices is plausible since the annotators are trained persons and therefore they make few mistakes. 3. Third assumption concerning estimated confusion matrices is plausible by construction. For the first few epochs, trace is forced to increase. &gt; Minimum value of trace of average of spatial confusion matrices is achieved when the estimated spatial confusion matrix becomes equal to the actual spatial confusion matrix for each annotator. So, miniminzing the trace in the loss moves the predicted spatial confusion matrices towards their ground truth counterparts.\nWith estimated spatial confusion matrices close to their ground truth counterparts and estimated annotator distribution close to ground truth annotator distribution, estimated true label distribution naturally gets closer to actual true label distribution."
+  },
+  {
+    "objectID": "papers.html",
+    "href": "papers.html",
+    "title": "Short Notes on Few Interesting Papers",
+    "section": "",
+    "text": "Visual Correspondences for Unsupervised Domain Adaptation on Electron Microscopy Images. Link\nTeaching deep neural networks to localize single molecules for super-resolution microscopy. Link\nEfficient Deep Network Architectures for Fast Chest X-Ray Tuberculosis Screening and Visualization. Link\nNoise2Void - Learning Denoising from Single Noisy Images. Link\nModality Attention and Sampling Enables Deep Learning with Heterogeneous Marker Combinations in Fluorescence Microscopy. Link\nUltrasound Video Summarization using Deep Reinforcement Learning. Link\nSelf-Supervised Representation Learning For Ultrasound Video. Link\nCLOPS: Continual Learning of Physiological Signals Link\nJoint reconstruction and bias field correction for undersampled MR imaging. Link\nA deep spatiotemporal graph learning architecture for brain connectivity analysis. Link\nRapid whole-heart CMR with single volume super-resolution. Link\nReal‐time cardiovascular MR with spatio‐temporal artifact suppression using deep learning–proof of concept in congenital heart disease. Link\nBarking up the right tree: an approach to search over molecule synthesis DAGs. Link\nDisentangling Human Error from the Ground Truth in Segmentation of Medical Images. Link\nTime-Dependent Deep Image Prior for Dynamic MRI. Link\nAnomaly Detection on X-Rays Using Self-Supervised Aggregation Learning. Link\nTask-driven hierarchical deep neural network models of the proprioceptive pathway. Link\nEnd-to-end training of deep probabilistic CCA on paired biomedical observations. Link"
+  },
+  {
+    "objectID": "papers.html#ml-bio",
+    "href": "papers.html#ml-bio",
+    "title": "Short Notes on Few Interesting Papers",
+    "section": "",
+    "text": "Visual Correspondences for Unsupervised Domain Adaptation on Electron Microscopy Images. Link\nTeaching deep neural networks to localize single molecules for super-resolution microscopy. Link\nEfficient Deep Network Architectures for Fast Chest X-Ray Tuberculosis Screening and Visualization. Link\nNoise2Void - Learning Denoising from Single Noisy Images. Link\nModality Attention and Sampling Enables Deep Learning with Heterogeneous Marker Combinations in Fluorescence Microscopy. Link\nUltrasound Video Summarization using Deep Reinforcement Learning. Link\nSelf-Supervised Representation Learning For Ultrasound Video. Link\nCLOPS: Continual Learning of Physiological Signals Link\nJoint reconstruction and bias field correction for undersampled MR imaging. Link\nA deep spatiotemporal graph learning architecture for brain connectivity analysis. Link\nRapid whole-heart CMR with single volume super-resolution. Link\nReal‐time cardiovascular MR with spatio‐temporal artifact suppression using deep learning–proof of concept in congenital heart disease. Link\nBarking up the right tree: an approach to search over molecule synthesis DAGs. Link\nDisentangling Human Error from the Ground Truth in Segmentation of Medical Images. Link\nTime-Dependent Deep Image Prior for Dynamic MRI. Link\nAnomaly Detection on X-Rays Using Self-Supervised Aggregation Learning. Link\nTask-driven hierarchical deep neural network models of the proprioceptive pathway. Link\nEnd-to-end training of deep probabilistic CCA on paired biomedical observations. Link"
+  },
+  {
+    "objectID": "papers.html#vision",
+    "href": "papers.html#vision",
+    "title": "Short Notes on Few Interesting Papers",
+    "section": "Vision",
+    "text": "Vision\n\nRethinking Class Relations: Absolute-relative Few-shot Learning. Link\nCLIFER: Continual Learning with Imagination for Facial Expression Recognition. Link\nCategory Level Object Pose Estimation via Neural Analysis-by-Synthesis. Link\nSelf-Supervised Localisation between Range Sensors and Overhead Imagery. Link\nRELATE: Physically Plausible Multi-Object Scene Synthesis Using Structured Latent Spaces. Link\nPerpetual Motion: Generating Unbounded Human Motion. Link\nDual Resolution Corresponding Networks. Link\nSelf-supervised Learning of Interpretable Key Points from Unlabelled Videos Link\nLearning a Generative Motion Model from Image Sequences based on a Latent Motion Matrix. Link\n\n\nGaze Estimation\n\nLearning-by-Synthesis for Appearance-based 3D Gaze Estimation. Link\n360-Degree Gaze Estimation in the Wild Using Multiple Zoom Scales. Link\nDeep eye fixation map learning for calibration-free eye gaze tracking. Link\nA Hierarchical Generative Model for Eye Image Synthesis and Eye Gaze Estimation Link"
+  }
+]

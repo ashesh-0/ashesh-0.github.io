@@ -1,14 +1,7 @@
 ---
-layout: single
 title: 360-Degree Gaze Estimation in the Wild Using Multiple Zoom Scales
 permalink: /gaze/
-author_profile: true
 # toc: true
-classes: wide
-header:
-    overlay_image: /assets/images/own_collage.jpg
-    overlay_filter: 0.5
-    caption: "Photo credit: [**arXiv**](https://arxiv.org/abs/2009.06924)"
 
 ---
 
@@ -21,7 +14,7 @@ header:
 * Yaw $$\theta$$ and Pitch $$\phi$$ angle: In polar co-ordinates a normalized 3D vector can be represented by 2 angles. Gaze vector is therefore represented by $$\theta$$ (left right orientation) and $$\phi$$ (top down orientation).
 
 
-<div style="text-align:center"><img src="../assets/images/own_yawpitch.jpg" alt="drawing"
+<div style="text-align:center"><img src="/assets/images/own_yawpitch.jpg" alt="drawing"
 title="Yaw and Pitch definition. (Credits: https://arxiv.org/abs/2009.06924) "/></div>
 
 ### Sine-Cosine Transformation
@@ -40,7 +33,7 @@ It is easy to see that in sine-cosine space, there is no discontinuity at $$\the
 
 ### Weighted Sine-Cosine Transformation
 We observe that $$\theta_C$$ is not able to predict $$0^\circ$$ and $$\theta_S$$ is not able to predict $$\pm\pi/2$$ as can be seen in below figure where we look at their distributions.
-<div style="text-align:center"><img src="../assets/images/own_SC_dip.png" alt="drawing"
+<div style="text-align:center"><img src="/assets/images/own_SC_dip.png" alt="drawing"
 title="Noticin
 g a dip around 0-degree. (Credits: https://arxiv.org/abs/2009.06924) "/></div>
 

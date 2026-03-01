@@ -1,9 +1,6 @@
 ---
-layout: home
-author_profile: true
 title: About Me
 # layout: single
-classes: wide
 ---
 I am currently a Postdoctoral Fellow in [Florian Jug](https://humantechnopole.it/en/people/florian-jug/)'s lab at Human Technopole. I completed my PhD in Computer Science at TU Dresden, during which I conducted all my research within Florian Jug's lab at Human Technopole, where I also carried out my doctoral research. My PhD project was an image decomposition task of splitting a superimposed image into its constituent channels. 
 
@@ -20,7 +17,7 @@ We published [uSplit](https://ashesh-0.github.io/uSplit/), a HVAE inspired archi
 This enabled (a) getting multiple predictions (a.k.a opinions of the network) for a single input and (b) model calibration: having a pixelwise estimate of error in the prediction. 
 We recently published it at ECCV 24.
 For a meaningful evaluation of our work, and in general for unsupervised denoising tasks on microscopy data, we developed [microSSIM](https://ashesh-0.github.io/MicroSSIM/), a variant of SSIM more suited for microscopy data which was published at BIC workshop, ECCV 24. 
-At the beginning of my PhD, I also worked on [structural noise removal](/structural_noise_removal/) using contrastive learning on the latent space.
+At the beginning of my PhD, I also worked on [structural noise removal](/structural_noise_removal.md) using contrastive learning on the latent space.
 
 
 ## Code Contributions
@@ -29,5 +26,5 @@ On the coding side, I've been interested in contributing to microscopy data rela
 # RA in Vision-lab, NTU, Taiwan.
 Prior to this, I was working as a Research Assistant in [National Taiwan University](https://www.ntu.edu.tw/english/), Taipei under Prof. [Hsuan-Tien Lin](https://www.csie.ntu.edu.tw/~htlin/). There, I published two first-author works:
 * 3D Gaze estimation in the wild. [BMVC 2021](https://www.bmvc2021-virtualconference.com/conference/papers/paper_0643.html).
-* Extreme precipitation prediction. [Problem Statement](/extreme_rainfall/), [Paper Link](https://journals.ametsoc.org/view/journals/aies/1/3/AIES-D-21-0005.1.xml).
+* Extreme precipitation prediction. [Problem Statement](/pages/extreme_rainfall_prediction.md), [Paper Link](https://journals.ametsoc.org/view/journals/aies/1/3/AIES-D-21-0005.1.xml).
 
