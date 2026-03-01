@@ -33,7 +33,6 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
@@ -71,7 +70,7 @@ ul.task-list li input[type="checkbox"] {
 <link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="nav-fixed">
+<body class="nav-fixed fullcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -127,41 +126,18 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#phd" id="toc-phd" class="nav-link active" data-scroll-target="#phd">PhD</a>
-  <ul class="collapse">
-  <li><a href="#code-contributions" id="toc-code-contributions" class="nav-link" data-scroll-target="#code-contributions">Code Contributions</a></li>
-  </ul></li>
-  <li><a href="#ra-in-vision-lab-ntu-taiwan." id="toc-ra-in-vision-lab-ntu-taiwan." class="nav-link" data-scroll-target="#ra-in-vision-lab-ntu-taiwan.">RA in Vision-lab, NTU, Taiwan.</a></li>
-  </ul>
-</nav>
-    </div>
+    
 <!-- main -->
-<main class="content" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-about-jolla content">
+  <img src="assets/images/profile.jpg" class="about-image
+  round " style="height: 15em; width: 15em;">
+ <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">About Me</h1>
 </div>
-
-
-
 <div class="quarto-title-meta">
-
-    
-  
-    
   </div>
-  
-
-
-</header>
-
-
+</header><main class="content" id="quarto-document-content">
 <p>I am currently a Postdoctoral Fellow in <a href="https://humantechnopole.it/en/people/florian-jug/">Florian Jug</a>’s lab at Human Technopole. I completed my PhD in Computer Science at TU Dresden, during which I conducted all my research within Florian Jug’s lab at Human Technopole, where I also carried out my doctoral research. My PhD project was an image decomposition task of splitting a superimposed image into its constituent channels.</p>
 <p>I received B.Tech+M.Tech in <a href="https://www.cse.iitd.ernet.in/">Computer Science</a> in 2015, from the IIT Delhi. I worked as a Data Scientist at <a href="https://attck.com/work/qplum/">Qplum</a>, an online investment advisory firm, from Dec 2015 to Dec 2018. I then worked as a Research Assistant in <a href="https://www.ntu.edu.tw/english/">National Taiwan University</a>, Taipei under Prof.&nbsp;<a href="https://www.csie.ntu.edu.tw/~htlin/">Hsuan-Tien Lin</a> where I worked in Computer Vision.</p>
 <section id="phd" class="level1">
@@ -169,7 +145,7 @@ ul.task-list li input[type="checkbox"] {
 <p>Given a superimposed (noisy) image, the task is to decompose it into its constituent channels. <img src="assets/images/usplit_teaser.png" alt="drawing" class="center" width="800px" height="auto" title="Splitting: An image decomposition task" style="max-width: 100%; height: auto;"></p>
 <p>We published <a href="https://ashesh-0.github.io/uSplit/">uSplit</a>, a HVAE inspired architecture which used surrounding context in a GPU-efficient way, at ICCV 23. Subsequently, we built on top of it to create <a href="https://ashesh-0.github.io/denoiSplit/">denoiSplit</a>, a network which could do unsupervised denoising together with decomposition. This enabled (a) getting multiple predictions (a.k.a opinions of the network) for a single input and (b) model calibration: having a pixelwise estimate of error in the prediction. We recently published it at ECCV 24. For a meaningful evaluation of our work, and in general for unsupervised denoising tasks on microscopy data, we developed <a href="https://ashesh-0.github.io/MicroSSIM/">microSSIM</a>, a variant of SSIM more suited for microscopy data which was published at BIC workshop, ECCV 24. At the beginning of my PhD, I also worked on <a href="./structural_noise_removal.html">structural noise removal</a> using contrastive learning on the latent space.</p>
 <section id="code-contributions" class="level2">
-<h2 class="anchored" data-anchor-id="code-contributions">Code Contributions</h2>
+<h2 data-anchor-id="code-contributions">Code Contributions</h2>
 <p>On the coding side, I’ve been interested in contributing to microscopy data related code: (a) <a href="https://github.com/pymmcore-plus/c-mda-engine">c-mda-engine</a>, a proof-of-concept C++ based engine for controlling microscopes. Idea was to move re-usable code from different downstream applications to a common codebase and use <a href="https://www.swig.org/Doc1.3/Python.html">SWIG</a> to generate python bindings. (b) I recently (May 2024) started contributing to <a href="https://github.com/ashesh-0/microsim">microsim</a>, a light microscopy simulator. (c) I created a python package <a href="https://pypi.org/project/predtiler/">predtiler</a>, a light-weight package which enables tiled prediction in any dataset class used with pytorch with minimal changes in the dataset class code.</p>
 </section>
 </section>
@@ -179,8 +155,20 @@ ul.task-list li input[type="checkbox"] {
 
 
 </section>
-
-</main> <!-- /main -->
+</main> 
+  <hr class="about-sep">
+   <div class="about-links">
+  <a href="https://github.com/ashesh-0/" class="about-link" rel="" target="">
+    <i class="bi bi-github"></i>
+     <span class="about-link-text">Github</span>
+  </a>
+  <a href="https://www.linkedin.com/in/ashesh0/" class="about-link" rel="" target="">
+    <i class="bi bi-linkedin"></i>
+     <span class="about-link-text">LinkedIn</span>
+  </a>
+</div>
+</div>
+ <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -201,13 +189,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
   toggleBodyColorPrimary();  
-  const icon = "";
-  const anchorJS = new window.AnchorJS();
-  anchorJS.options = {
-    placement: 'right',
-    icon: icon
-  };
-  anchorJS.add('.anchored');
   const isCodeAnnotation = (el) => {
     for (const clz of el.classList) {
       if (clz.startsWith('code-annotation-')) {                     

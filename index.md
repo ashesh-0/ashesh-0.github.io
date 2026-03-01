@@ -1,5 +1,18 @@
 ---
 title: About Me
+about:
+  template: jolla
+  image: assets/images/profile.jpg
+  image-width: 15em
+  image-shape: round
+  links:
+    - icon: github
+      text: Github
+      href: https://github.com/ashesh-0/
+    - icon: linkedin
+      text: LinkedIn
+      href: https://www.linkedin.com/in/ashesh0/
+toc: false
 # layout: single
 ---
 I am currently a Postdoctoral Fellow in [Florian Jug](https://humantechnopole.it/en/people/florian-jug/)'s lab at Human Technopole. I completed my PhD in Computer Science at TU Dresden, during which I conducted all my research within Florian Jug's lab at Human Technopole, where I also carried out my doctoral research. My PhD project was an image decomposition task of splitting a superimposed image into its constituent channels. 
