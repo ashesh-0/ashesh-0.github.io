@@ -197,7 +197,7 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="super-short-introduction">Super Short Introduction</h2>
 <ul>
 <li><a href="https://arxiv.org/abs/2009.06924">Paper Link</a></li>
-<li>This work of mine solves the problem of estimating gaze of a person in unconstrained environments - variable camera-person distance and full <span class="math display">\[360^\circ\]</span> variation in Yaw. Variable camera-person distance is handled via a multi-scale approach where features from multiple scales are aggregated. A full <span class="math display">\[360^\circ\]</span> variation in Yaw raises an interesting problem of predicting backward gazes which is improved upon by using a weighted sine-cosine transformation.</li>
+<li>This work of mine solves the problem of estimating gaze of a person in unconstrained environments - variable camera-person distance and full <span class="math inline">\(360^\circ\)</span> variation in Yaw. Variable camera-person distance is handled via a multi-scale approach where features from multiple scales are aggregated. A full <span class="math inline">\(360^\circ\)</span> variation in Yaw raises an interesting problem of predicting backward gazes which is improved upon by using a weighted sine-cosine transformation.</li>
 </ul>
 </section>
 <section id="an-overview-of-the-methodology" class="level2">
@@ -205,7 +205,7 @@ window.Quarto = {
 <section id="definitions" class="level3">
 <h3 class="anchored" data-anchor-id="definitions">Definitions:</h3>
 <ul>
-<li>Yaw <span class="math display">\[\theta\]</span> and Pitch <span class="math display">\[\phi\]</span> angle: In polar co-ordinates a normalized 3D vector can be represented by 2 angles. Gaze vector is therefore represented by <span class="math display">\[\theta\]</span> (left right orientation) and <span class="math display">\[\phi\]</span> (top down orientation).</li>
+<li>Yaw <span class="math inline">\(\theta\)</span> and Pitch <span class="math inline">\(\phi\)</span> angle: In polar co-ordinates a normalized 3D vector can be represented by 2 angles. Gaze vector is therefore represented by <span class="math inline">\(\theta\)</span> (left right orientation) and <span class="math inline">\(\phi\)</span> (top down orientation).</li>
 </ul>
 <div style="text-align:center">
 <img src="./assets/images/own_yawpitch.jpg" alt="drawing" title="Yaw and Pitch definition. (Credits: https://arxiv.org/abs/2009.06924) " style="max-width: 100%; height: auto;">
@@ -213,7 +213,7 @@ window.Quarto = {
 </section>
 <section id="sine-cosine-transformation" class="level3">
 <h3 class="anchored" data-anchor-id="sine-cosine-transformation">Sine-Cosine Transformation</h3>
-Backward gaze induces discontinuity at <span class="math display">\[\theta=\pm\pi\]</span> as seen in figure below. Yaw angle is defined with respect to negative z axis. Discontinuity is seen when the projection of gaze vector on XZ plane is very close to positive Z direction. From one side the angle reaches <span class="math display">\[\pi(3.14)\]</span> and from the other, it reaches <span class="math display">\[-\pi(-3.14)\]</span>.
+Backward gaze induces discontinuity at <span class="math inline">\(\theta=\pm\pi\)</span> as seen in figure below. Yaw angle is defined with respect to negative z axis. Discontinuity is seen when the projection of gaze vector on XZ plane is very close to positive Z direction. From one side the angle reaches <span class="math inline">\(\pi(3.14)\)</span> and from the other, it reaches <span class="math inline">\(-\pi(-3.14)\)</span>.
 <figure class="half figure">
 <a href="./assets/images/own_yawdisco.jpg"><img src="./assets/images/own_yawdisco.jpg" style="max-width: 100%; height: auto;" class="figure-img"></a> <a href="./assets/images/own_disco_ex.png"><img src="./assets/images/own_disco_ex.png" style="max-width: 100%; height: auto;" class="figure-img"></a>
 <figcaption>
@@ -221,20 +221,20 @@ Discontinuity in backward gazes (Credits: https://arxiv.org/abs/2009.06924).
 </figcaption>
 </figure>
 <blockquote class="blockquote">
-<p>We solve the issue by applying sine-cosine transformation on target - we predict <span class="math display">\[sin(\theta)\]</span>, <span class="math display">\[cos(\theta)\]</span> and <span class="math display">\[sin(\phi)\]</span>.</p>
+<p>We solve the issue by applying sine-cosine transformation on target - we predict <span class="math inline">\(sin(\theta)\)</span>, <span class="math inline">\(cos(\theta)\)</span> and <span class="math inline">\(sin(\phi)\)</span>.</p>
 </blockquote>
-<p>It is easy to see that in sine-cosine space, there is no discontinuity at <span class="math display">\[\theta=\pm\pi\]</span>. We predict <span class="math display">\[\theta\]</span> from two ways. We estimate Sine-based estimate <span class="math display">\[\theta_S\]</span> by using predicted <span class="math display">\[sin(\theta)\]</span> and sign of <span class="math display">\[cos(\theta)\]</span>. We obtain Cosine-based estimate <span class="math display">\[\theta_C\]</span> by using predicted <span class="math display">\[cos(\theta)\]</span> and sign of <span class="math display">\[\sin(\theta)\]</span>. Our prediction for yaw is <span class="math display">\[\theta_{SC} = (\theta_S + \theta_C\]</span>)/2</p>
+<p>It is easy to see that in sine-cosine space, there is no discontinuity at <span class="math inline">\(\theta=\pm\pi\)</span>. We predict <span class="math inline">\(\theta\)</span> from two ways. We estimate Sine-based estimate <span class="math inline">\(\theta_S\)</span> by using predicted <span class="math inline">\(sin(\theta)\)</span> and sign of <span class="math inline">\(cos(\theta)\)</span>. We obtain Cosine-based estimate <span class="math inline">\(\theta_C\)</span> by using predicted <span class="math inline">\(cos(\theta)\)</span> and sign of <span class="math inline">\(\sin(\theta)\)</span>. Our prediction for yaw is <span class="math inline">\(\theta_{SC} = (\theta_S + \theta_C\)</span>)/2</p>
 </section>
 <section id="weighted-sine-cosine-transformation" class="level3">
 <h3 class="anchored" data-anchor-id="weighted-sine-cosine-transformation">Weighted Sine-Cosine Transformation</h3>
-We observe that <span class="math display">\[\theta_C\]</span> is not able to predict <span class="math display">\[0^\circ\]</span> and <span class="math display">\[\theta_S\]</span> is not able to predict <span class="math display">\[\pm\pi/2\]</span> as can be seen in below figure where we look at their distributions.
+We observe that <span class="math inline">\(\theta_C\)</span> is not able to predict <span class="math inline">\(0^\circ\)</span> and <span class="math inline">\(\theta_S\)</span> is not able to predict <span class="math inline">\(\pm\pi/2\)</span> as can be seen in below figure where we look at their distributions.
 <div style="text-align:center">
 <img src="./assets/images/own_SC_dip.png" alt="drawing" title="Noticin
 g a dip around 0-degree. (Credits: https://arxiv.org/abs/2009.06924) " style="max-width: 100%; height: auto;">
 </div>
-<p>We argue that it is due to low derivative of <span class="math display">\[tanh\]</span> around <span class="math display">\[\pm1\]</span> and high derivative of <span class="math display">\[sin^{-1}\]</span> and <span class="math display">\[cos{-1}\]</span> around <span class="math display">\[\pm\pi/2\]</span> and <span class="math display">\[0^\circ\]</span> respectively. We fix this by using a weighted average scheme. Our final prediction for yaw,</p>
+<p>We argue that it is due to low derivative of <span class="math inline">\(tanh\)</span> around <span class="math inline">\(\pm1\)</span> and high derivative of <span class="math inline">\(sin^{-1}\)</span> and <span class="math inline">\(cos{-1}\)</span> around <span class="math inline">\(\pm\pi/2\)</span> and <span class="math inline">\(0^\circ\)</span> respectively. We fix this by using a weighted average scheme. Our final prediction for yaw,</p>
 <p><span class="math display">\[\theta_{WSC} = w*sin(\theta) + (1-w)*cos(\theta)\]</span></p>
-Finally, we note that there is no ambiguity in estimating <span class="math display">\[\phi\]</span> from <span class="math display">\[sin(\phi)\]</span> since <span class="math display">\[\phi \in [-\pi/2,\pi/2]\]</span> ### Multi-Crop Approach We take this approach to do efficient feature extraction over varying head sizes appearing in the dataset as shown below.
+Finally, we note that there is no ambiguity in estimating <span class="math inline">\(\phi\)</span> from <span class="math inline">\(sin(\phi)\)</span> since <span class="math inline">\(\phi \in [-\pi/2,\pi/2]\)</span> ### Multi-Crop Approach We take this approach to do efficient feature extraction over varying head sizes appearing in the dataset as shown below.
 <figure class="figure">
 <a href="./assets/images/own_different_scaled_imgs.png"><img src="./assets/images/own_different_scaled_imgs.png" style="max-width: 100%; height: auto;" class="figure-img"></a>
 <figcaption>

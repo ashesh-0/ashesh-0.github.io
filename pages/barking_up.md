@@ -25,9 +25,9 @@ There are three types of actions in the construction of the serialized DAG.
 * (A3) Connectivity Choice: This decides what reactants are to be used for the current reaction. It links existing nodes ('P' type or 'B' type) to the freshly created product node. It also decides whether the product formed is intermediate or final.
 
 ### Definitions:
-* Final Molecule is $$M$$
-* Synthesis DAG $$M$$ is composed of a sequence of actions $$V^i$$,  $$M=[V^1,V^2,..V^L]$$. Also, action type of $$V^i$$ is $$A^i, A^i\in\{A1,A2,A3\}$$.
-* $$V_{<l}$$ denotes sequence of actions taken before $$V_l$$.
+* Final Molecule is $M$
+* Synthesis DAG $M$ is composed of a sequence of actions $V^i$,  $M=[V^1,V^2,..V^L]$. Also, action type of $V^i$ is $A^i, A^i\in\{A1,A2,A3\}$.
+* $V_{<l}$ denotes sequence of actions taken before $V_l$.
 
 ### Probablistic Model Based Architecture
 They define the probablity distribution over the actions as follows.

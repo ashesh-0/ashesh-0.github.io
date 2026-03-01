@@ -244,7 +244,7 @@ Division of the region into patches (Credits: https://ieeexplore.ieee.org/docume
 <ul>
 <li>For doing domain adaptation, paper learns a new set of weights for the new domain. This is achieved through MIL. Note that for learning the classification model on source domain, supervised learning approach is used.</li>
 <li>Use of Huber loss ensures that large differences are given relatively less importance.</li>
-<li><em>softmin</em> computes the loss between a source domain voxel and all its correspondences in the target domain. It is this one to many aspect in the loss which makes this a MIL setting. It is designed to ignore large differing correspondences. One can infer this by observing that <span class="math display">\[e^{-r*x_i}\]</span> goes to 0 pretty quickly when the x_i large.</li>
+<li><em>softmin</em> computes the loss between a source domain voxel and all its correspondences in the target domain. It is this one to many aspect in the loss which makes this a MIL setting. It is designed to ignore large differing correspondences. One can infer this by observing that <span class="math inline">\(e^{-r*x_i}\)</span> goes to 0 pretty quickly when the x_i large.</li>
 </ul>
 <figure class="figure">
 <a href="../assets/images/VisCorresEM_4.png"><img src="../assets/images/VisCorresEM_4.png" style="max-width: 100%; height: auto;" class="figure-img"></a>
@@ -252,7 +252,7 @@ Division of the region into patches (Credits: https://ieeexplore.ieee.org/docume
 MIL formulation. (Credits: https://ieeexplore.ieee.org/document/8863400).
 </figcaption>
 </figure>
-<p>Here, <span class="math display">\[\theta^t\]</span> and <span class="math display">\[\theta^s\]</span> are the parameters of the model for target domain and source domain respectively. <span class="math display">\[v_i^s\]</span> is the source voxel and <span class="math display">\[v^t_{i,j}\]</span> is the jth correspondence of <span class="math display">\[v_i^s\]</span> in the target volume. <span class="math display">\[f^s()\]</span> is the binary classifier. L is Huber loss.</p>
+<p>Here, <span class="math inline">\(\theta^t\)</span> and <span class="math inline">\(\theta^s\)</span> are the parameters of the model for target domain and source domain respectively. <span class="math inline">\(v_i^s\)</span> is the source voxel and <span class="math inline">\(v^t_{i,j}\)</span> is the jth correspondence of <span class="math inline">\(v_i^s\)</span> in the target volume. <span class="math inline">\(f^s()\)</span> is the binary classifier. L is Huber loss.</p>
 </section>
 <section id="consensus-heatmaps" class="level3">
 <h3 class="anchored" data-anchor-id="consensus-heatmaps">Consensus Heatmaps</h3>

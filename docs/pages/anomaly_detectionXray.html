@@ -210,7 +210,7 @@ window.Quarto = {
 </section>
 <section id="reconstruction-loss" class="level3">
 <h3 class="anchored" data-anchor-id="reconstruction-loss">Reconstruction Loss</h3>
-<p>Paper uses an auto-encoder network and therefore naturally uses a MSE based <span class="math display">\[L_{mse}\]</span> reconstruction loss. Note that without this loss, all images will learn to map to a single location in embedding space thereby making the entropy component of loss 0. This component ensures that embedding contains most of instance specific information.</p>
+<p>Paper uses an auto-encoder network and therefore naturally uses a MSE based <span class="math inline">\(L_{mse}\)</span> reconstruction loss. Note that without this loss, all images will learn to map to a single location in embedding space thereby making the entropy component of loss 0. This component ensures that embedding contains most of instance specific information.</p>
 </section>
 <section id="sample-specific-loss-for-augumentation-invariance" class="level3">
 <h3 class="anchored" data-anchor-id="sample-specific-loss-for-augumentation-invariance">Sample Specific Loss (for augumentation invariance)</h3>
@@ -221,12 +221,12 @@ This is applied on embedding space (output of the encoder). This ensures that au
 Sample specific loss (Credits: https://arxiv.org/abs/2010.09856).
 </figcaption>
 </figure>
-<p>For some intuition, note that for minimizing <span class="math display">\[L_{ss}\]</span> with fixed individual <span class="math display">\[z_i, z_k\]</span>, we need to maximize <span class="math display">\[z_j^Tz_i\]</span> which would happen when both <span class="math display">\[z_i,z_j\]</span> are very close to each other. So this loss encourages that.</p>
-<p>Training happens in two phases. In the first pre-training phase, the network is trained using <span class="math display">\[L_{mse} + L_{ss}\]</span>. In the second phase, another component <span class="math display">\[L_{agg}\]</span> is added which ensures that clustering of similar training images happens in the embedding space.</p>
+<p>For some intuition, note that for minimizing <span class="math inline">\(L_{ss}\)</span> with fixed individual <span class="math inline">\(z_i, z_k\)</span>, we need to maximize <span class="math inline">\(z_j^Tz_i\)</span> which would happen when both <span class="math inline">\(z_i,z_j\)</span> are very close to each other. So this loss encourages that.</p>
+<p>Training happens in two phases. In the first pre-training phase, the network is trained using <span class="math inline">\(L_{mse} + L_{ss}\)</span>. In the second phase, another component <span class="math inline">\(L_{agg}\)</span> is added which ensures that clustering of similar training images happens in the embedding space.</p>
 </section>
 <section id="memory-bank" class="level3">
 <h3 class="anchored" data-anchor-id="memory-bank">Memory Bank</h3>
-Embedding of all examples in training data is saved in this array like structure. Updation is done in a moving average way. This is helpful to get top-k similar embeddings from the training data needed in the <span class="math display">\[L_{agg}\]</span> described in next section.
+Embedding of all examples in training data is saved in this array like structure. Updation is done in a moving average way. This is helpful to get top-k similar embeddings from the training data needed in the <span class="math inline">\(L_{agg}\)</span> described in next section.
 <figure class="half figure">
 <a href="../assets/images/SALAD_4.png"><img src="../assets/images/SALAD_4.png" style="max-width: 100%; height: auto;" class="figure-img"></a> <a href="../assets/images/SALAD_3.png"><img src="../assets/images/SALAD_3.png" style="max-width: 100%; height: auto;" class="figure-img"></a>
 <figcaption>
@@ -236,14 +236,14 @@ Memory Bank. (Left) Its each entry gets updated with corresponding embeddings co
 </section>
 <section id="aggregation-loss-for-clustering" class="level3">
 <h3 class="anchored" data-anchor-id="aggregation-loss-for-clustering">Aggregation Loss (for clustering)</h3>
-<p>It is very similar to how <span class="math display">\[L_{ss}\]</span> works. The difference is that dot product in <span class="math display">\[p_{i,j}\]</span> is computed between embeddings of two similar looking but different images.</p>
+<p>It is very similar to how <span class="math inline">\(L_{ss}\)</span> works. The difference is that dot product in <span class="math inline">\(p_{i,j}\)</span> is computed between embeddings of two similar looking but different images.</p>
 <figure class="figure">
 <a href="../assets/images/SALAD_2.png"><img src="../assets/images/SALAD_2.png" style="max-width: 100%; height: auto;" class="figure-img"></a>
 <figcaption>
 Aggregation loss (Credits: https://arxiv.org/abs/2010.09856).
 </figcaption>
 </figure>
-<p>Here, <span class="math display">\[N_k(z_i)\]</span> denote the top-k neighbors of <span class="math display">\[z_i\]</span> from memory bank. Picking the top-k encourages the model to make the embedding vector <span class="math display">\[z_i\]</span> very similar to its k neighboring embedding vectors. This leads to progressive clustering.</p>
+<p>Here, <span class="math inline">\(N_k(z_i)\)</span> denote the top-k neighbors of <span class="math inline">\(z_i\)</span> from memory bank. Picking the top-k encourages the model to make the embedding vector <span class="math inline">\(z_i\)</span> very similar to its k neighboring embedding vectors. This leads to progressive clustering.</p>
 
 
 </section>

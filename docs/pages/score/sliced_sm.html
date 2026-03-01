@@ -205,27 +205,27 @@ window.Quarto = {
 <section id="definitions" class="level3">
 <h3 class="anchored" data-anchor-id="definitions">Definitions</h3>
 <ul>
-<li><span class="math display">\[p_d\]</span>: Data distribution</li>
-<li><span class="math display">\[\widetilde{p}_m(x;\theta)\]</span>: Unnormalized density (modelled by a neural network)</li>
-<li><span class="math display">\[{p}_m(x;\theta)\]</span>: Corresponding normalized density</li>
-<li>Score function: Score for a probablity distribution M(x) is defined as <span class="math display">\[\nabla_{x} \log(M(x))\]</span>.</li>
-<li><span class="math display">\[s_d\]</span> and <span class="math display">\[s_m\]</span> denote the score functions for <span class="math display">\[p_d()\]</span> and <span class="math display">\[p_m()\]</span> respectively.</li>
-<li>Score matching: One has a data distribution, typically in implicit form with i.i.d samples drawn from it. Objective is to train a network which predicts score of that distribution. ### Earlier Work In work done by Hyvärinen (2005), for score matching fisher divergence was established to be the objective of choice. The objective <span class="math display">\[L(\theta)\]</span> is defined as <img src="../../assets/images/score_matching/ssm_fisher2005.png" alt="drawing" title="Score matching objective" style="max-width: 100%; height: auto;"></li>
+<li><span class="math inline">\(p_d\)</span>: Data distribution</li>
+<li><span class="math inline">\(\widetilde{p}_m(x;\theta)\)</span>: Unnormalized density (modelled by a neural network)</li>
+<li><span class="math inline">\({p}_m(x;\theta)\)</span>: Corresponding normalized density</li>
+<li>Score function: Score for a probablity distribution M(x) is defined as <span class="math inline">\(\nabla_{x} \log(M(x))\)</span>.</li>
+<li><span class="math inline">\(s_d\)</span> and <span class="math inline">\(s_m\)</span> denote the score functions for <span class="math inline">\(p_d()\)</span> and <span class="math inline">\(p_m()\)</span> respectively.</li>
+<li>Score matching: One has a data distribution, typically in implicit form with i.i.d samples drawn from it. Objective is to train a network which predicts score of that distribution. ### Earlier Work In work done by Hyvärinen (2005), for score matching fisher divergence was established to be the objective of choice. The objective <span class="math inline">\(L(\theta)\)</span> is defined as <img src="../../assets/images/score_matching/ssm_fisher2005.png" alt="drawing" title="Score matching objective" style="max-width: 100%; height: auto;"></li>
 </ul>
-<p>In that work it was shown that there exist an equivalent objective which does not need the score of the target distribution, <span class="math display">\[s_d(x)\]</span>. It is a beautiful proof using integration by parts. <img src="../../assets/images/score_matching/ssm_fisher2005_2.png" alt="drawing" title="Implicit score matching objective" style="max-width: 100%; height: auto;"></p>
-<p>Here, <span class="math display">\[tr\]</span> is the trace. Notice that <span class="math display">\[p_d()\]</span> is just in the expectation which can easily be approximated by monte carlo estimate. So here, one needs to compute the trace of the hessian. This brings us to the central issue tackled by the paper.</p>
+<p>In that work it was shown that there exist an equivalent objective which does not need the score of the target distribution, <span class="math inline">\(s_d(x)\)</span>. It is a beautiful proof using integration by parts. <img src="../../assets/images/score_matching/ssm_fisher2005_2.png" alt="drawing" title="Implicit score matching objective" style="max-width: 100%; height: auto;"></p>
+<p>Here, <span class="math inline">\(tr\)</span> is the trace. Notice that <span class="math inline">\(p_d()\)</span> is just in the expectation which can easily be approximated by monte carlo estimate. So here, one needs to compute the trace of the hessian. This brings us to the central issue tackled by the paper.</p>
 </section>
 <section id="issue" class="level3">
 <h3 class="anchored" data-anchor-id="issue">Issue</h3>
-<p>If <span class="math display">\[D\]</span> is the dimension of data, then our model outputs score which has <span class="math display">\[D\]</span> scalar values. We need to compute the partial derivative of output’s each dimention for computing the trace. So, this will take <span class="math display">\[D\]</span> times more time over computing partial derivative of a scalar.</p>
+<p>If <span class="math inline">\(D\)</span> is the dimension of data, then our model outputs score which has <span class="math inline">\(D\)</span> scalar values. We need to compute the partial derivative of output’s each dimention for computing the trace. So, this will take <span class="math inline">\(D\)</span> times more time over computing partial derivative of a scalar.</p>
 </section>
 <section id="sliced-score-matching" class="level3">
 <h3 class="anchored" data-anchor-id="sliced-score-matching">Sliced Score Matching</h3>
 <p>Instead of using the fisher divergence, they use the following expression for objective: <img src="../../assets/images/score_matching/ssm_slicedfisher.png" alt="drawing" title="Sliced score matching objective" style="max-width: 100%; height: auto;"></p>
-<p>Here, v is some random direction. So, this objective first projects the actual score and the predicted score to a random direction and then computes the difference. Note that expectation is also taken with respect to v. On the lines of proof done by Hyvärinen (2005), they prove an equivalent objective which does not need <span class="math display">\[s_d\]</span>.</p>
+<p>Here, v is some random direction. So, this objective first projects the actual score and the predicted score to a random direction and then computes the difference. Note that expectation is also taken with respect to v. On the lines of proof done by Hyvärinen (2005), they prove an equivalent objective which does not need <span class="math inline">\(s_d\)</span>.</p>
 <p><img src="../../assets/images/score_matching/ssm_implicit_slicedfisher.png" alt="drawing" title="Implicit sliced score matching objective" style="max-width: 100%; height: auto;"></p>
 <blockquote class="blockquote">
-<p>Now, the benefit is that <span class="math display">\[v^T s_m(x;\theta)v\]</span> is a scalar. So, one needs D times less time to compute <span class="math display">\[\nabla_{x}v^T s_m(x;\theta)v\]</span>.</p>
+<p>Now, the benefit is that <span class="math inline">\(v^T s_m(x;\theta)v\)</span> is a scalar. So, one needs D times less time to compute <span class="math inline">\(\nabla_{x}v^T s_m(x;\theta)v\)</span>.</p>
 </blockquote>
 
 

@@ -223,7 +223,7 @@ Eye gaze estimation is formulated for both 2D as well as 3D case. For 2D case, r
 </section>
 <section id="distribution-based-calibration" class="level3">
 <h3 class="anchored" data-anchor-id="distribution-based-calibration">Distribution Based Calibration</h3>
-<p>We get the eye fixation map using RCNN (<span class="math display">\[p_f(x,y\|I)\]</span>) and using the gaze estimation model (<span class="math display">\[p_g(x,y\|I,\theta)\]</span>). For estimating the parameters of the gaze model, the paper minimizes the KL-divergence between these two fixation maps.</p>
+<p>We get the eye fixation map using RCNN (<span class="math inline">\(p_f(x,y\|I)\)</span>) and using the gaze estimation model (<span class="math inline">\(p_g(x,y\|I,\theta)\)</span>). For estimating the parameters of the gaze model, the paper minimizes the KL-divergence between these two fixation maps.</p>
 <div style="text-align:center">
 <img src="../assets/images/defm_2016_1.png" alt="drawing" title="KL-Divergence based optimization. (Credits: https://dl.acm.org/doi/10.1145/2857491.2857515) " style="max-width: 100%; height: auto;">
 </div>

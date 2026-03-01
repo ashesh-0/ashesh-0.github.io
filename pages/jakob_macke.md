@@ -11,7 +11,7 @@ permalink: /DECODE/
 
 ## Summary of Main Ideas
 ### Input-Output Setting of the Proposed Network
-* Input: A sequence of image frames ($$ImageCount=3$$) containing sparsely activated fluorophores.
+* Input: A sequence of image frames ($ImageCount=3$) containing sparsely activated fluorophores.
 * Output: For each pixel location in the input frames, it predicts
     1. the probablity of it having a fluorophore,
     2. x,y and z component relative to center of the pixel denoting its location,

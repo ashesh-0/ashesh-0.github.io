@@ -13,7 +13,7 @@ title: "Self-Supervised Representation Learning For Ultrasound Video"
 As mentioned above, the focus is to learn a representation which captures the anatomy present in US frames. To do that in unsupervised way, they introduce spatial and temporal transformations. To unearth these transformations from the modified input would require the model to have an understanding of the anatomy of the content of US frames.
 
 ### Temporal-Order Correction
-They use 4 video frames as input. The formulate it as a classification problem with $$4!/2 = 12$$ classes. Note that forward and backward video flow is considered to be same class.
+They use 4 video frames as input. The formulate it as a classification problem with $4!/2 = 12$ classes. Note that forward and backward video flow is considered to be same class.
 <img src="/assets/images/alison_noble1.png" alt="drawing"
 title="Credits: https://arxiv.org/abs/2003.00105 " style="max-width: 100%; height: auto;"/>
 

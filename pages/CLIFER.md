@@ -17,7 +17,7 @@ title: "CLIFER: Continual Learning with Imagination for Facial Expression Recogn
 * GDM module: A Continual learning model. Implements the human inspired dual memory system using artifical neurons.
 ## Understanding the Paper
 ### Imagination Model
-Model is adapted from ExprGAN. It has two discriminators: $$D_z$$ to regularize the latent space embedding and $$D_{img}$$ to regularize the generated images. $$D_z$$ ensures that latent space embedding of generated images is similar to original image embeddings. This helps to reduce distorting in generated images. $$D_{img}$$ ensures that generated images actually have the intended face expressions.
+Model is adapted from ExprGAN. It has two discriminators: $D_z$ to regularize the latent space embedding and $D_{img}$ to regularize the generated images. $D_z$ ensures that latent space embedding of generated images is similar to original image embeddings. This helps to reduce distorting in generated images. $D_{img}$ ensures that generated images actually have the intended face expressions.
 
 <img src="/assets/images/CLIFER.png" alt="drawing"
 title="Model architecture. (Taken from https://www.computer.org/csdl/pds/api/csdl/proceedings/download-article/1kecIRr1grK/pdf) " style="max-width: 100%; height: auto;"/>

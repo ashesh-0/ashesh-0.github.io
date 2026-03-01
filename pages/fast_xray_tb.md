@@ -19,7 +19,7 @@ permalink: /fast_xray_TB/
 * Saliency Map: Derivative of output class score w.r.t input image. It has the same resolution as the input image. It shows relative importance of input pixels in the decision making.
 * grad-CAMs: Derivative of output class score w.r.t a feature map from a deeper layer. It has lower resolution than input image but has better localization.
 ### Network Structure
-Architecture is shown below. $$a * b/c$$ format is used in multiple blocks shown below where a and be are the spatial kernel dimensions and c is the stride. $$\bigoplus$$ means addition and GAP is global average pooling.
+Architecture is shown below. $a * b/c$ format is used in multiple blocks shown below where a and be are the spatial kernel dimensions and c is the stride. $\bigoplus$ means addition and GAP is global average pooling.
 <figure>
     <a href="/assets/images/fast_xray_tb.png"><img src="/assets/images/fast_xray_tb.png" style="max-width: 100%; height: auto;"></a>
     <figcaption>Proposed Architecture (Credits: https://www.nature.com/articles/s41598-019-42557-4).</figcaption>

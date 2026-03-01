@@ -196,14 +196,14 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="super-short-description">Super Short Description</h2>
 <ul>
 <li><a href="https://arxiv.org/abs/2212.01789">Paper Link</a></li>
-<li>This paper tackles deblurring task and works with Conditional diffusion model based setup where the conditional input is the blurry image. The primary focus is on out-of-distribution performance. The technical novelty lies in how the conditional input is mixed with the intermediate noisy <span class="math display">\[x_t\]</span>.</li>
+<li>This paper tackles deblurring task and works with Conditional diffusion model based setup where the conditional input is the blurry image. The primary focus is on out-of-distribution performance. The technical novelty lies in how the conditional input is mixed with the intermediate noisy <span class="math inline">\(x_t\)</span>.</li>
 </ul>
 </section>
 <section id="learned-structural-guidance" class="level2">
 <h2 class="anchored" data-anchor-id="learned-structural-guidance">Learned Structural Guidance</h2>
 <section id="motivation" class="level3">
 <h3 class="anchored" data-anchor-id="motivation">Motivation</h3>
-<p>In order to improve the out-of-distribution performance, the authors ensure two things. Firstly, more and more coarser scale information is encouraged to be used. This should help since it is more likely that even in test images, which are out-of-distribution, the coarse scale information is still similar to what was seen in training data. Secondly, the relevant information present in the conditional input has an ‘optimal’ representation before merging with <span class="math display">\[x_t\]</span>.</p>
+<p>In order to improve the out-of-distribution performance, the authors ensure two things. Firstly, more and more coarser scale information is encouraged to be used. This should help since it is more likely that even in test images, which are out-of-distribution, the coarse scale information is still similar to what was seen in training data. Secondly, the relevant information present in the conditional input has an ‘optimal’ representation before merging with <span class="math inline">\(x_t\)</span>.</p>
 </section>
 <section id="implementation-details" class="level3">
 <h3 class="anchored" data-anchor-id="implementation-details">Implementation details</h3>

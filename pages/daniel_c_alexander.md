@@ -8,16 +8,16 @@ title: "Disentangling Human Error from the Ground Truth in Segmentation of Medic
 
 ## Brief Overview of the Methodology
 ### Notations and Definitions
-* Annotator specific spatial confusion matrix ($$A^{(r)}_{\phi}$$): For annotator $$r$$, this is a confusion matrix for each pixel in the input image over $$L$$ target labels.
-* Estimated True label distribution ($$\hat{p}_{\theta}(x)$$): For every pixel, it contains the probablity distribution over labels.
-* Estimated Annotator distribution ($$\hat{p}^{(r)}_{\theta}(x)$$): It estimates the answer to the following question--- If annotator $$r$$ had to segment the image $$x$$, then what would his/her  estimate of per-pixel true probablity distribution over labels be?
-* Segmentation CNN: CNN network which predicts $$\hat{p}_{\theta}(x)$$ and takes MRI image as input.
-* Annotation CNN: CNN network which predicts $$A^{(r)}_{\phi}$$ and takes as input a MRI image.
+* Annotator specific spatial confusion matrix ($A^{(r)}_{\phi}$): For annotator $r$, this is a confusion matrix for each pixel in the input image over $L$ target labels.
+* Estimated True label distribution ($\hat{p}_{\theta}(x)$): For every pixel, it contains the probablity distribution over labels.
+* Estimated Annotator distribution ($\hat{p}^{(r)}_{\theta}(x)$): It estimates the answer to the following question--- If annotator $r$ had to segment the image $x$, then what would his/her  estimate of per-pixel true probablity distribution over labels be?
+* Segmentation CNN: CNN network which predicts $\hat{p}_{\theta}(x)$ and takes MRI image as input.
+* Annotation CNN: CNN network which predicts $A^{(r)}_{\phi}$ and takes as input a MRI image.
 
 ### Architecture Description
-* Input: An MRI image $$x$$.
-* Output: 1. $$\hat{p}_{\theta}(x)$$, 2. $$A^{(r)}_{\phi} ~\forall r $$.
-* Flow: $$x$$ is passed through the Segmentation CNN to yield segmentation probablities $$\hat{p}_{\theta}(x)$$. At inference time, this is the final prediction. $$x$$ is also passed through Annotation CNN to get $$A^{(r)}_{\phi}$$ for each annotator $$r$$. Using the confusion matrix and the label distribution, using matrix multiplication, it is straight forward to compute estimated annotator distribution: the label distribution as the annotator $$r$$ would have felt ($$\hat{p}^{(r)}_{\theta}(x)$$). At training time, the loss is computed using them and not using $$\hat{p}_{\theta}(x)$$. It makes sense becase in the training data, we donot have true label distribution. We only have labels annotated by specific annotators.
+* Input: An MRI image $x$.
+* Output: 1. $\hat{p}_{\theta}(x)$, 2. $A^{(r)}_{\phi} ~\forall r $.
+* Flow: $x$ is passed through the Segmentation CNN to yield segmentation probablities $\hat{p}_{\theta}(x)$. At inference time, this is the final prediction. $x$ is also passed through Annotation CNN to get $A^{(r)}_{\phi}$ for each annotator $r$. Using the confusion matrix and the label distribution, using matrix multiplication, it is straight forward to compute estimated annotator distribution: the label distribution as the annotator $r$ would have felt ($\hat{p}^{(r)}_{\theta}(x)$). At training time, the loss is computed using them and not using $\hat{p}_{\theta}(x)$. It makes sense becase in the training data, we donot have true label distribution. We only have labels annotated by specific annotators.
 <figure>
     <a href="/assets/images/DisHumErrGT_1.png"><img src="/assets/images/DisHumErrGT_1.png" style="max-width: 100%; height: auto;"></a>
     <figcaption> Overall Architecture description (Credits: https://proceedings.neurips.cc/paper/2020/file/b5d17ed2b502da15aa727af0d51508d6-Paper.pdf).</figcaption>

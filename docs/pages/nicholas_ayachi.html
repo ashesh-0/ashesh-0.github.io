@@ -197,14 +197,14 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="super-short-description">Super Short Description</h2>
 <ul>
 <li><a href="https://arxiv.org/pdf/2011.01741.pdf">Paper Link</a></li>
-<li>Given a sequence of images, this paper learns to predict a motion model. It predicts warping parameters for each element in the sequence. Simply stated, when the first image of the sequence is warped with say predicted warping parameters of <span class="math display">\[5^{th}\]</span> element, then <span class="math display">\[5^{th}\]</span> image of the sequence should get formed. It uses conditional VAE for this. For having a non-fluctuating motion model, a temporal convolutional network is used. For making the model capable of generating consistant warping parameters for missing images in the sequence, temporal dropout is introduced in training. Further, the paper also shows the capability of transport: applying the motion of one object on another.</li>
+<li>Given a sequence of images, this paper learns to predict a motion model. It predicts warping parameters for each element in the sequence. Simply stated, when the first image of the sequence is warped with say predicted warping parameters of <span class="math inline">\(5^{th}\)</span> element, then <span class="math inline">\(5^{th}\)</span> image of the sequence should get formed. It uses conditional VAE for this. For having a non-fluctuating motion model, a temporal convolutional network is used. For making the model capable of generating consistant warping parameters for missing images in the sequence, temporal dropout is introduced in training. Further, the paper also shows the capability of transport: applying the motion of one object on another.</li>
 </ul>
 </section>
 <section id="brief-overview-of-the-methodology" class="level2">
 <h2 class="anchored" data-anchor-id="brief-overview-of-the-methodology">Brief Overview of the Methodology</h2>
 <section id="encoder" class="level3">
 <h3 class="anchored" data-anchor-id="encoder">Encoder</h3>
-<p>Encoder consists of a feature extraction module and a Temporal Convolutional Network (TCN). An image pair is passed to the feature extractor to get a latent representation. Each element of the input sequence is coupled with the first element of the sequence to create image pairs. The latent representation encodes the relative motion between the two frames. TCN comprises of 1D convolutions. The latent representations are convolved with TCN so as to achieve temporal regularization. The output <span class="math display">\[(\mu,\sigma)\]</span> is the mean and the standard deviation of the posterior distribution. Motion matrix <span class="math display">\[z\]</span> is sampled from the posterior. ### Decoder Decoder takes as input the motion matrix and the first image of the input sequence and generate the deformations (warping parameters) for each element in the sequence. They are then applied on the first image of the input sequence to get generated images. The aim of the paper is that these generated images should closely match the images from the input sequence (starting from the second image).</p>
+<p>Encoder consists of a feature extraction module and a Temporal Convolutional Network (TCN). An image pair is passed to the feature extractor to get a latent representation. Each element of the input sequence is coupled with the first element of the sequence to create image pairs. The latent representation encodes the relative motion between the two frames. TCN comprises of 1D convolutions. The latent representations are convolved with TCN so as to achieve temporal regularization. The output <span class="math inline">\((\mu,\sigma)\)</span> is the mean and the standard deviation of the posterior distribution. Motion matrix <span class="math inline">\(z\)</span> is sampled from the posterior. ### Decoder Decoder takes as input the motion matrix and the first image of the input sequence and generate the deformations (warping parameters) for each element in the sequence. They are then applied on the first image of the input sequence to get generated images. The aim of the paper is that these generated images should closely match the images from the input sequence (starting from the second image).</p>
 <figure class="figure">
 <a href="../assets/images/nicholas_ayachi_1.png"><img src="../assets/images/nicholas_ayachi_1.png" style="max-width: 100%; height: auto;" class="figure-img"></a>
 <figcaption>
@@ -218,7 +218,7 @@ Proposed Architecture (Credits: https://arxiv.org/pdf/2011.01741.pdf).
 </section>
 <section id="transport" class="level3">
 <h3 class="anchored" data-anchor-id="transport">Transport</h3>
-<p>It flows naturally from the structure of the model. The motion matrix <span class="math display">\[z\]</span> of one object is taken and is fed to the decoder with the first image of the input sequence of another object.</p>
+<p>It flows naturally from the structure of the model. The motion matrix <span class="math inline">\(z\)</span> of one object is taken and is fed to the decoder with the first image of the input sequence of another object.</p>
 
 
 </section>

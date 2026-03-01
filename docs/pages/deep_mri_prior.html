@@ -204,7 +204,7 @@ window.Quarto = {
 <section id="initial-points-to-note" class="level3">
 <h3 class="anchored" data-anchor-id="initial-points-to-note">Initial Points to Note</h3>
 <ul>
-<li>In Dynamic MRI, the image which is being scanned changes with time. So the objective is to recover <span class="math display">\[x_t\]</span> at time <span class="math display">\[t\]</span>.</li>
+<li>In Dynamic MRI, the image which is being scanned changes with time. So the objective is to recover <span class="math inline">\(x_t\)</span> at time <span class="math inline">\(t\)</span>.</li>
 <li>Actual input to the model is golden angle radial lines. However, using NuFFT, it is converted to sinograms.</li>
 <li>For every new MRI sequence reconstruction, the model needs to be retrained from scratch.</li>
 </ul>
@@ -212,14 +212,14 @@ window.Quarto = {
 <section id="training-procedure" class="level3">
 <h3 class="anchored" data-anchor-id="training-procedure">Training Procedure</h3>
 <ul>
-<li><p>Two latent variables <span class="math display">\[z_0\]</span> and <span class="math display">\[z_T\]</span> (64 dimensional) are sampled from a uniform distribution. They correspond to start time 0 and end time <span class="math display">\[T\]</span> of the sequence to be predicted. For any intermediate time <span class="math display">\[t\]</span>, the latent variable is obtained by a simple linear interpolation. &gt;<span class="math display">\[z_t = \alpha_tz_0 + (1-\alpha_t)z_T\]</span></p>
+<li><p>Two latent variables <span class="math inline">\(z_0\)</span> and <span class="math inline">\(z_T\)</span> (64 dimensional) are sampled from a uniform distribution. They correspond to start time 0 and end time <span class="math inline">\(T\)</span> of the sequence to be predicted. For any intermediate time <span class="math inline">\(t\)</span>, the latent variable is obtained by a simple linear interpolation. &gt;<span class="math inline">\(z_t = \alpha_tz_0 + (1-\alpha_t)z_T\)</span></p>
 <figure class="figure">
 <p><a href="../assets/images/deep_prior_MRI_1.png"><img src="../assets/images/deep_prior_MRI_1.png" style="max-width: 100%; height: auto;" class="figure-img"></a></p>
 <figcaption>
 <p>Interpolation of latent variable (Credits: https://arxiv.org/abs/1910.01684).</p>
 </figcaption>
 </figure></li>
-<li><p>The latent variable <span class="math display">\[z_t\]</span> is fed to a deep CNN model which outputs MRI image <span class="math display">\[x_t\]</span> at time <span class="math display">\[t\]</span>. Note that information regarding the temporal aspect is only present in the latent variable. CNN model is jointly optimized over all time points. Thus, CNN model just by itself does not know for which timestamp does it need to generate the MRI image.</p></li>
+<li><p>The latent variable <span class="math inline">\(z_t\)</span> is fed to a deep CNN model which outputs MRI image <span class="math inline">\(x_t\)</span> at time <span class="math inline">\(t\)</span>. Note that information regarding the temporal aspect is only present in the latent variable. CNN model is jointly optimized over all time points. Thus, CNN model just by itself does not know for which timestamp does it need to generate the MRI image.</p></li>
 <li><p>Similar to what gets done to actual MRI image, output of CNN model is operated upon using NuFFT. This converts it to an estimate of sinogram. As we have the actual sinogram data for different time points, this procedure is used to train the CNN model so that the predicted sinogram gets maximally close to target sinogram.</p></li>
 </ul>
 <figure class="figure">
@@ -229,7 +229,7 @@ Overall Architecture (Credits: https://arxiv.org/abs/1910.01684).
 </figcaption>
 </figure>
 <ul>
-<li>Once the training is done, MRI image at time <span class="math display">\[t\]</span> is obtained by feeding <span class="math display">\[z_t\]</span> as input to the CNN model.</li>
+<li>Once the training is done, MRI image at time <span class="math inline">\(t\)</span> is obtained by feeding <span class="math inline">\(z_t\)</span> as input to the CNN model.</li>
 </ul>
 
 

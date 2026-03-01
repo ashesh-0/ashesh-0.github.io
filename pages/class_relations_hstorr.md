@@ -11,7 +11,7 @@ title: "Rethinking Class Relations: Absolute-Relative Few-Shot Learning"
 ## A Concise Overview on Approach Taken
 ### Similarity Network
 It consists of two subnetworks: a feature encoder which yields embeddings from input image and the relation network which yields the similarity score between two input image embeddings. Mathematically, relation network input-output is described as following:
-$$ SI(\phi,\phi^*; P) = r(v(\phi,\phi^*);P)$$. Here, $$\phi,\phi*$$ are the feature embeddings of two images, v represents the concatenation operator and r denotes the relation network.
+$ SI(\phi,\phi^*; P) = r(v(\phi,\phi^*);P)$. Here, $\phi,\phi*$ are the feature embeddings of two images, v represents the concatenation operator and r denotes the relation network.
 
 ### Relative Learning
 Relative learning builds on Similarity network. Difference lies in the target. Unlike in most similarity networks, here, the target is not boolean but soft. They first obtain a semantic embedding for the two classes belonging to the two input images. wordVec and feature_attributes are two variations tried for the class semantic embedding. They then employ a similarity measure on the embedding to yield a real valued similarity, which works as 'soft' similarity.

@@ -46,13 +46,13 @@ For having resource and time efficiency, one needs to intelligently sample few v
 ### Multiple Instance Learning (MIL)
 * For doing domain adaptation, paper learns a new set of weights for the new domain. This is achieved through MIL. Note that for learning the classification model on source domain, supervised learning approach is used.
 * Use of Huber loss ensures that large differences are given relatively less importance.
-* *softmin* computes the loss between a source domain voxel and all its correspondences in the target domain. It is this one to many aspect in the loss which makes this a MIL setting. It is designed to ignore large differing correspondences. One can infer this by observing that $$e^{-r*x_i}$$ goes to 0 pretty quickly when the x_i large.
+* *softmin* computes the loss between a source domain voxel and all its correspondences in the target domain. It is this one to many aspect in the loss which makes this a MIL setting. It is designed to ignore large differing correspondences. One can infer this by observing that $e^{-r*x_i}$ goes to 0 pretty quickly when the x_i large.
 
 <figure>
     <a href="/assets/images/VisCorresEM_4.png"><img src="/assets/images/VisCorresEM_4.png" style="max-width: 100%; height: auto;"></a>
     <figcaption>MIL formulation.   (Credits: https://ieeexplore.ieee.org/document/8863400).</figcaption>
 </figure>
-Here, $$\theta^t$$ and $$\theta^s$$ are the parameters of the model for target domain and source domain respectively. $$v_i^s$$ is the source voxel and $$v^t_{i,j}$$ is the jth correspondence of $$v_i^s$$ in the target volume. $$f^s()$$ is the binary classifier. L is Huber loss.
+Here, $\theta^t$ and $\theta^s$ are the parameters of the model for target domain and source domain respectively. $v_i^s$ is the source voxel and $v^t_{i,j}$ is the jth correspondence of $v_i^s$ in the target volume. $f^s()$ is the binary classifier. L is Huber loss.
 
 ### Consensus Heatmaps
 Idea is to aggregate the correspondences over all the sampled voxels of source domain to generate a heatmap on target domain volume. This heatmap is claimed to be a more robust source of information for segmenting foreground and background regions since it is empirically shown to be similar to annotations. NCC score and the shape of the annotation of the corresponding voxel on source domain volume are the two things which are used for its creation.

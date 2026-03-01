@@ -204,18 +204,18 @@ window.Quarto = {
 <section id="conventions-and-nomenclatures" class="level3">
 <h3 class="anchored" data-anchor-id="conventions-and-nomenclatures">Conventions and Nomenclatures:</h3>
 <ol type="1">
-<li>Different brain regions are termed as nodes (count: <span class="math display">\[N\]</span>).</li>
-<li>Input data is <span class="math display">\[ N * T \]</span> where <span class="math display">\[T\]</span>, denoting the timeseries length, is 1200.</li>
-<li>Neighbourhood information: Dense adjacency matrix (<span class="math display">\[N*N\]</span>). Their architecture also can handle sparse neighbourhood information. <img src="../assets/images/pietro_1.png" alt="drawing" title="Credits (https://ieeexplore.ieee.org/document/9175360)" style="max-width: 100%; height: auto;"></li>
+<li>Different brain regions are termed as nodes (count: <span class="math inline">\(N\)</span>).</li>
+<li>Input data is $ N * T $ where <span class="math inline">\(T\)</span>, denoting the timeseries length, is 1200.</li>
+<li>Neighbourhood information: Dense adjacency matrix (<span class="math inline">\(N*N\)</span>). Their architecture also can handle sparse neighbourhood information. <img src="../assets/images/pietro_1.png" alt="drawing" title="Credits (https://ieeexplore.ieee.org/document/9175360)" style="max-width: 100%; height: auto;"></li>
 </ol>
 </section>
 <section id="step-by-step-procedure" class="level3">
 <h3 class="anchored" data-anchor-id="step-by-step-procedure">Step by Step Procedure:</h3>
 <ol type="1">
-<li><p><em>Temporal feature extraction:</em> For each node, they use module composed of 1D CNN to extract features from the temporal data. Output is termed as Activation matrix (<span class="math display">\[H(1)\]</span>). Input output relationship: <span class="math display">\[N*T =&gt; N*256\]</span></p></li>
-<li><p><em>GCN Operations:</em> Message passing is used to incorporate the information in the activation matrix from neighboriing nodes’ activation matrices. Activation matrix’s shape remains the same. Input output relationship: <span class="math display">\[N*256 =&gt; N*256\]</span></p></li>
-<li><p>For feature aggregation over multiple nodes, two methods are used. Simpler one is the average pooling across nodes. Input output relationship: <span class="math display">\[N*256 =&gt; 1*256\]</span></p></li>
-<li><p><em>Hierarchical Pooling:</em> The other method used is Differential pooling which is taken from a different paper. The procedure runs in multiple iterations. At each iteration, it clusters nodes present in previous iteration into a smaller number of clusters. This way, at the end one is left with just one node. While the final output dimension is same as Average pooling, in this procedure one has effectively given different weights to different nodes and this has been achieved in a hierarchical way. Input output relationship: <span class="math display">\[N*256 =&gt; 1*256\]</span></p></li>
+<li><p><em>Temporal feature extraction:</em> For each node, they use module composed of 1D CNN to extract features from the temporal data. Output is termed as Activation matrix (<span class="math inline">\(H(1)\)</span>). Input output relationship: <span class="math inline">\(N*T =&gt; N*256\)</span></p></li>
+<li><p><em>GCN Operations:</em> Message passing is used to incorporate the information in the activation matrix from neighboriing nodes’ activation matrices. Activation matrix’s shape remains the same. Input output relationship: <span class="math inline">\(N*256 =&gt; N*256\)</span></p></li>
+<li><p>For feature aggregation over multiple nodes, two methods are used. Simpler one is the average pooling across nodes. Input output relationship: <span class="math inline">\(N*256 =&gt; 1*256\)</span></p></li>
+<li><p><em>Hierarchical Pooling:</em> The other method used is Differential pooling which is taken from a different paper. The procedure runs in multiple iterations. At each iteration, it clusters nodes present in previous iteration into a smaller number of clusters. This way, at the end one is left with just one node. While the final output dimension is same as Average pooling, in this procedure one has effectively given different weights to different nodes and this has been achieved in a hierarchical way. Input output relationship: <span class="math inline">\(N*256 =&gt; 1*256\)</span></p></li>
 </ol>
 
 
