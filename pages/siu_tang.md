@@ -18,7 +18,7 @@ Technical description of their representation is noted below:
 
 ### Architecture
 <img src="/assets/images/siu_tang_1.png" alt="drawing"
-title="Credits (https://arxiv.org/abs/2007.13886)"/>
+title="Credits (https://arxiv.org/abs/2007.13886)" style="max-width: 100%; height: auto;"/>
 Architecture is depicted in figure shown above. Few notable points:
 1. There are 2 auto-encoder networks, one for pose and one for body translation.
 2. Output of last fc layer is the predicted change. $$\alpha$$-weighted average of this along with original state is done to yield next state.
@@ -29,9 +29,9 @@ Architecture is depicted in figure shown above. Few notable points:
 Their loss $$L$$ is weighed sum of three components:
 1. Reconstruction Loss $$L_{rec}$$: It is shown in figure below. To understand the last term, note that if prediction is exactly target, then  $$\theta_{3:i} - (\hat{\theta_{3:i}} - \hat{\theta_{2:i-1}})$$  should be equal to $$\theta_{2:i-1}$$. This is exactly what the term enforces.
 <img src="/assets/images/siu_tang_2.png" alt="drawing"
-title="Credits (https://arxiv.org/abs/2007.13886)"/>
+title="Credits (https://arxiv.org/abs/2007.13886)" style="max-width: 100%; height: auto;"/>
 2. Pose naturalness loss $$L_{vp}$$: A pre-trained model is used to estimate 'un-naturalness' of the generated body pose which is then minimized in the loss.
 3. The KL-Divergence loss $$L_{kl}$$: In the image describing this component below, $$\Psi$$ is the interesting piece. $$\Psi(s) = \sqrt{1 + s^2}$$. They show that due to introduction of $$\Psi$$, this component has temporal components.
 <img src="/assets/images/siu_tang_3.png" alt="drawing"
-title="Credits (https://arxiv.org/abs/2007.13886)"/>
+title="Credits (https://arxiv.org/abs/2007.13886)" style="max-width: 100%; height: auto;"/>
 

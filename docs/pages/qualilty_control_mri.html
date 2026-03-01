@@ -209,7 +209,7 @@ window.Quarto = {
 <h3 class="anchored" data-anchor-id="iterative-search-in-the-latent-space">Iterative-Search in the Latent Space</h3>
 Paper aims to find a latent vector <span class="math display">\[z_{sur}\]</span> which, when passed through the generator <span class="math display">\[G\]</span> yields a good quality image-segmentation pair <span class="math display">\[X\]</span> (<span class="math display">\[X=(I,S)\]</span>). For doing that it uses the fact that since VAE has been trained on good quality image-segmentation pairs, the reconstruction loss for such a pair would be low. Paper first gets an initial latent vector <span class="math display">\[z_0\]</span> by passing the input (I,S) through VAE’s encoder. Main idea now is to find a latent vector <span class="math display">\[z_{sur}\]</span> near to <span class="math display">\[z_0\]</span> which has a lower loss. Paper finds such a latent vector using gradient of the reconstruction loss in an iterative fashion. The iteration stops when then loss plateaus around some value. Paper indirectly shows that this latent vector indeed generates good quality image-segmentation pair by demonstrating the effectiveness of the quality control done using this method.
 <figure class="figure">
-<a href="../assets/images/qc_mri_1.png"><img src="../assets/images/qc_mri_1.png" class="figure-img"></a>
+<a href="../assets/images/qc_mri_1.png"><img src="../assets/images/qc_mri_1.png" style="max-width: 100%; height: auto;" class="figure-img"></a>
 <figcaption>
 Iterative Approach (Credits: https://arxiv.org/pdf/2006.13379.pdf).
 </figcaption>

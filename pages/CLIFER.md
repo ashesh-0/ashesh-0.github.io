@@ -20,7 +20,7 @@ title: "CLIFER: Continual Learning with Imagination for Facial Expression Recogn
 Model is adapted from ExprGAN. It has two discriminators: $$D_z$$ to regularize the latent space embedding and $$D_{img}$$ to regularize the generated images. $$D_z$$ ensures that latent space embedding of generated images is similar to original image embeddings. This helps to reduce distorting in generated images. $$D_{img}$$ ensures that generated images actually have the intended face expressions.
 
 <img src="/assets/images/CLIFER.png" alt="drawing"
-title="Model architecture. (Taken from https://www.computer.org/csdl/pds/api/csdl/proceedings/download-article/1kecIRr1grK/pdf) "/>
+title="Model architecture. (Taken from https://www.computer.org/csdl/pds/api/csdl/proceedings/download-article/1kecIRr1grK/pdf) " style="max-width: 100%; height: auto;"/>
 
 ### How does GDM Module Ensure Rapid Non-Overlapping Learning in Episodic Memory
 * Non overlapping means that each embedding is attempted to get stored as they are. Tendency to encode the common features across embeddings of same face expression type is discouraged.

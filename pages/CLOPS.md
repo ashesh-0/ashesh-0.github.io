@@ -22,5 +22,5 @@ This paper does not use all of the data present in Replay buffer to augment the 
 
 In naive terms, they pass the input through the network multiple times. Due to dropout, the predicted probablity distribution over labels is different in each forward pass.They estimate the fluctuation in the probablity distribution. Larger the fluctuation, more confused is the model.
 <img src="/assets/images/CLOPS.png" alt="drawing"
-title=" Less forgetfulness in CLOPS. (Taken from https://arxiv.org/abs/2004.09578) "/>
+title=" Less forgetfulness in CLOPS. (Taken from https://arxiv.org/abs/2004.09578) " style="max-width: 100%; height: auto;"/>
 In above figure, one can look at the performance of CLOPS. The new task learning begins after every 20 epochs. Task which is getting learnt has a bold line. Shaded area represents the one standard deviation. It is evident that CLOPS has  lesser average detoriation on already learnt tasks when a new task is being learnt. It also has lesser fluctuation around the mean for already learnt tasks (from shaded area comparison).

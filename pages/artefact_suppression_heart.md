@@ -27,7 +27,7 @@ Radial sampling is getting more popular over Cartesian sampling these days. All 
 4 networks were trained, each with a different data owing to a different undersampling strategy. It was observed that undersampling technique with rotating trajectories led to better models apparently because the aliases produced by them were in-coherent and noise-like.
 The reconstruction time had a 5X improvement over contemporary compressed sensing techniques. This model also performed well on actual real time images.
 <figure>
-    <a href="/assets/images/artifactMR_1.png"><img src="/assets/images/artifactMR_1.png"></a>
+    <a href="/assets/images/artifactMR_1.png"><img src="/assets/images/artifactMR_1.png" style="max-width: 100%; height: auto;"></a>
     <figcaption>One can observe best reconstruction achieved in the last column at location pointed by the arrow. This corresponds to non uniform rotated trajectory based undersampling. (Credits: https://pubmed.ncbi.nlm.nih.gov/30194880/)</figcaption>
 </figure>
 

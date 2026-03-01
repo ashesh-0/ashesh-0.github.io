@@ -219,7 +219,7 @@ window.Quarto = {
 <li>Output: 1. <span class="math display">\[\hat{p}_{\theta}(x)\]</span>, 2. <span class="math display">\[A^{(r)}_{\phi} ~\forall r \]</span>.</li>
 <li>Flow: <span class="math display">\[x\]</span> is passed through the Segmentation CNN to yield segmentation probablities <span class="math display">\[\hat{p}_{\theta}(x)\]</span>. At inference time, this is the final prediction. <span class="math display">\[x\]</span> is also passed through Annotation CNN to get <span class="math display">\[A^{(r)}_{\phi}\]</span> for each annotator <span class="math display">\[r\]</span>. Using the confusion matrix and the label distribution, using matrix multiplication, it is straight forward to compute estimated annotator distribution: the label distribution as the annotator <span class="math display">\[r\]</span> would have felt (<span class="math display">\[\hat{p}^{(r)}_{\theta}(x)\]</span>). At training time, the loss is computed using them and not using <span class="math display">\[\hat{p}_{\theta}(x)\]</span>. It makes sense becase in the training data, we donot have true label distribution. We only have labels annotated by specific annotators.
 <figure class="figure">
-<a href="../assets/images/DisHumErrGT_1.png"><img src="../assets/images/DisHumErrGT_1.png" class="figure-img"></a>
+<a href="../assets/images/DisHumErrGT_1.png"><img src="../assets/images/DisHumErrGT_1.png" style="max-width: 100%; height: auto;" class="figure-img"></a>
 <figcaption>
 Overall Architecture description (Credits: https://proceedings.neurips.cc/paper/2020/file/b5d17ed2b502da15aa727af0d51508d6-Paper.pdf).
 </figcaption>

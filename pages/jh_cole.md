@@ -17,7 +17,7 @@ permalink: /neurodram/
 ## Brief Description of Main Ideas
 An architecture tailor-made for MRI data processing is the main content of this paper. This architecture has been divided into multiple subnetworks as can be seen in image below. They are briefly described in following sections.
 <figure>
-    <a href="/assets/images/james_cole_1.png"><img src="/assets/images/james_cole_1.png"></a>
+    <a href="/assets/images/james_cole_1.png"><img src="/assets/images/james_cole_1.png" style="max-width: 100%; height: auto;"></a>
     <figcaption>Proposed Architecture (Credits: https://arxiv.org/pdf/1910.04721.pdf).</figcaption>
 </figure>
 

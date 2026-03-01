@@ -14,7 +14,7 @@ For supervised training to get high-resolution data from low-resolution input, o
 ### Broad Inferences
 In general, vessel diameters were correctly depicted in super-resolution images. However, one could observe slight underestimation of vessel diameter for the case of proximal left coronary artery(LCA). In terms of lesion detectivity and specificity, high resolution data was better than super-resolution data which was in turn better than low resolution data. However, the difference between high resolution and super-resolution were marginal. In terms of image quality, super-resolution data was the best with sharp,clear edges and denoised images (it had the best eSNR).
 <figure>
-    <a href="/assets/images/rapidCMR_1.png"><img src="/assets/images/rapidCMR_1.png"></a>
+    <a href="/assets/images/rapidCMR_1.png"><img src="/assets/images/rapidCMR_1.png" style="max-width: 100%; height: auto;"></a>
     <figcaption>One can observe good reconstruction in the case of super-resolution. (Credits: https://jcmr-online.biomedcentral.com/articles/10.1186/s12968-020-00651-x)</figcaption>
 </figure>
 

@@ -21,7 +21,7 @@ permalink: /fast_xray_TB/
 ### Network Structure
 Architecture is shown below. $$a * b/c$$ format is used in multiple blocks shown below where a and be are the spatial kernel dimensions and c is the stride. $$\bigoplus$$ means addition and GAP is global average pooling.
 <figure>
-    <a href="/assets/images/fast_xray_tb.png"><img src="/assets/images/fast_xray_tb.png"></a>
+    <a href="/assets/images/fast_xray_tb.png"><img src="/assets/images/fast_xray_tb.png" style="max-width: 100%; height: auto;"></a>
     <figcaption>Proposed Architecture (Credits: https://www.nature.com/articles/s41598-019-42557-4).</figcaption>
 </figure>
 
@@ -33,7 +33,7 @@ images). Lower resolution in case of grad-CAMs made them less useful. Motivation
 another piece of information besides the classification's prediction values. As seen below, it is easy to agree with the paper
 that the saliency maps have important visual queues which the clinicians would understand.
 <figure>
-    <a href="/assets/images/fast_xray_tb2.png"><img src="/assets/images/fast_xray_tb2.png"></a>
+    <a href="/assets/images/fast_xray_tb2.png"><img src="/assets/images/fast_xray_tb2.png" style="max-width: 100%; height: auto;"></a>
     <figcaption> Saliency map overlayed on original X-ray scan. This example has TB and the model correctly predicted it. (Credits: https://www.nature.com/articles/s41598-019-42557-4).</figcaption>
 </figure>
 

@@ -15,7 +15,7 @@ Encoder consists of a feature extraction module and a Temporal Convolutional Net
 Decoder takes as input the motion matrix and the first image of the input sequence and generate the deformations (warping parameters) for each element in the sequence. They are then applied on the first image of the input sequence to get generated images. The aim of the paper is that these generated images should closely match the images from the input sequence (starting from the second image).
 
 <figure>
-    <a href="/assets/images/nicholas_ayachi_1.png"><img src="/assets/images/nicholas_ayachi_1.png"></a>
+    <a href="/assets/images/nicholas_ayachi_1.png"><img src="/assets/images/nicholas_ayachi_1.png" style="max-width: 100%; height: auto;"></a>
     <figcaption>Proposed Architecture (Credits: https://arxiv.org/pdf/2011.01741.pdf).</figcaption>
 </figure>
 

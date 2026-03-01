@@ -214,7 +214,7 @@ window.Quarto = {
 <ul>
 <li><p>Two latent variables <span class="math display">\[z_0\]</span> and <span class="math display">\[z_T\]</span> (64 dimensional) are sampled from a uniform distribution. They correspond to start time 0 and end time <span class="math display">\[T\]</span> of the sequence to be predicted. For any intermediate time <span class="math display">\[t\]</span>, the latent variable is obtained by a simple linear interpolation. &gt;<span class="math display">\[z_t = \alpha_tz_0 + (1-\alpha_t)z_T\]</span></p>
 <figure class="figure">
-<p><a href="../assets/images/deep_prior_MRI_1.png"><img src="../assets/images/deep_prior_MRI_1.png" class="figure-img"></a></p>
+<p><a href="../assets/images/deep_prior_MRI_1.png"><img src="../assets/images/deep_prior_MRI_1.png" style="max-width: 100%; height: auto;" class="figure-img"></a></p>
 <figcaption>
 <p>Interpolation of latent variable (Credits: https://arxiv.org/abs/1910.01684).</p>
 </figcaption>
@@ -223,7 +223,7 @@ window.Quarto = {
 <li><p>Similar to what gets done to actual MRI image, output of CNN model is operated upon using NuFFT. This converts it to an estimate of sinogram. As we have the actual sinogram data for different time points, this procedure is used to train the CNN model so that the predicted sinogram gets maximally close to target sinogram.</p></li>
 </ul>
 <figure class="figure">
-<a href="../assets/images/deep_prior_MRI_2.png"><img src="../assets/images/deep_prior_MRI_2.png" class="figure-img"></a>
+<a href="../assets/images/deep_prior_MRI_2.png"><img src="../assets/images/deep_prior_MRI_2.png" style="max-width: 100%; height: auto;" class="figure-img"></a>
 <figcaption>
 Overall Architecture (Credits: https://arxiv.org/abs/1910.01684).
 </figcaption>

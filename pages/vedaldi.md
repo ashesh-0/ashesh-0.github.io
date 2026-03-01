@@ -13,10 +13,10 @@ permalink: /Jakab20/
 Pose: Pose is defined in two ways: as a skeleton image and as a set of 2D points. Pose is defined for a face image and for whole body as well.
 
 * Skeletal Image Representation of Pose <img src="/assets/images/vedaldi_2.png" alt="drawing"
-title=". Credits (https://www.robots.ox.ac.uk/~vgg/publications/2020/Jakab20/jakab20.pdf)"/>
+title=". Credits (https://www.robots.ox.ac.uk/~vgg/publications/2020/Jakab20/jakab20.pdf)" style="max-width: 100%; height: auto;"/>
 
 * Keypoint Representation of Pose. <img src="/assets/images/vedaldi_1.png" alt="drawing"
-title="Credits (https://www.robots.ox.ac.uk/~vgg/publications/2020/Jakab20/jakab20.pdf)"/>
+title="Credits (https://www.robots.ox.ac.uk/~vgg/publications/2020/Jakab20/jakab20.pdf)" style="max-width: 100%; height: auto;"/>
 
 
 ### Encoder
@@ -29,7 +29,7 @@ The unsupervised approach necessitates the use of Discriminator. This module is 
 As defined in Definitions, pose is defined in two ways. The first definition is its repsentation as the skeleton image. Paper argues that the appearance information is still present in this representation in the form of structured noise. Evidence is that one is able to do the reconstruction of the original image from the pose image. Another evidence is that one is able to visually see the appearnce information if one applies $$log()$$ on the pose representation. It is shown in figure below. It is due to these reasons that, they come up with a discrete Keypoint representation which consists of simply 2D keypoints.
 
 <img src="/assets/images/vedaldi_3.png" alt="drawing"
-title="Credits (https://www.robots.ox.ac.uk/~vgg/publications/2020/Jakab20/jakab20.pdf)"/>
+title="Credits (https://www.robots.ox.ac.uk/~vgg/publications/2020/Jakab20/jakab20.pdf)" style="max-width: 100%; height: auto;"/>
 
 ### Conditional Decoder
 This module takes input the skeletal representation of pose and an input image containing the pose's object. Note that the pose of the object in the input image is different from the input pose. This module then 'applies' the input pose on the input image thereby generating a new image which has the object in that specific pose which was given as input.

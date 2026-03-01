@@ -23,7 +23,7 @@ permalink: /DECODE/
 ### DECODE network overview
 It has two submodules. Frame analysis module takes as input one frame and it predicts the feature embeddings. Temporal Context Module takes in these feature embeddings and predict the multi-channel feature maps which is the network's output.
 <figure>
-    <a href="/assets/images/DECODE_1.png"><img src="/assets/images/DECODE_1.png"></a>
+    <a href="/assets/images/DECODE_1.png"><img src="/assets/images/DECODE_1.png" style="max-width: 100%; height: auto;"></a>
     <figcaption>Proposed Architecture (Credits: https://arxiv.org/abs/1907.00770).</figcaption>
 </figure>
 

@@ -216,7 +216,7 @@ window.Quarto = {
 <h3 class="anchored" data-anchor-id="sample-specific-loss-for-augumentation-invariance">Sample Specific Loss (for augumentation invariance)</h3>
 This is applied on embedding space (output of the encoder). This ensures that augumented versions of the same image have very similar embedding representation. This is achieved by minimizing the entropy in the following way
 <figure class="figure">
-<a href="../assets/images/SALAD_1.png"><img src="../assets/images/SALAD_1.png" class="figure-img"></a>
+<a href="../assets/images/SALAD_1.png"><img src="../assets/images/SALAD_1.png" style="max-width: 100%; height: auto;" class="figure-img"></a>
 <figcaption>
 Sample specific loss (Credits: https://arxiv.org/abs/2010.09856).
 </figcaption>
@@ -228,7 +228,7 @@ Sample specific loss (Credits: https://arxiv.org/abs/2010.09856).
 <h3 class="anchored" data-anchor-id="memory-bank">Memory Bank</h3>
 Embedding of all examples in training data is saved in this array like structure. Updation is done in a moving average way. This is helpful to get top-k similar embeddings from the training data needed in the <span class="math display">\[L_{agg}\]</span> described in next section.
 <figure class="half figure">
-<a href="../assets/images/SALAD_4.png"><img src="../assets/images/SALAD_4.png" class="figure-img"></a> <a href="../assets/images/SALAD_3.png"><img src="../assets/images/SALAD_3.png" class="figure-img"></a>
+<a href="../assets/images/SALAD_4.png"><img src="../assets/images/SALAD_4.png" style="max-width: 100%; height: auto;" class="figure-img"></a> <a href="../assets/images/SALAD_3.png"><img src="../assets/images/SALAD_3.png" style="max-width: 100%; height: auto;" class="figure-img"></a>
 <figcaption>
 Memory Bank. (Left) Its each entry gets updated with corresponding embeddings computed in each epoch. (Right) Moving average updated methodology (Credits: https://arxiv.org/abs/2010.09856)
 </figcaption>
@@ -238,7 +238,7 @@ Memory Bank. (Left) Its each entry gets updated with corresponding embeddings co
 <h3 class="anchored" data-anchor-id="aggregation-loss-for-clustering">Aggregation Loss (for clustering)</h3>
 <p>It is very similar to how <span class="math display">\[L_{ss}\]</span> works. The difference is that dot product in <span class="math display">\[p_{i,j}\]</span> is computed between embeddings of two similar looking but different images.</p>
 <figure class="figure">
-<a href="../assets/images/SALAD_2.png"><img src="../assets/images/SALAD_2.png" class="figure-img"></a>
+<a href="../assets/images/SALAD_2.png"><img src="../assets/images/SALAD_2.png" style="max-width: 100%; height: auto;" class="figure-img"></a>
 <figcaption>
 Aggregation loss (Credits: https://arxiv.org/abs/2010.09856).
 </figcaption>

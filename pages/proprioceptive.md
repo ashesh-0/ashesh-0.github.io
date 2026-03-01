@@ -18,14 +18,14 @@ They start with a dataset of pen-tip trajectories. This data maps a pen-tip traj
 ### Challenging Task
 A t-SNE plot of spindle firing rates show that one cannot visually discriminate different characters. Low performance of SVM trained on spindle firing rates also support the claim.
 <figure>
-    <a href="/assets/images/proprioceptive_1.png"><img src="/assets/images/proprioceptive_1.png"></a>
+    <a href="/assets/images/proprioceptive_1.png"><img src="/assets/images/proprioceptive_1.png" style="max-width: 100%; height: auto;"></a>
     <figcaption> Challenging Task to classify characters from spindle firing rates (Credits: https://www.biorxiv.org/content/10.1101/2020.05.06.081372v1).</figcaption>
 </figure>
 
 ### Neural Network models.
 Two family of models were developed. The first family is called spatial-temporal. Note that different muscle spindles is the spatial dimension and then there is a time component to it. In Spatial-temporal family, there is sequential processing of information across  spatial dimension followed by temporal dimension. They use one dimensional kernels to process information along one dimension at a time. The second family, called spatiotemporal, uses two dimensional kernels and therefore process information across both dimensions simultaneously.
 <figure>
-    <a href="/assets/images/proprioceptive_2.png"><img src="/assets/images/proprioceptive_2.png"></a>
+    <a href="/assets/images/proprioceptive_2.png"><img src="/assets/images/proprioceptive_2.png" style="max-width: 100%; height: auto;"></a>
     <figcaption> One observes discrimnative representation with ANN (Credits: https://www.biorxiv.org/content/10.1101/2020.05.06.081372v1).</figcaption>
 </figure>
 

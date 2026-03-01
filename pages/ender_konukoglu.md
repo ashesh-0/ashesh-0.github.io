@@ -18,7 +18,7 @@ title: "Joint Reconstruction and Bias Field Correction for Undersampled MR Imagi
 2. They state bias field as something which fluctuates the pixel intensity. They introduce a pixelwise multiplier $$B$$ which explicitly models the bias field thereby decoupling it with the content. Both $$B$$ and the estimate $$x$$ are obtained using the following equation:
 
 <img src="/assets/images/ender_k1.png" alt="drawing"
-title="Credits (https://arxiv.org/abs/2007.13123)"/>
+title="Credits (https://arxiv.org/abs/2007.13123)" style="max-width: 100%; height: auto;"/>
 
 $$Bx$$ is the predicted estimate.
 

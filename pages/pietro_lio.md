@@ -19,7 +19,7 @@ title: "A Deep Spatiotemporal Graph Learning Architecture for Brain Connectivity
 2. Input data is $$ N * T $$ where $$T$$, denoting the timeseries length, is 1200.
 3. Neighbourhood information: Dense adjacency matrix ($$N*N$$). Their architecture also can handle sparse neighbourhood information.
 <img src="/assets/images/pietro_1.png" alt="drawing"
-title="Credits (https://ieeexplore.ieee.org/document/9175360)"/>
+title="Credits (https://ieeexplore.ieee.org/document/9175360)" style="max-width: 100%; height: auto;"/>
 
 ### Step by Step Procedure:
 1. *Temporal feature extraction:* For each node, they use module composed of 1D CNN to extract features from the temporal data. Output is termed as Activation matrix ($$H(1)$$). Input output relationship: $$N*T => N*256$$

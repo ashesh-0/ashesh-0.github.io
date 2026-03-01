@@ -9,12 +9,12 @@ title: "Barking up the right tree: an approach to search over molecule synthesis
 ## An Overview of Methodology
 Starting from a selected set of building blocks (simple chemical compounds), the molecule is built one step at a time. Paper defines different action types. Sequentially selecting appropriate actions, each belonging to one of those action types leads to the synthesis DAG construction.  Qualitatively, actions include the choice of reactants, the number of reactants in a reaction and the number of reactions. Note that there are two sets for the choice of reactants: original building blocks and the intermediate compounds formed till that point in time. These actions are predicted from their respective action-type neural networks. For predicting the DAG, the paper represents DAG as a sequence of actions and it predicts one action at a time.
 <figure>
-    <a href="/assets/images/barkingDAG_4.png"><img src="/assets/images/barkingDAG_4.png"></a>
+    <a href="/assets/images/barkingDAG_4.png"><img src="/assets/images/barkingDAG_4.png" style="max-width: 100%; height: auto;"></a>
     <figcaption> An example DAG ( Credits: https://proceedings.neurips.cc/paper/2020/file/4cc05b35c2f937c5bd9e7d41d3686fff-Paper.pdf).</figcaption>
 </figure>
 
 <figure>
-    <a href="/assets/images/barkingDAG_3.png"><img src="/assets/images/barkingDAG_3.png"></a>
+    <a href="/assets/images/barkingDAG_3.png"><img src="/assets/images/barkingDAG_3.png" style="max-width: 100%; height: auto;"></a>
     <figcaption> DAG shown above is represented here as a serialized sequence of actions ( Credits: https://proceedings.neurips.cc/paper/2020/file/4cc05b35c2f937c5bd9e7d41d3686fff-Paper.pdf).</figcaption>
 </figure>
 
@@ -32,13 +32,13 @@ There are three types of actions in the construction of the serialized DAG.
 ### Probablistic Model Based Architecture
 They define the probablity distribution over the actions as follows.
 <figure>
-    <a href="/assets/images/BarkingDAG_1.png"><img src="/assets/images/barkingDAG_1.png"></a>
+    <a href="/assets/images/BarkingDAG_1.png"><img src="/assets/images/barkingDAG_1.png" style="max-width: 100%; height: auto;"></a>
     <figcaption>Probablity Distribution over sequence of Actions. Each term in the RHS is modelled with RNN and a action specific neural network</figcaption>
 </figure>
 
 They use a common RNN to model each term shown above. Specifically, for every action type, there is a neural network. This neural  network takes as input the output of the RNN. This models the conditionality on previous actions. However, the hidden state of the RNN does not have the explicit information about what the last predicted action was. So, the input to the RNN is the action embedding for the last action which was taken. If the action involved a molecule, (like A2,A3) then GNN was used to get the embedding for the molecule which gets used as the action embedding. Otherwise (action type A1), the embedding vector is learnt for these abstract actions. In this setup, the initial hidden state of the RNN has significance since it is that which has the potential to guide the construction towards a specific subdomain of molecules.
 <figure>
-    <a href="/assets/images/barkingDAG_2.png"><img src="/assets/images/barkingDAG_2.png"></a>
+    <a href="/assets/images/barkingDAG_2.png"><img src="/assets/images/barkingDAG_2.png" style="max-width: 100%; height: auto;"></a>
     <figcaption>Overall Network structure modelling the probablity distribution described in this subsection ( Credits: https://proceedings.neurips.cc/paper/2020/file/4cc05b35c2f937c5bd9e7d41d3686fff-Paper.pdf).</figcaption>
 </figure>
 

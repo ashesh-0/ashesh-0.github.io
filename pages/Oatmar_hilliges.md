@@ -10,7 +10,7 @@ title: "Category Level Object Pose Estimation via Neural Analysis-by-Synthesis"
 ## A Concise Overview on Approach Taken
 ### Pose-Aware Image Generator
 <img src="/assets/images/oatmar_1.png" alt="drawing"
-title="Credits: https://arxiv.org/abs/2008.08145 "/>
+title="Credits: https://arxiv.org/abs/2008.08145 " style="max-width: 100%; height: auto;"/>
 
 This module takes input the image embedding a.k.a the latent code and 6D pose vector and aims to output the same object in a different orientation as defined by the pose vector. It has four steps:
 1. 3D feature volume is generated from latent code.
@@ -20,6 +20,6 @@ This module takes input the image embedding a.k.a the latent code and 6D pose ve
 
 ### Object Pose Estimation
 <img src="/assets/images/oatmar_2.png" alt="drawing"
-title="Credits: https://arxiv.org/abs/2008.08145 "/>
+title="Credits: https://arxiv.org/abs/2008.08145 " style="max-width: 100%; height: auto;"/>
 
 This requires the generation module to be trained. Generation module is trained in Variational autoencoder fashion with latent variable being the image latent code. This module takes as input an image and uses trained image generation module to estimate its pose and latent code. Idea is to feed the generation module some latent code and pose and get a generated image. Use gradient descent iteratively to bring generated image as close to input image by minimizing the perceptual loss and thereby updating the latent code and the pose. Note that Generation module's weights are fixed for this task. They do this whole process multiple times, starting with a different latent code and pose each time. Among several predictions, they pick the one with the least final perceptual loss. Using trained encoder and the input image, they fetch the mean and variance of the gaussian distribution modeling the latent code and sample from that. They sample pose uniformly from the space of valid poses.

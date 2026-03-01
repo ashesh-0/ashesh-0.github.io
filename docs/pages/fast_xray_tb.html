@@ -207,7 +207,7 @@ window.Quarto = {
 <li>Saliency Map: Derivative of output class score w.r.t input image. It has the same resolution as the input image. It shows relative importance of input pixels in the decision making.</li>
 <li>grad-CAMs: Derivative of output class score w.r.t a feature map from a deeper layer. It has lower resolution than input image but has better localization. ### Network Structure Architecture is shown below. <span class="math display">\[a * b/c\]</span> format is used in multiple blocks shown below where a and be are the spatial kernel dimensions and c is the stride. <span class="math display">\[\bigoplus\]</span> means addition and GAP is global average pooling.
 <figure class="figure">
-<a href="../assets/images/fast_xray_tb.png"><img src="../assets/images/fast_xray_tb.png" class="figure-img"></a>
+<a href="../assets/images/fast_xray_tb.png"><img src="../assets/images/fast_xray_tb.png" style="max-width: 100%; height: auto;" class="figure-img"></a>
 <figcaption>
 Proposed Architecture (Credits: https://www.nature.com/articles/s41598-019-42557-4).
 </figcaption>
@@ -219,7 +219,7 @@ Proposed Architecture (Credits: https://www.nature.com/articles/s41598-019-42557
 <h3 class="anchored" data-anchor-id="visualization">Visualization</h3>
 Paper claims that Saliency maps were visually quite intuitive (one of the authors is expert in inspection of X-ray images). Lower resolution in case of grad-CAMs made them less useful. Motivation for visualization is to give the clinician another piece of information besides the classification’s prediction values. As seen below, it is easy to agree with the paper that the saliency maps have important visual queues which the clinicians would understand.
 <figure class="figure">
-<a href="../assets/images/fast_xray_tb2.png"><img src="../assets/images/fast_xray_tb2.png" class="figure-img"></a>
+<a href="../assets/images/fast_xray_tb2.png"><img src="../assets/images/fast_xray_tb2.png" style="max-width: 100%; height: auto;" class="figure-img"></a>
 <figcaption>
 Saliency map overlayed on original X-ray scan. This example has TB and the model correctly predicted it. (Credits: https://www.nature.com/articles/s41598-019-42557-4).
 </figcaption>

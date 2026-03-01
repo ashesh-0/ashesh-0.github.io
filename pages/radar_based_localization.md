@@ -13,7 +13,7 @@ As mentioned in the description above, the goal here to predict the rotation ang
 Here, we will call range sensor generated image as modality B and satellite image as modality A
 
 <img src="/assets/images/radar_based_lc_1.png" alt="drawing"
-title=" Unsupervised estimation of rotation alignment done though 2 pass method. (Taken from https://arxiv.org/abs/2006.02108) "/>
+title=" Unsupervised estimation of rotation alignment done though 2 pass method. (Taken from https://arxiv.org/abs/2006.02108) " style="max-width: 100%; height: auto;"/>
 
 ### Estimating $$\theta$$
 They build on a previous work. There, a deep network $$f_R$$ was used. Let $$I_A$$ and $$I_B$$ denote the image of modality A and B respectively. A number of rotated versions of $$I_B$$ were made. Each version was then concatenated with $$I_A$$. All this was given input to the network. The network generated a weighted average of rotated $$I_B$$ images with largest weight being expected to be given to the correctly rotated version.
@@ -36,7 +36,7 @@ They train it in two phases. In the first phase, they train $$E_a$$,$$E_p$$ and 
 > For training $$E_a$$,$$E_p$$ and $$D$$, they capture pose from a pair of translationally differing images and apply the inferred pose on another image.
 
 <img src="/assets/images/radar_based_lc_2.png" alt="drawing"
-title=" Unsupervised estimation of translation alignment done through image generation. (Taken from https://arxiv.org/abs/2006.02108) "/>
+title=" Unsupervised estimation of translation alignment done through image generation. (Taken from https://arxiv.org/abs/2006.02108) " style="max-width: 100%; height: auto;"/>
 
 Let $$B^1,B^2$$ be images from the domain $$B\theta$$. They randomly pick a translation offset $$\gamma$$. They get the appearance of $$B^1$$ as $$E_a(B^1)$$. They get the embedding for $$\gamma$$ as $$E_p(B^2,B^2_{\gamma})$$. Here, $$B^2_{\gamma}$$ is the translated version of $$B^2$$. Feeding above two appearance and pose embeddings in D, they train it end to end to get $$B^1_{\gamma}$$.
 

@@ -15,13 +15,13 @@ As mentioned above, the focus is to learn a representation which captures the an
 ### Temporal-Order Correction
 They use 4 video frames as input. The formulate it as a classification problem with $$4!/2 = 12$$ classes. Note that forward and backward video flow is considered to be same class.
 <img src="/assets/images/alison_noble1.png" alt="drawing"
-title="Credits: https://arxiv.org/abs/2003.00105 "/>
+title="Credits: https://arxiv.org/abs/2003.00105 " style="max-width: 100%; height: auto;"/>
 
 
 ### Spatio-Temporal Transform Prediction
 They use several affine transformations like rotation, scale, shear etc and train another network to predict the transformation parameters. Note that transformation is applied to all frames.
 <img src="/assets/images/alison_noble2.png" alt="drawing"
-title="Credits: https://arxiv.org/abs/2003.00105 "/>
+title="Credits: https://arxiv.org/abs/2003.00105 " style="max-width: 100%; height: auto;"/>
 
 
 ### Combining Above Two Tasks:

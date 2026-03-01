@@ -215,7 +215,7 @@ window.Quarto = {
 <li>They first train a Variational autoencoder on true MRI images patches (on <span class="math display">\[x\]</span>). ELBO of an estimate <span class="math display">\[x^t\]</span> computed on this trained VAE would be an indicator of how ‘real’ does this estimate look like.</li>
 <li>They state bias field as something which fluctuates the pixel intensity. They introduce a pixelwise multiplier <span class="math display">\[B\]</span> which explicitly models the bias field thereby decoupling it with the content. Both <span class="math display">\[B\]</span> and the estimate <span class="math display">\[x\]</span> are obtained using the following equation:</li>
 </ol>
-<p><img src="../assets/images/ender_k1.png" alt="drawing" title="Credits (https://arxiv.org/abs/2007.13123)"></p>
+<p><img src="../assets/images/ender_k1.png" alt="drawing" title="Credits (https://arxiv.org/abs/2007.13123)" style="max-width: 100%; height: auto;"></p>
 <p><span class="math display">\[Bx\]</span> is the predicted estimate.</p>
 <ol start="3" type="1">
 <li>For doing the above mentioned optimization, they follow an iterative approach where they move the estimate along the direction of gradient of ELBO. This will necessarily make sure that the ELBO score increases and therefore the ‘naturalness’ of the estimate increases. This transformation is named as Prior projection (<span class="math display">\[P_{prior}\]</span>)</li>

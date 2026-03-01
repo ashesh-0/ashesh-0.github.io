@@ -17,11 +17,11 @@ to an image sequentially. Deep neural networks are used in the second markov cha
 
 Here, the reverse (learnable) process is defined as:
 <img src="/assets/images/score_matching/ddpm_reverse.png" alt="drawing"
-title="Reverse process"/>
+title="Reverse process" style="max-width: 100%; height: auto;"/>
 
 The forward process, a diffusion process with fixed parameters is defined as:
 <img src="/assets/images/score_matching/ddpm_forward.png" alt="drawing"
-title="Forward process"/>
+title="Forward process" style="max-width: 100%; height: auto;"/>
 
 $$x_0$$ is the clean image. forward process moves from $$x_{0}$$ to $$x_T$$, one step at a time and reverse process moves backwards ($$x_T$$ to $$x_0$$).
 ### Reverse process
@@ -31,16 +31,16 @@ $$p_\theta(x_{t-1}|x_t) = N(x_{t-1};\mu_\theta(x_t,t),\sum_{\theta}(x_t,t))$$. T
 ### Loss
 They maximize the log-likelihood of data. They optimize a variational lowerbound of the log-likelihood.
 <img src="/assets/images/score_matching/ddpm_loss1.png" alt="drawing"
-title="Loss formulation"/>
+title="Loss formulation" style="max-width: 100%; height: auto;"/>
 On simplification, this boils down to 3 KL Divergence terms
 <img src="/assets/images/score_matching/ddpm_loss2.png" alt="drawing"
-title="Loss formulation in KL Divergence terms"/>
+title="Loss formulation in KL Divergence terms" style="max-width: 100%; height: auto;"/>
 
 We can use Bayes formula to compute $$q(x_{t-1}\|x_t)$$. It turns out that it is also a gaussian distribution. They denote its mean as $$\widetilde{\mu}_t$$. Since all terms in KL-divergence are comparison between gaussians, this helps them to compute the divergence more efficient when compared with computing using monte carlo estimates. Additionally, since the parameters of forward process are fixed, $$L_T$$ is fixed and therefore can be ignored in training.
 
 $$L_{t-1}$$ can be simplified to:
 <img src="/assets/images/score_matching/ddpm_lt_1.png" alt="drawing"
-title="The second KL-Divergence term in loss"/>
+title="The second KL-Divergence term in loss" style="max-width: 100%; height: auto;"/>
 
 
 So, simplest choice is that we make our model predict $$\widetilde{\mu}_t$$. However, after further simplifing $$L_{t-1}$$, another choice arises which essentially directs the model to predict the excess noise present in $$x_t$$ with respect to $$x_{t-1}$$. This happens primarily because $$q(x_t\|x_0)$$ is also gaussian and can be written in a closed form.
@@ -48,6 +48,6 @@ So, simplest choice is that we make our model predict $$\widetilde{\mu}_t$$. How
 ### Generating process.
 To sample $$x_{t-1}$$ (from $$p_\theta(x_{t-1}\|x_t)$$), one predicts the excess noise $$\epsilon_\theta(x_t,t)$$ and
 <img src="/assets/images/score_matching/ddpm_sampling.png" alt="drawing"
-title="Image generation by sampling: one step"/>
+title="Image generation by sampling: one step" style="max-width: 100%; height: auto;"/>
 
 So, starting from complete noise, one takes backward steps using above formula. At the end, we would have an image belonging to the data distribution.

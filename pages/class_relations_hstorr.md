@@ -17,8 +17,8 @@ $$ SI(\phi,\phi^*; P) = r(v(\phi,\phi^*);P)$$. Here, $$\phi,\phi*$$ are the feat
 Relative learning builds on Similarity network. Difference lies in the target. Unlike in most similarity networks, here, the target is not boolean but soft. They first obtain a semantic embedding for the two classes belonging to the two input images. wordVec and feature_attributes are two variations tried for the class semantic embedding. They then employ a similarity measure on the embedding to yield a real valued similarity, which works as 'soft' similarity.
 
 <figure class="half">
-    <a href="/assets/images/torr_1.png"><img src="/assets/images/torr_1.png"></a>
-    <a href="/assets/images/torr_2.png"><img src="/assets/images/torr_2.png"></a>
+    <a href="/assets/images/torr_1.png"><img src="/assets/images/torr_1.png" style="max-width: 100%; height: auto;"></a>
+    <a href="/assets/images/torr_2.png"><img src="/assets/images/torr_2.png" style="max-width: 100%; height: auto;"></a>
     <figcaption> Two similarity measures. Credits: https://arxiv.org/abs/2001.03919.</figcaption>
 </figure>
 
@@ -26,11 +26,11 @@ Relative learning builds on Similarity network. Difference lies in the target. U
 ### Absolute Learning
 An Object info predictor branch is attached on top of feature encoder which predicts semantic embeddings (wordVec and attributes). Note that semantic embedding along with similarity measure was used in Relative learning to make the relation labels soft. Another thing to note here is that target of Relation network is binary and not soft. Authors integrate these two components in next section. Interestingly, for the binary target, MSE is used.
 <img src="/assets/images/torr_3.png" alt="drawing"
-title="Credits: https://arxiv.org/abs/2001.03919 "/>
+title="Credits: https://arxiv.org/abs/2001.03919 " style="max-width: 100%; height: auto;"/>
 
 ### Absolute-Relative Learning
 As can be seen below, all components mentioned above have been integrated into one network which is jointly learnt. We have a soft-labelled relation network which uses wordToVec, attributes and class labels to estimate similarity separately and subsequently use a voting procedure to yield final prediction. We then have 3 absolute learning branches predicting wordToVec, attributes and class labels.
 <img src="/assets/images/torr_4.png" alt="drawing"
-title="Credits: https://arxiv.org/abs/2001.03919 "/>
+title="Credits: https://arxiv.org/abs/2001.03919 " style="max-width: 100%; height: auto;"/>
 
 

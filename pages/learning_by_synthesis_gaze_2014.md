@@ -18,8 +18,8 @@ title: "Learning-by-Synthesis for Appearance-based 3D Gaze Estimation"
 ### Dataset Description
 The dataset has 64K images which comprises of 50 subjects, 8 views (head poses) and 160 gaze directions.
 <figure class="half">
-    <a href="/assets/images/lbs_2013_1.png"><img src="/assets/images/lbs_2013_1.png"></a>
-    <a href="/assets/images/lbs_2013_2.png"><img src="/assets/images/lbs_2013_2.png"></a>
+    <a href="/assets/images/lbs_2013_1.png"><img src="/assets/images/lbs_2013_1.png" style="max-width: 100%; height: auto;"></a>
+    <a href="/assets/images/lbs_2013_2.png"><img src="/assets/images/lbs_2013_2.png" style="max-width: 100%; height: auto;"></a>
     <figcaption>Left:Placement of virtual camera at fixed distance from eye. Right: Definition of head pose. Head pose is defined by the 3D coordinate of mid point of eyes and the face plane (plane of the triangle) (Credits: https://ieeexplore.ieee.org/document/6909631).</figcaption>
 </figure>
 

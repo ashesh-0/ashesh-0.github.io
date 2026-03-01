@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Ashesh - A Hierarchical Generative Model for Eye Image Synthesis and Eye Gaze Estimation</title>
+<title>Ashesh - Sliced Score Matching: A Scalable Approach to Density and Score Estimation</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,22 +23,22 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../">
-<script src="../site_libs/quarto-html/quarto.js"></script>
-<script src="../site_libs/quarto-html/popper.min.js"></script>
-<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -97,7 +97,7 @@ window.Quarto = {
 };
 </script>
 
-<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="../../styles.css">
 </head>
 
 <body class="nav-fixed">
@@ -107,7 +107,7 @@ window.Quarto = {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="../index.html">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Ashesh</span>
     </a>
   </div>
@@ -118,19 +118,19 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../index.html"> 
+    <a class="nav-link" href="../../index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../projects.html"> 
+    <a class="nav-link" href="../../projects.html"> 
 <span class="menu-text">Projects</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../resume.html"> 
+    <a class="nav-link" href="../../resume.html"> 
 <span class="menu-text">Resume</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../papers.html"> 
+    <a class="nav-link" href="../../papers.html"> 
 <span class="menu-text">Papers</span></a>
   </li>  
 </ul>
@@ -161,12 +161,12 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#super-short-introduction" id="toc-super-short-introduction" class="nav-link active" data-scroll-target="#super-short-introduction">Super Short Introduction</a></li>
-  <li><a href="#an-overview-of-the-methodology" id="toc-an-overview-of-the-methodology" class="nav-link" data-scroll-target="#an-overview-of-the-methodology">An Overview of the Methodology</a>
+  <li><a href="#super-short-description" id="toc-super-short-description" class="nav-link active" data-scroll-target="#super-short-description">Super Short Description</a></li>
+  <li><a href="#concise-overview" id="toc-concise-overview" class="nav-link" data-scroll-target="#concise-overview">Concise Overview</a>
   <ul class="collapse">
-  <li><a href="#definitions" id="toc-definitions" class="nav-link" data-scroll-target="#definitions">Definitions:</a></li>
-  <li><a href="#hgsm" id="toc-hgsm" class="nav-link" data-scroll-target="#hgsm">HGSM</a></li>
-  <li><a href="#conditional-bigan" id="toc-conditional-bigan" class="nav-link" data-scroll-target="#conditional-bigan">Conditional BiGAN</a></li>
+  <li><a href="#definitions" id="toc-definitions" class="nav-link" data-scroll-target="#definitions">Definitions</a></li>
+  <li><a href="#issue" id="toc-issue" class="nav-link" data-scroll-target="#issue">Issue</a></li>
+  <li><a href="#sliced-score-matching" id="toc-sliced-score-matching" class="nav-link" data-scroll-target="#sliced-score-matching">Sliced Score Matching</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -176,7 +176,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">A Hierarchical Generative Model for Eye Image Synthesis and Eye Gaze Estimation</h1>
+<h1 class="title">Sliced Score Matching: A Scalable Approach to Density and Score Estimation</h1>
 </div>
 
 
@@ -193,42 +193,40 @@ window.Quarto = {
 </header>
 
 
-<section id="super-short-introduction" class="level2">
-<h2 class="anchored" data-anchor-id="super-short-introduction">Super Short Introduction</h2>
+<section id="super-short-description" class="level2">
+<h2 class="anchored" data-anchor-id="super-short-description">Super Short Description</h2>
 <ul>
-<li><a href="https://ieeexplore.ieee.org/document/8578151">Paper Link</a></li>
-<li>Novelty of the paper is the dual ability to estimate gaze from image and generate image given gaze and geometric inputs. They introduce an intermediate state of image shape. Image shape ( representation of eye using discrete dots) is generated from input Image using c-BiGAN which is a GAN and is therefore learnt using data driven approach. HGSM is used to predict Gaze from the image shape. It uses the geometric knowledge of eye and it’s methodology is based on the standard 3D model of the eye.</li>
+<li><a href="https://arxiv.org/abs/1905.07088">Paper Link</a></li>
+<li>This work deals with score matching. Aim is to speed up the training process for score matching. They come up with a new method for it and show theoretically that it is equivalent to original method. They show that their new method is faster. In their method, instead of taking fisher divergence between target score and the predicted score, they project the scores onto some random direction and then take the difference.</li>
 </ul>
 </section>
-<section id="an-overview-of-the-methodology" class="level2">
-<h2 class="anchored" data-anchor-id="an-overview-of-the-methodology">An Overview of the Methodology</h2>
+<section id="concise-overview" class="level2">
+<h2 class="anchored" data-anchor-id="concise-overview">Concise Overview</h2>
 <section id="definitions" class="level3">
-<h3 class="anchored" data-anchor-id="definitions">Definitions:</h3>
+<h3 class="anchored" data-anchor-id="definitions">Definitions</h3>
 <ul>
-<li>Eye shape: A visual representation of eye made using discrete points. In this representation, when compared with input image, texture and other appearance based effects are removed. Eye shape contains purely geometric information and therefore is analytically and faithfully generated given the gaze and person specific parameters.</li>
-<li>ECS: Eye co-ordinate system</li>
-<li>CCS: Camera co-ordinate system. Note that head pose {R,e} is the rotation and translation matrix in ECS which converts to points to CCS.</li>
+<li><span class="math display">\[p_d\]</span>: Data distribution</li>
+<li><span class="math display">\[\widetilde{p}_m(x;\theta)\]</span>: Unnormalized density (modelled by a neural network)</li>
+<li><span class="math display">\[{p}_m(x;\theta)\]</span>: Corresponding normalized density</li>
+<li>Score function: Score for a probablity distribution M(x) is defined as <span class="math display">\[\nabla_{x} \log(M(x))\]</span>.</li>
+<li><span class="math display">\[s_d\]</span> and <span class="math display">\[s_m\]</span> denote the score functions for <span class="math display">\[p_d()\]</span> and <span class="math display">\[p_m()\]</span> respectively.</li>
+<li>Score matching: One has a data distribution, typically in implicit form with i.i.d samples drawn from it. Objective is to train a network which predicts score of that distribution. ### Earlier Work In work done by Hyvärinen (2005), for score matching fisher divergence was established to be the objective of choice. The objective <span class="math display">\[L(\theta)\]</span> is defined as <img src="../../assets/images/score_matching/ssm_fisher2005.png" alt="drawing" title="Score matching objective" style="max-width: 100%; height: auto;"></li>
 </ul>
-<figure class="figure">
-<a href="../assets/images/hgsm_1.png"><img src="../assets/images/hgsm_1.png" class="figure-img"></a>
-<figcaption>
-Eye shape (Credits: https://ieeexplore.ieee.org/document/8578151).
-</figcaption>
-</figure>
+<p>In that work it was shown that there exist an equivalent objective which does not need the score of the target distribution, <span class="math display">\[s_d(x)\]</span>. It is a beautiful proof using integration by parts. <img src="../../assets/images/score_matching/ssm_fisher2005_2.png" alt="drawing" title="Implicit score matching objective" style="max-width: 100%; height: auto;"></p>
+<p>Here, <span class="math display">\[tr\]</span> is the trace. Notice that <span class="math display">\[p_d()\]</span> is just in the expectation which can easily be approximated by monte carlo estimate. So here, one needs to compute the trace of the hessian. This brings us to the central issue tackled by the paper.</p>
 </section>
-<section id="hgsm" class="level3">
-<h3 class="anchored" data-anchor-id="hgsm">HGSM</h3>
-<p>As noted above, Eye shape contains purely geometric information. HGSM uses the standard 3D eye model. After taking kappa and eye radius as input, 3D eye is generated. It is then projected onto the 2D plane to generate the eye shape. Following are the various steps involved for the generation of eye shape from gaze and person specific geometric parameters: * Kappa (<span class="math display">\[\theta_k,\phi_k\]</span>) and eye radius (<span class="math display">\[r_o\]</span>) is sampled from their respective priors. * Visual axis and Optical axis are drawn (having angle kappa between them) * Pupil center is drawn in ECS using above parameters. Head pose is used to get pupil center IN CCS. * Using a linear model with noise allowing shape variations, iris and eyelid contour co-ordinates are obtained in ECS. Gaze is the dependant variable here. Similar to pupil center, convert them into CCS using head pose. * Finally, using camera projection matrix W, get their co-ordinates on image frame. this gives us the eye Shape.</p>
+<section id="issue" class="level3">
+<h3 class="anchored" data-anchor-id="issue">Issue</h3>
+<p>If <span class="math display">\[D\]</span> is the dimension of data, then our model outputs score which has <span class="math display">\[D\]</span> scalar values. We need to compute the partial derivative of output’s each dimention for computing the trace. So, this will take <span class="math display">\[D\]</span> times more time over computing partial derivative of a scalar.</p>
 </section>
-<section id="conditional-bigan" class="level3">
-<h3 class="anchored" data-anchor-id="conditional-bigan">Conditional BiGAN</h3>
-This is inspired by conditional-GAN and bidirectional-GAN. Generator (G) takes eye shape and a random vector as input and generates the eye image. Another component Encoder (E) takes in the eye image and generates the eye shape. Finally, Discriminator (D) takes in eye shape and eye image as input and predicts 1 when both of them are consistent with each other.
-<figure class="figure">
-<a href="../assets/images/hgsm_2.png"><img src="../assets/images/hgsm_2.png" class="figure-img"></a>
-<figcaption>
-Conditional BiGAN (Credits: https://ieeexplore.ieee.org/document/8578151).
-</figcaption>
-</figure>
+<section id="sliced-score-matching" class="level3">
+<h3 class="anchored" data-anchor-id="sliced-score-matching">Sliced Score Matching</h3>
+<p>Instead of using the fisher divergence, they use the following expression for objective: <img src="../../assets/images/score_matching/ssm_slicedfisher.png" alt="drawing" title="Sliced score matching objective" style="max-width: 100%; height: auto;"></p>
+<p>Here, v is some random direction. So, this objective first projects the actual score and the predicted score to a random direction and then computes the difference. Note that expectation is also taken with respect to v. On the lines of proof done by Hyvärinen (2005), they prove an equivalent objective which does not need <span class="math display">\[s_d\]</span>.</p>
+<p><img src="../../assets/images/score_matching/ssm_implicit_slicedfisher.png" alt="drawing" title="Implicit sliced score matching objective" style="max-width: 100%; height: auto;"></p>
+<blockquote class="blockquote">
+<p>Now, the benefit is that <span class="math display">\[v^T s_m(x;\theta)v\]</span> is a scalar. So, one needs D times less time to compute <span class="math display">\[\nabla_{x}v^T s_m(x;\theta)v\]</span>.</p>
+</blockquote>
 
 
 </section>

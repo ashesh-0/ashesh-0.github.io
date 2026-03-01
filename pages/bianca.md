@@ -22,6 +22,6 @@ For both encoder and decoder, two different types are used for the two modalitie
 ### Data flow
 The two inputs (image and the gene expression) are passed through their respective encoders to get embeddings. The outputs are subsequently passed on the PCCA module where one gets two modality specific components and one shared component. Using them, the embeddings are first reconstructed. The reconstructed embeddings are then passed to their respective decoders to yeild reconstructed inputs. The flow is shown in the figure below.
 <figure>
-    <a href="/assets/images/deep_ppca_1.png"><img src="/assets/images/deep_ppca_1.png"></a>
+    <a href="/assets/images/deep_ppca_1.png"><img src="/assets/images/deep_ppca_1.png" style="max-width: 100%; height: auto;"></a>
     <figcaption>Proposed Architecture (Credits: http://auai.org/uai2019/proceedings/papers/340.pdf).</figcaption>
 </figure>

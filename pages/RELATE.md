@@ -13,7 +13,7 @@ A GAN takes input a latent vector and generate images. In several GAN variations
 The model takes care of the acceptable relationship between objects and between objects and background.
 
 <img src="/assets/images/RELATE.jpg" alt="drawing"
-title="Model architecture. (Base image taken from https://arxiv.org/abs/2007.01272) "/>
+title="Model architecture. (Base image taken from https://arxiv.org/abs/2007.01272) " style="max-width: 100%; height: auto;"/>
 
 Model architecture has two modules. First one is Scene composition and rendering module. Firstly, this is responsible for generating latent vectors to decide upon number of objects, kind of background and kind of each object. This is also responsible for generating latent vectors for position of each object. Paper calls these two latent vector sets as appearance and position vectors. All these vectors are generated independently. This module also converts the appearance vectors to 3 dimensional tensors.
 

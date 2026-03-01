@@ -17,14 +17,14 @@ As discussed above, the network has to take as input an image patch whose centra
 ### Underlying Assumptions
 * *The noise is pixelwise independent:* Value of noise in a pixel should be independent to the value of noise in nearby pixels. In case this assumption doesn't hold, for example in case of presence of intensity gradient in image, that component of noise will remain in the denoised version. An example of such a case can be seen below.
 <figure class="half">
-    <a href="/assets/images/noise_to_void_orig2.png"><img src="/assets/images/noise_to_void_orig2.png"></a>
-    <a href="/assets/images/noise_to_void_den2.png"><img src="/assets/images/noise_to_void_den2.png"></a>
+    <a href="/assets/images/noise_to_void_orig2.png"><img src="/assets/images/noise_to_void_orig2.png" style="max-width: 100%; height: auto;"></a>
+    <a href="/assets/images/noise_to_void_den2.png"><img src="/assets/images/noise_to_void_den2.png" style="max-width: 100%; height: auto;"></a>
     <figcaption> Original Image (a) has structural noise (tiled effect) along with white noise. Denoised version (c) removes white noise but retains the structural noise (tiled effect) (Credits: https://arxiv.org/abs/1811.10980).</figcaption>
 </figure>
 
 * *Data does not have independent pixels:* In case image has very high contrast with pixel values changing almost unpredictably. In that case, the high contrast will be blurred as it will be considered as noise.
 <figure class="half">
-    <a href="/assets/images/noise_to_void_orig.png"><img src="/assets/images/noise_to_void_orig.png"></a>
-    <a href="/assets/images/noise_to_void_den.png"><img src="/assets/images/noise_to_void_den.png"></a>
+    <a href="/assets/images/noise_to_void_orig.png"><img src="/assets/images/noise_to_void_orig.png" style="max-width: 100%; height: auto;"></a>
+    <a href="/assets/images/noise_to_void_den.png"><img src="/assets/images/noise_to_void_den.png" style="max-width: 100%; height: auto;"></a>
     <figcaption> Original Image (d) has high contrast and pixel values are naturally jittery. Denoised version (f) loses those details (Credits: https://arxiv.org/abs/1811.10980).</figcaption>
 </figure>

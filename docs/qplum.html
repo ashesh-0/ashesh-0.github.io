@@ -174,12 +174,12 @@ ul.task-list li input[type="checkbox"] {
 <section id="execution-system" class="level3">
 <h3 class="anchored" data-anchor-id="execution-system">Execution System</h3>
 <p>As we have seen, PMS says something like “After looking at the prices of stocks and etfs of past few days, I, in my genius intelligence and ultimate authority, think that for the user ABC, we should buy n1 shares of APPL, sell n2 shares of VTI and so on and so forth”. It sends these orders to execution system.</p>
-<p>For every order, execution system looks at price data at minisecond/microsecond granularity and decides upon the best time in near future to execute the order. If it is a buy order, the system attempts to execute the order at the time when the price is locally low. For a sell order, aim is naturally to sell at a locally higher price. <img src="./assets/images/price_minima_maxima.jpg" alt="drawing" width="550" title="At Maxima(Minima) aim is to Sell(Buy)"></p>
+<p>For every order, execution system looks at price data at minisecond/microsecond granularity and decides upon the best time in near future to execute the order. If it is a buy order, the system attempts to execute the order at the time when the price is locally low. For a sell order, aim is naturally to sell at a locally higher price. <img src="./assets/images/price_minima_maxima.jpg" alt="drawing" width="550" title="At Maxima(Minima) aim is to Sell(Buy)" style="max-width: 100%; height: auto;"></p>
 </section>
 <section id="order-routing-server-ors" class="level3">
 <h3 class="anchored" data-anchor-id="order-routing-server-ors">Order Routing Server (ORS)</h3>
 <p>Exchange speaks a different language. Trading system speaks another. ORS is the interpreter which receives messages from one and translates it to the other. A buy order request, sell order request, order price modification request etc are some examples of messages which Trading system sends to Exchange. Order confirmation notification, order cancellation notification etc. are few examples of messages sent by the exchange.</p>
-<p><img src="./assets/images/ORS.jpg" alt="drawing" width="500" title="ORS acts as an interpreter between Execution system and Exchange"></p>
+<p><img src="./assets/images/ORS.jpg" alt="drawing" width="500" title="ORS acts as an interpreter between Execution system and Exchange" style="max-width: 100%; height: auto;"></p>
 
 
 </section>

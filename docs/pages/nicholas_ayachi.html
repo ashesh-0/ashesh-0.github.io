@@ -206,7 +206,7 @@ window.Quarto = {
 <h3 class="anchored" data-anchor-id="encoder">Encoder</h3>
 <p>Encoder consists of a feature extraction module and a Temporal Convolutional Network (TCN). An image pair is passed to the feature extractor to get a latent representation. Each element of the input sequence is coupled with the first element of the sequence to create image pairs. The latent representation encodes the relative motion between the two frames. TCN comprises of 1D convolutions. The latent representations are convolved with TCN so as to achieve temporal regularization. The output <span class="math display">\[(\mu,\sigma)\]</span> is the mean and the standard deviation of the posterior distribution. Motion matrix <span class="math display">\[z\]</span> is sampled from the posterior. ### Decoder Decoder takes as input the motion matrix and the first image of the input sequence and generate the deformations (warping parameters) for each element in the sequence. They are then applied on the first image of the input sequence to get generated images. The aim of the paper is that these generated images should closely match the images from the input sequence (starting from the second image).</p>
 <figure class="figure">
-<a href="../assets/images/nicholas_ayachi_1.png"><img src="../assets/images/nicholas_ayachi_1.png" class="figure-img"></a>
+<a href="../assets/images/nicholas_ayachi_1.png"><img src="../assets/images/nicholas_ayachi_1.png" style="max-width: 100%; height: auto;" class="figure-img"></a>
 <figcaption>
 Proposed Architecture (Credits: https://arxiv.org/pdf/2011.01741.pdf).
 </figcaption>

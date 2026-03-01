@@ -29,16 +29,16 @@ For generating a noisy sample from q_{\sigma k}, one starts with a clean image a
 #### On learning
 For each $$\sigma_k$$, they work with following denoising score matching objective $$l(\theta;\sigma)$$:
 <img src="/assets/images/score_matching/SMLD_obj.png" alt="drawing"
-title="Objective"/>
+title="Objective" style="max-width: 100%; height: auto;"/>
 Note that since the conditional probablity here is modelled as a gaussian, its score can be analytically computed to $$\dfrac{\widetilde{x} - x }{\sigma^2}$$. They use a unified objective over all $$\sigma$$s
 <img src="/assets/images/score_matching/SMLD_obj2.png" alt="drawing"
-title="Unified objective"/>
+title="Unified objective" style="max-width: 100%; height: auto;"/>
 
 
 #### NCSN inference via annealed Langevin dynamics
 They start with a random noise image and iteratively convert it to a realistic image. For doing this, they follow the same procedure for every $$\sigma_i$$. At every noise level, they update the image in the direction of the score for T steps. When updating the image, they also add a noise component to it at every step. They then take this as the initial input for the next noise level and do the same procedure.
 <img src="/assets/images/score_matching/SMLD_sample.png" alt="drawing"
-title="Iterative generation"/>
+title="Iterative generation" style="max-width: 100%; height: auto;"/>
 
 
 ### Why it works

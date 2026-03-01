@@ -18,7 +18,7 @@ title: "Time-Dependent Deep Image Prior for Dynamic MRI"
 * Two latent variables $$z_0$$ and $$z_T$$ (64 dimensional) are sampled from a uniform distribution. They correspond to start time 0 and end time $$T$$ of the sequence to be predicted. For any intermediate time $$t$$, the latent variable is obtained by a simple linear interpolation.
 >$$z_t = \alpha_tz_0 + (1-\alpha_t)z_T$$
 <figure>
-    <a href="/assets/images/deep_prior_MRI_1.png"><img src="/assets/images/deep_prior_MRI_1.png"></a>
+    <a href="/assets/images/deep_prior_MRI_1.png"><img src="/assets/images/deep_prior_MRI_1.png" style="max-width: 100%; height: auto;"></a>
     <figcaption> Interpolation of latent variable (Credits: https://arxiv.org/abs/1910.01684).</figcaption>
 </figure>
 
@@ -28,7 +28,7 @@ title: "Time-Dependent Deep Image Prior for Dynamic MRI"
 * Similar to what gets done to actual MRI image, output of CNN model is operated upon using NuFFT. This converts it to an estimate of sinogram. As we have the actual sinogram data for different time points, this procedure is used to train the CNN model so that the predicted sinogram gets maximally close to target sinogram.
 
 <figure>
-    <a href="/assets/images/deep_prior_MRI_2.png"><img src="/assets/images/deep_prior_MRI_2.png"></a>
+    <a href="/assets/images/deep_prior_MRI_2.png"><img src="/assets/images/deep_prior_MRI_2.png" style="max-width: 100%; height: auto;"></a>
     <figcaption> Overall Architecture (Credits: https://arxiv.org/abs/1910.01684).</figcaption>
 </figure>
 

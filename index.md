@@ -11,7 +11,7 @@ I then worked as a Research Assistant in [National Taiwan University](https://ww
 # PhD
 Given a superimposed (noisy) image, the task is to decompose it into its constituent channels.
 <img src="assets/images/usplit_teaser.png" alt="drawing" class="center" width="800px" height="auto"
-title="Splitting: An image decomposition task"/>
+title="Splitting: An image decomposition task" style="max-width: 100%; height: auto;"/>
 
 We published [uSplit](https://ashesh-0.github.io/uSplit/), a HVAE inspired architecture which used surrounding context in a GPU-efficient way, at ICCV 23. Subsequently, we built on top of it to create [denoiSplit](https://ashesh-0.github.io/denoiSplit/), a network which could do unsupervised denoising together with decomposition.
 This enabled (a) getting multiple predictions (a.k.a opinions of the network) for a single input and (b) model calibration: having a pixelwise estimate of error in the prediction. 

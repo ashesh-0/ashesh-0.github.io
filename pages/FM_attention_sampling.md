@@ -17,13 +17,13 @@ With marker sampling, one randomly selects a subset of markers which will be pro
 ### Marker Excite (ME)
 It is an attention based mechanism for reweighting the features learnt at intermediate layers. Input to the attention module is one hot encoded marker presence data. As with a typical attention module, Marker Excite allows the network to adjust better to the presence of any random subset of markers. They use the UNet network for segmentation. They replace the pre-existing attention module with Marker Excite attention at multiple intermediate layers as shown below.
 <figure>
-    <a href="/assets/images/MAS_FM_2.png"><img src="/assets/images/MAS_FM_2.png"></a>
+    <a href="/assets/images/MAS_FM_2.png"><img src="/assets/images/MAS_FM_2.png" style="max-width: 100%; height: auto;"></a>
     <figcaption>Showing Marker Excite Attention (Orange arrow) in UNet architecture (Credits: https://arxiv.org/abs/2008.12380).</figcaption>
 </figure>
 
 ### Network Architecture
 Network architecture is shown in the below figure. From the multi-marker data, one acquires multiple 2D images, one for each marker. Marker Sampling is performed and selected images are passed through the network to get segmentation. Note that since the input of the network is of fixed dimension, a 2D array of zeros is passed for those markers which are either absent in the data or have been deselected by Marker Sampling.
 <figure>
-    <a href="/assets/images/MAS_FM_1.png"><img src="/assets/images/MAS_FM_1.png"></a>
+    <a href="/assets/images/MAS_FM_1.png"><img src="/assets/images/MAS_FM_1.png" style="max-width: 100%; height: auto;"></a>
     <figcaption>Network Architecture(Credits: https://arxiv.org/abs/2008.12380).</figcaption>
 </figure>

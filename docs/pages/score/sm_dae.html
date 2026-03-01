@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Ashesh - Generative Modeling by Estimating Gradients of the Data Distribution</title>
+<title>Ashesh - A Connection Between Score Matching and Denoising Autoencoders</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -162,12 +162,12 @@ window.Quarto = {
    
   <ul>
   <li><a href="#super-short-description" id="toc-super-short-description" class="nav-link active" data-scroll-target="#super-short-description">Super Short Description</a></li>
-  <li><a href="#brief-overview-of-the-methodology" id="toc-brief-overview-of-the-methodology" class="nav-link" data-scroll-target="#brief-overview-of-the-methodology">Brief Overview of the Methodology</a>
+  <li><a href="#concise-overview" id="toc-concise-overview" class="nav-link" data-scroll-target="#concise-overview">Concise Overview</a>
   <ul class="collapse">
-  <li><a href="#definitions" id="toc-definitions" class="nav-link" data-scroll-target="#definitions">Definitions</a></li>
-  <li><a href="#main-issue-which-they-tackle" id="toc-main-issue-which-they-tackle" class="nav-link" data-scroll-target="#main-issue-which-they-tackle">Main Issue Which They Tackle</a></li>
-  <li><a href="#noise-conditional-score-networks-ncsn" id="toc-noise-conditional-score-networks-ncsn" class="nav-link" data-scroll-target="#noise-conditional-score-networks-ncsn">Noise Conditional Score Networks (NCSN)</a></li>
-  <li><a href="#why-it-works" id="toc-why-it-works" class="nav-link" data-scroll-target="#why-it-works">Why it works</a></li>
+  <li><a href="#explicit-score-matching" id="toc-explicit-score-matching" class="nav-link" data-scroll-target="#explicit-score-matching">Explicit Score matching</a></li>
+  <li><a href="#implicit-score-matching" id="toc-implicit-score-matching" class="nav-link" data-scroll-target="#implicit-score-matching">Implicit score matching</a></li>
+  <li><a href="#matching-the-score-of-a-nonparametric-estimator." id="toc-matching-the-score-of-a-nonparametric-estimator." class="nav-link" data-scroll-target="#matching-the-score-of-a-nonparametric-estimator.">Matching the Score of a Nonparametric Estimator.</a></li>
+  <li><a href="#denoising-score-matching" id="toc-denoising-score-matching" class="nav-link" data-scroll-target="#denoising-score-matching">Denoising Score Matching</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -177,7 +177,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Generative Modeling by Estimating Gradients of the Data Distribution</h1>
+<h1 class="title">A Connection Between Score Matching and Denoising Autoencoders</h1>
 </div>
 
 
@@ -197,42 +197,31 @@ window.Quarto = {
 <section id="super-short-description" class="level2">
 <h2 class="anchored" data-anchor-id="super-short-description">Super Short Description</h2>
 <ul>
-<li><a href="https://arxiv.org/abs/1907.05600">Paper Link</a></li>
-<li>This work is based on score matching. The primary concern tackled by the paper is that natural images lie in a small manifold and large part of the space does not contain any real examples. They tackle the difficulties arising from above fact by adding gaussian noise of different magnitudes to the image so as to cover whole space.</li>
+<li><a href="http://www.iro.umontreal.ca/~vincentp/Publications/smdae_techreport.pdf">Paper Link</a></li>
+<li>This note looks at multiple score matching objectives. First it explains few score matching objectives which were proved to be equivalent earlier. Next it considers noise related score matching objectives and show a relation between denoising and score matching. For a specific energy function, they show that the denoising autoencoder loss also can be represented as score matching objective.</li>
 </ul>
 </section>
-<section id="brief-overview-of-the-methodology" class="level2">
-<h2 class="anchored" data-anchor-id="brief-overview-of-the-methodology">Brief Overview of the Methodology</h2>
-<section id="definitions" class="level3">
-<h3 class="anchored" data-anchor-id="definitions">Definitions</h3>
-<ul>
-<li>Score for a probablity distribution M(x) is defined as <span class="math display">\[\psi(x) = \nabla_{x} \log(M(x))\]</span>.</li>
-</ul>
+<section id="concise-overview" class="level2">
+<h2 class="anchored" data-anchor-id="concise-overview">Concise Overview</h2>
+<p>In this paper, there are six formulations of the objective function, all related to score matching. In subsections below, they are briefly described. Let us start with defining some notations: * The true probablity distribution of x by <span class="math display">\[q(x)\]</span>. * In the hope of mimicking <span class="math display">\[q(x)\]</span>, we create a parametrized model <span class="math display">\[p(x;\theta)\]</span> with <span class="math display">\[\theta\]</span> being the learnable parameter. * Score for a probablity distribution M(x) is defined as <span class="math display">\[\psi(x) = \nabla_{x} \log(M(x))\]</span>. We denote the score function of our parametrized distribution <span class="math display">\[p(x;\theta)\]</span> by <span class="math display">\[\psi(x;\theta)\]</span> . Note that the partition function would disappear in the score. This is helpful as in many cases, it is untractable.</p>
+<section id="explicit-score-matching" class="level3">
+<h3 class="anchored" data-anchor-id="explicit-score-matching">Explicit Score matching</h3>
+<p>It needs availablity of score of true distribution, <span class="math display">\[\nabla_{x} \log(q(x))\]</span>. When that is available, the neural network is trained to output <span class="math display">\[\psi(x;\theta)\]</span>. <img src="../../assets/images/score_matching/esm_q.png" alt="drawing" title="ESM" style="max-width: 100%; height: auto;"></p>
 </section>
-<section id="main-issue-which-they-tackle" class="level3">
-<h3 class="anchored" data-anchor-id="main-issue-which-they-tackle">Main Issue Which They Tackle</h3>
-<p>Real images lie in a high dimensional space (A 512*512 image lies in <span class="math display">\[\rm I\!R^{262144}\]</span>). Naturally, most of the space does not contain relevant images. In such regions, the score <span class="math display">\[\psi(x)\]</span> is not defined. Secondly, in regions of low density, the score estimation will be less accurate.</p>
+<section id="implicit-score-matching" class="level3">
+<h3 class="anchored" data-anchor-id="implicit-score-matching">Implicit score matching</h3>
+<p>In most cases, <span class="math display">\[\nabla_{x} \log(q(x))\]</span> is not available. What is available are the iid samples from q. Due to an amazing proof by Hyvärinen (2005), another objective function was discovered which was equivalent to Explicit score matching and which did not need <span class="math display">\[\nabla_{x} \log(q(x))\]</span>. <img src="../../assets/images/score_matching/ism_q.png" alt="drawing" title="ISM" style="max-width: 100%; height: auto;"></p>
+<p>Here, d is the dimension of <span class="math display">\[x\]</span>. As can be seen from the above expression, trace of the hessian is needed (it is hessian since it is derivative of score, which is in itself a derivative). In order to actually implement it, one needed to replace expectation with sampling. <img src="../../assets/images/score_matching/ism_q0.png" alt="drawing" title="ISM discrete" style="max-width: 100%; height: auto;"></p>
 </section>
-<section id="noise-conditional-score-networks-ncsn" class="level3">
-<h3 class="anchored" data-anchor-id="noise-conditional-score-networks-ncsn">Noise Conditional Score Networks (NCSN)</h3>
-<section id="noisy-samples" class="level4">
-<h4 class="anchored" data-anchor-id="noisy-samples">Noisy Samples</h4>
-<p>They work with gaussian distribution to inject noise. They start with standard deviation for these gaussian distributions <span class="math display">\[\{\sigma_i\}_{i=1}^L\]</span>. They define the perturbed data distribution as <span class="math display">\[q_\sigma(x) \overset{\Delta}{=}\int p_{data}(t) N(x\|t,\sigma^2I)dt\]</span></p>
-<p>With contraint that <span class="math display">\[\sigma_i = \lambda*\sigma_{i+1}, \forall i\in[1,L]\]</span> with <span class="math display">\[\lambda &gt;1\]</span>, they have a progressively less noisy distribution (<span class="math display">\[q_{\sigma 1}(x)\]</span> is most noisy and <span class="math display">\[q_{\sigma L}(x)\]</span> is least noisy).</p>
-<p>For generating a noisy sample from q_{k}, one starts with a clean image and adds a gaussian noise to it from <span class="math display">\[N(0,\sigma_k^2)\]</span></p>
+<section id="matching-the-score-of-a-nonparametric-estimator." class="level3">
+<h3 class="anchored" data-anchor-id="matching-the-score-of-a-nonparametric-estimator.">Matching the Score of a Nonparametric Estimator.</h3>
+<p>In case <span class="math display">\[\nabla_{x} \log(q(x))\]</span> is not available, one way to get that is to use an approximate q by a non-parametric estimation using the iid samples of q. Parzen windows density estimator was used for that. Now that we have an approximate q, one could get target distribution’s score function. <img src="../../assets/images/score_matching/esm_qsigma.png" alt="drawing" title="ESM Estimate" style="max-width: 100%; height: auto;"> Even with this case, they go ahead to show that similar to explicit score matching, there exist an equivalent implicit version of it, <span class="math display">\[J_{ISMq\sigma}\]</span>, which uses trace of the hessian instead of target distribution’s score.</p>
 </section>
-<section id="on-learning" class="level4">
-<h4 class="anchored" data-anchor-id="on-learning">On learning</h4>
-<p>For each <span class="math display">\[\sigma_k\]</span>, they work with following denoising score matching objective <span class="math display">\[l(\theta;\sigma)\]</span>: <img src="../../assets/images/score_matching/SMLD_obj.png" alt="drawing" title="Objective"> Note that since the conditional probablity here is modelled as a gaussian, its score can be analytically computed to <span class="math display">\[\dfrac{\widetilde{x} - x }{\sigma^2}\]</span>. They use a unified objective over all <span class="math display">\[\sigma\]</span>s <img src="../../assets/images/score_matching/SMLD_obj2.png" alt="drawing" title="Unified objective"></p>
-</section>
-<section id="ncsn-inference-via-annealed-langevin-dynamics" class="level4">
-<h4 class="anchored" data-anchor-id="ncsn-inference-via-annealed-langevin-dynamics">NCSN inference via annealed Langevin dynamics</h4>
-<p>They start with a random noise image and iteratively convert it to a realistic image. For doing this, they follow the same procedure for every <span class="math display">\[\sigma_i\]</span>. At every noise level, they update the image in the direction of the score for T steps. When updating the image, they also add a noise component to it at every step. They then take this as the initial input for the next noise level and do the same procedure. <img src="../../assets/images/score_matching/SMLD_sample.png" alt="drawing" title="Iterative generation"></p>
-</section>
-</section>
-<section id="why-it-works" class="level3">
-<h3 class="anchored" data-anchor-id="why-it-works">Why it works</h3>
-<p>It has been proven in previous works that Denoising score matching objective makes the model predict score for <span class="math display">\[q_\sigma(x)\]</span> and not for <span class="math display">\[q_\sigma(\widetilde{x}\|x)\]</span>. So, if <span class="math display">\[\sigma\]</span> is very small, then the model learns to predict score of <span class="math display">\[q(x)\]</span>, the real data distribution. In this work, they keep the <span class="math display">\[\sigma_L\]</span> to be super small so that above logic works. Also, they keep <span class="math display">\[\sigma_1\]</span> to be super large so that it spans the whole space and one can easily sample from it.</p>
+<section id="denoising-score-matching" class="level3">
+<h3 class="anchored" data-anchor-id="denoising-score-matching">Denoising Score Matching</h3>
+<p>Here, they begin with a slightly different problem. Here, the data is the set of pair of clean image and its noisy version <span class="math display">\[ (x,\widetilde{x})\]</span>. They want to estimate conditional probablity density of noisy image given the clean image. Motivation is to be able to denoise the input image. They define the joint probablity density as <span class="math display">\[q_\sigma (x,\widetilde{x}) = q_\sigma(\widetilde{x}|x)q(x)\]</span>. Note that <span class="math display">\[q(x)\]</span> is the same as what was used in previous sub sections. The objective is defined as follows: <img src="../../assets/images/score_matching/dsm_qsigma.png" alt="drawing" title="Denoising score matching" style="max-width: 100%; height: auto;"></p>
+<p>When model is trained, one can get the conditional probablity density using model’s output. It is plausible to assume that <span class="math display">\[q_{\sigma}(\widetilde{x}|x)\]</span> will have maximum value when <span class="math display">\[\widetilde{x}\]</span> is equal to <span class="math display">\[x\]</span> (clean image) and will be less when <span class="math display">\[\widetilde{x}\]</span> is noisy. So, when one has score function for <span class="math display">\[q_\sigma(\widetilde{x}|x)\]</span>, then one can move <span class="math display">\[\widetilde{x}\]</span> along the score (which is the derivative) to reduce the noise. They proved that <span class="math display">\[DSM_{q\sigma}\]</span> is equivalent to <span class="math display">\[ESM_{q\sigma}\]</span>. &gt;&gt; So, even if one tries to optimize to denoise the image, the optimal function obtained will be the score function for clean images (when q() is modelled as parzen windows density estimator).</p>
+<p>Another work has built on this inference. Instead of training for the score function of clean images, they train on noisy versions of it. At the end, they showed that for specific energy function, the objective function for denoising autoencoder boils down to score matching.</p>
 
 
 </section>

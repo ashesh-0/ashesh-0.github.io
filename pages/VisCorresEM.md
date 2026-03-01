@@ -22,7 +22,7 @@ permalink: /VisCorresEM/
 > In this way, for every sampled voxel from source domain, there is a set of corresponding voxels in the target domain.
 
 <figure>
-    <a href="/assets/images/VisCorresEM_1.png"><img src="/assets/images/VisCorresEM_1.png"></a>
+    <a href="/assets/images/VisCorresEM_1.png"><img src="/assets/images/VisCorresEM_1.png" style="max-width: 100%; height: auto;"></a>
     <figcaption>Establishing Correspondences. Here one source voxel has 2 target domain correspondences. (Credits: https://ieeexplore.ieee.org/document/8863400).</figcaption>
 </figure>
 
@@ -34,7 +34,7 @@ For having resource and time efficiency, one needs to intelligently sample few v
 * Foreground region sampling: More sampling done from border regions of the target structures.
 * Background region sampling: It has two components. In the first, more sampling is done from border regions of the target structures. In the second, those background voxels are also selected which give high NCC score with foreground voxels.
 <figure>
-    <a href="/assets/images/VisCorresEM_2.png"><img src="/assets/images/VisCorresEM_2.png"></a>
+    <a href="/assets/images/VisCorresEM_2.png"><img src="/assets/images/VisCorresEM_2.png" style="max-width: 100%; height: auto;"></a>
     <figcaption>Division of the region into patches  (Credits: https://ieeexplore.ieee.org/document/8863400).</figcaption>
 </figure>
 
@@ -49,7 +49,7 @@ For having resource and time efficiency, one needs to intelligently sample few v
 * *softmin* computes the loss between a source domain voxel and all its correspondences in the target domain. It is this one to many aspect in the loss which makes this a MIL setting. It is designed to ignore large differing correspondences. One can infer this by observing that $$e^{-r*x_i}$$ goes to 0 pretty quickly when the x_i large.
 
 <figure>
-    <a href="/assets/images/VisCorresEM_4.png"><img src="/assets/images/VisCorresEM_4.png"></a>
+    <a href="/assets/images/VisCorresEM_4.png"><img src="/assets/images/VisCorresEM_4.png" style="max-width: 100%; height: auto;"></a>
     <figcaption>MIL formulation.   (Credits: https://ieeexplore.ieee.org/document/8863400).</figcaption>
 </figure>
 Here, $$\theta^t$$ and $$\theta^s$$ are the parameters of the model for target domain and source domain respectively. $$v_i^s$$ is the source voxel and $$v^t_{i,j}$$ is the jth correspondence of $$v_i^s$$ in the target volume. $$f^s()$$ is the binary classifier. L is Huber loss.

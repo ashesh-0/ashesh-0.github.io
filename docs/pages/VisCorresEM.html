@@ -215,7 +215,7 @@ window.Quarto = {
 <li>Some of the correspondences are removed by doing non-maximum suppression. Those which have lower NCC value are also removed. &gt; In this way, for every sampled voxel from source domain, there is a set of corresponding voxels in the target domain.</li>
 </ul>
 <figure class="figure">
-<a href="../assets/images/VisCorresEM_1.png"><img src="../assets/images/VisCorresEM_1.png" class="figure-img"></a>
+<a href="../assets/images/VisCorresEM_1.png"><img src="../assets/images/VisCorresEM_1.png" style="max-width: 100%; height: auto;" class="figure-img"></a>
 <figcaption>
 Establishing Correspondences. Here one source voxel has 2 target domain correspondences. (Credits: https://ieeexplore.ieee.org/document/8863400).
 </figcaption>
@@ -225,7 +225,7 @@ Establishing Correspondences. Here one source voxel has 2 target domain correspo
 <h3 class="anchored" data-anchor-id="sampling-intelligently-from-source-domain">Sampling Intelligently from Source Domain</h3>
 For having resource and time efficiency, one needs to intelligently sample few voxels from source domain for finding correspondences. #### What is done * Volume is divided into same sized patches by defining a grid. Centroid of each patch is a candidate for sampling. * Different methodology is used for sampling from foreground and from background regions. * Foreground region sampling: More sampling done from border regions of the target structures. * Background region sampling: It has two components. In the first, more sampling is done from border regions of the target structures. In the second, those background voxels are also selected which give high NCC score with foreground voxels.
 <figure class="figure">
-<a href="../assets/images/VisCorresEM_2.png"><img src="../assets/images/VisCorresEM_2.png" class="figure-img"></a>
+<a href="../assets/images/VisCorresEM_2.png"><img src="../assets/images/VisCorresEM_2.png" style="max-width: 100%; height: auto;" class="figure-img"></a>
 <figcaption>
 Division of the region into patches (Credits: https://ieeexplore.ieee.org/document/8863400).
 </figcaption>
@@ -247,7 +247,7 @@ Division of the region into patches (Credits: https://ieeexplore.ieee.org/docume
 <li><em>softmin</em> computes the loss between a source domain voxel and all its correspondences in the target domain. It is this one to many aspect in the loss which makes this a MIL setting. It is designed to ignore large differing correspondences. One can infer this by observing that <span class="math display">\[e^{-r*x_i}\]</span> goes to 0 pretty quickly when the x_i large.</li>
 </ul>
 <figure class="figure">
-<a href="../assets/images/VisCorresEM_4.png"><img src="../assets/images/VisCorresEM_4.png" class="figure-img"></a>
+<a href="../assets/images/VisCorresEM_4.png"><img src="../assets/images/VisCorresEM_4.png" style="max-width: 100%; height: auto;" class="figure-img"></a>
 <figcaption>
 MIL formulation. (Credits: https://ieeexplore.ieee.org/document/8863400).
 </figcaption>

@@ -20,7 +20,7 @@ Paper uses an auto-encoder network and therefore naturally uses a MSE based $$L_
 ### Sample Specific Loss (for augumentation invariance)
 This is applied on embedding space (output of the encoder). This ensures that augumented versions of the same image have very similar embedding representation. This is achieved by minimizing the entropy in the following way
 <figure>
-    <a href="/assets/images/SALAD_1.png"><img src="/assets/images/SALAD_1.png"></a>
+    <a href="/assets/images/SALAD_1.png"><img src="/assets/images/SALAD_1.png" style="max-width: 100%; height: auto;"></a>
     <figcaption> Sample specific loss (Credits: https://arxiv.org/abs/2010.09856).</figcaption>
 </figure>
 For some intuition, note that for minimizing $$L_{ss}$$ with fixed individual $$z_i, z_k$$, we need to maximize $$z_j^Tz_i$$ which would happen when both $$z_i,z_j$$ are very close to each other. So this loss encourages that.
@@ -30,15 +30,15 @@ Training happens in two phases. In the first pre-training phase, the network is 
 ### Memory Bank
 Embedding of all examples in training data is saved in this array like structure. Updation is done in a moving average way. This is helpful to get top-k similar embeddings from the training data needed in the $$L_{agg}$$ described in next section.
 <figure class="half">
-    <a href="/assets/images/SALAD_4.png"><img src="/assets/images/SALAD_4.png"></a>
-    <a href="/assets/images/SALAD_3.png"><img src="/assets/images/SALAD_3.png"></a>
+    <a href="/assets/images/SALAD_4.png"><img src="/assets/images/SALAD_4.png" style="max-width: 100%; height: auto;"></a>
+    <a href="/assets/images/SALAD_3.png"><img src="/assets/images/SALAD_3.png" style="max-width: 100%; height: auto;"></a>
     <figcaption>Memory Bank. (Left) Its each entry gets updated with corresponding embeddings computed in each epoch. (Right) Moving average updated methodology (Credits: https://arxiv.org/abs/2010.09856)</figcaption>
 </figure>
 ### Aggregation Loss (for clustering)
 It is very similar to how $$L_{ss}$$ works. The difference is that dot product in $$p_{i,j}$$ is computed between embeddings of two similar looking but different images.
 
 <figure>
-    <a href="/assets/images/SALAD_2.png"><img src="/assets/images/SALAD_2.png"></a>
+    <a href="/assets/images/SALAD_2.png"><img src="/assets/images/SALAD_2.png" style="max-width: 100%; height: auto;"></a>
     <figcaption> Aggregation loss (Credits: https://arxiv.org/abs/2010.09856).</figcaption>
 </figure>
 

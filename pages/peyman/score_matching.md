@@ -14,7 +14,7 @@ The authors work with linear corruptions which could be modelled by a matrix mul
 
 The extend the DSM equivalence proof (Vincent 2011) to the case of such corruptions, i.e, in the equations shown below, minimizing $$J_1(\theta)$$ is same as minimizing $$J_2(\theta)$$. Specifically, under "mild" conditions, one only needs conditional log-likelihood to learn the score.
 <figure>
-    <a href="/assets/images/peyman_score_matching_dsm.png"><img src="/assets/images/peyman_score_matching_dsm.png"></a>
+    <a href="/assets/images/peyman_score_matching_dsm.png"><img src="/assets/images/peyman_score_matching_dsm.png" style="max-width: 100%; height: auto;"></a>
     <figcaption> Degradation family considered in this paper (Credits: https://arxiv.org/abs/2209.05442).</figcaption>
 </figure>
  
@@ -26,7 +26,7 @@ The extend the DSM equivalence proof (Vincent 2011) to the case of such corrupti
  they instead predict $$h_{\theta}$$, which is related to $$s_{\theta}$$ as shown below.
  ![image-center]({{ site.url }}{{ site.baseurl }}/assets/images/peyman_score_matching_reparametrization.png){: .align-center}
  <!-- <figure>
-    <a href="/assets/images/peyman_score_matching_reparametrization.png"><img src="/assets/images/peyman_score_matching_reparametrization.png"></a>
+    <a href="/assets/images/peyman_score_matching_reparametrization.png"><img src="/assets/images/peyman_score_matching_reparametrization.png" style="max-width: 100%; height: auto;"></a>
     <!-- <figcaption> Degradation family considered in this paper (Credits: https://arxiv.org/abs/2209.05442).</figcaption> -->
 <!-- </figure> -->
 
@@ -37,14 +37,14 @@ now is trained to be close to $$C_t * x_0$$. While it is clear that it is a repa
 
  They look at their formulation as a Stochastic differential equation (SDE) and they argue that their SDE formulation is reversible. They discretize the reverse diffusion process to obtain an expression for $$\Delta x$$, which when added to $$x_t$$, moves it closer to $$x_0$$. The expression for $$\Delta x$$ is shown below.
  <figure>
-    <a href="/assets/images/peyman_score_matching_scheduler_expression.png"><img src="/assets/images/peyman_score_matching_scheduler_expression.png"></a>
+    <a href="/assets/images/peyman_score_matching_scheduler_expression.png"><img src="/assets/images/peyman_score_matching_scheduler_expression.png" style="max-width: 100%; height: auto;"></a>
     <!-- <figcaption> Degradation family considered in this paper (Credits: https://arxiv.org/abs/2209.05442).</figcaption> -->
 </figure>
 It is worth noting that there are three expressions above. The first one is doing deblurring (Notice the difference is being taken between the degradation matrices) and the second one is doing denoising. One could also see below the qualitative effect of the momentum sampler.
  
  
  <figure>
-    <a href="/assets/images/peyman_score_matching_scheduler.jpg"><img src="/assets/images/peyman_score_matching_scheduler.jpg"></a>
+    <a href="/assets/images/peyman_score_matching_scheduler.jpg"><img src="/assets/images/peyman_score_matching_scheduler.jpg" style="max-width: 100%; height: auto;"></a>
     <figcaption>(Credits: https://arxiv.org/abs/2209.05442).</figcaption>
 </figure>
 

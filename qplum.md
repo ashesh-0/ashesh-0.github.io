@@ -27,7 +27,7 @@ For every order, execution system looks at price data at minisecond/microsecond 
 time in near future to execute the order. If it is a buy order, the system attempts to execute the order at the time
 when the price is locally low. For a sell order, aim is naturally to sell at a locally higher price.
 <img src="/assets/images/price_minima_maxima.jpg" alt="drawing" width="550"
-title="At Maxima(Minima) aim is to Sell(Buy)"/>
+title="At Maxima(Minima) aim is to Sell(Buy)" style="max-width: 100%; height: auto;"/>
 
 ### Order Routing Server (ORS)
 Exchange speaks a different language. Trading system speaks another. ORS is the interpreter which receives messages from
@@ -36,4 +36,4 @@ some examples of messages which Trading system sends to Exchange. Order confirma
 notification etc. are few examples of messages sent by the exchange.
 
 <img src="/assets/images/ORS.jpg" alt="drawing" width="500"
-title="ORS acts as an interpreter between Execution system and Exchange"/>
+title="ORS acts as an interpreter between Execution system and Exchange" style="max-width: 100%; height: auto;"/>

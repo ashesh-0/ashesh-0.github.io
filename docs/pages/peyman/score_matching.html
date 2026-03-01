@@ -205,7 +205,7 @@ window.Quarto = {
 <p>The authors work with linear corruptions which could be modelled by a matrix multiplication as denoted by <span class="math display">\[C_t\]</span> below (blur). <img src="{{ site.url }}{{ site.baseurl }}/assets/images/peyman_score_matching_degradation.png" class="img-fluid" alt="image-center">{: .align-center}</p>
 The extend the DSM equivalence proof (Vincent 2011) to the case of such corruptions, i.e, in the equations shown below, minimizing <span class="math display">\[J_1(\theta)\]</span> is same as minimizing <span class="math display">\[J_2(\theta)\]</span>. Specifically, under “mild” conditions, one only needs conditional log-likelihood to learn the score.
 <figure class="figure">
-<a href="../../assets/images/peyman_score_matching_dsm.png"><img src="../../assets/images/peyman_score_matching_dsm.png" class="figure-img"></a>
+<a href="../../assets/images/peyman_score_matching_dsm.png"><img src="../../assets/images/peyman_score_matching_dsm.png" style="max-width: 100%; height: auto;" class="figure-img"></a>
 <figcaption>
 Degradation family considered in this paper (Credits: https://arxiv.org/abs/2209.05442).
 </figcaption>
@@ -213,7 +213,7 @@ Degradation family considered in this paper (Credits: https://arxiv.org/abs/2209
 <section id="uncleared-doubt" class="level3">
 <h3 class="anchored" data-anchor-id="uncleared-doubt">Uncleared Doubt</h3>
 <p>The do a network reparametrization making use of the given linear corruption matrix. Instead of moving the network prediction <span class="math display">\[s_{\theta}(x|t)\]</span> closer to <span class="math display">\[(C_t* x_0 - x_t)/\sigma^2_t\]</span>, they instead predict <span class="math display">\[h_{\theta}\]</span>, which is related to <span class="math display">\[s_{\theta}\]</span> as shown below. <img src="{{ site.url }}{{ site.baseurl }}/assets/images/peyman_score_matching_reparametrization.png" class="img-fluid" alt="image-center">{: .align-center} <!-- <figure>
-    <a href="/assets/images/peyman_score_matching_reparametrization.png"><img src="/assets/images/peyman_score_matching_reparametrization.png"></a>
+    <a href="/assets/images/peyman_score_matching_reparametrization.png"><img src="/assets/images/peyman_score_matching_reparametrization.png" style="max-width: 100%; height: auto;"></a>
     <!-- <figcaption> Degradation family considered in this paper (Credits: https://arxiv.org/abs/2209.05442).</figcaption> --> <!-- </figure> --></p>
 <p>Hence, now, <span class="math display">\[C_t*h_{\theta}(x|t)\]</span> now is trained to be close to <span class="math display">\[C_t * x_0\]</span>. While it is clear that it is a reparametrization and that the knowledge about the degradation is used, it is not clear what is the advantage of this reparametrization. An ablation study on this would have been helpful.</p>
 </section>
@@ -222,11 +222,11 @@ Degradation family considered in this paper (Credits: https://arxiv.org/abs/2209
 <h2 class="anchored" data-anchor-id="momentum-sampler">Momentum Sampler</h2>
 They look at their formulation as a Stochastic differential equation (SDE) and they argue that their SDE formulation is reversible. They discretize the reverse diffusion process to obtain an expression for <span class="math display">\[\Delta x\]</span>, which when added to <span class="math display">\[x_t\]</span>, moves it closer to <span class="math display">\[x_0\]</span>. The expression for <span class="math display">\[\Delta x\]</span> is shown below.
 <figure class="figure">
-<a href="../../assets/images/peyman_score_matching_scheduler_expression.png"><img src="../../assets/images/peyman_score_matching_scheduler_expression.png" class="figure-img"></a> <!-- <figcaption> Degradation family considered in this paper (Credits: https://arxiv.org/abs/2209.05442).</figcaption> -->
+<a href="../../assets/images/peyman_score_matching_scheduler_expression.png"><img src="../../assets/images/peyman_score_matching_scheduler_expression.png" style="max-width: 100%; height: auto;" class="figure-img"></a> <!-- <figcaption> Degradation family considered in this paper (Credits: https://arxiv.org/abs/2209.05442).</figcaption> -->
 </figure>
 <p>It is worth noting that there are three expressions above. The first one is doing deblurring (Notice the difference is being taken between the degradation matrices) and the second one is doing denoising. One could also see below the qualitative effect of the momentum sampler.</p>
 <figure class="figure">
-<a href="../../assets/images/peyman_score_matching_scheduler.jpg"><img src="../../assets/images/peyman_score_matching_scheduler.jpg" class="figure-img"></a>
+<a href="../../assets/images/peyman_score_matching_scheduler.jpg"><img src="../../assets/images/peyman_score_matching_scheduler.jpg" style="max-width: 100%; height: auto;" class="figure-img"></a>
 <figcaption>
 (Credits: https://arxiv.org/abs/2209.05442).
 </figcaption>
