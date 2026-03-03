@@ -2,7 +2,7 @@
 title: About Me
 about:
   template: jolla
-  image: assets/images/profile.jpg
+  image: assets/images/profile.jpeg
   image-width: 15em
   image-shape: round
   links:
