@@ -10,6 +10,8 @@ website:
     left:
       - href: index.md
         text: Home
+      - href: lab_research.md
+        text: Lab Research
       - href: past_projects.md
         text: PhD & Prior Research
       - href: resume.md
