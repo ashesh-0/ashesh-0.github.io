@@ -17,7 +17,7 @@ website:
       - href: resume.md
         text: Resume
       - href: papers.md
-        text: Papers
+        text: Interesting Papers
     right:
       - icon: github
         href: https://github.com/ashesh-0/
