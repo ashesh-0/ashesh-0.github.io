@@ -67,8 +67,22 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
 
 <script type="text/javascript">
 const typesetMath = (el) => {
@@ -210,33 +224,33 @@ window.Quarto = {
 <section id="definitions" class="level3">
 <h3 class="anchored" data-anchor-id="definitions">Definitions</h3>
 <ul>
-<li>Score for a probablity distribution M(x) is defined as <span class="math inline">\(\psi(x) = \nabla_{x} \log(M(x))\)</span>.</li>
+<li>Score for a probablity distribution M(x) is defined as <span class="math inline">\psi(x) = \nabla_{x} \log(M(x))</span>.</li>
 </ul>
 </section>
 <section id="main-issue-which-they-tackle" class="level3">
 <h3 class="anchored" data-anchor-id="main-issue-which-they-tackle">Main Issue Which They Tackle</h3>
-<p>Real images lie in a high dimensional space (A 512*512 image lies in <span class="math inline">\(\rm I\!R^{262144}\)</span>). Naturally, most of the space does not contain relevant images. In such regions, the score <span class="math inline">\(\psi(x)\)</span> is not defined. Secondly, in regions of low density, the score estimation will be less accurate.</p>
+<p>Real images lie in a high dimensional space (A 512*512 image lies in <span class="math inline">\rm I\!R^{262144}</span>). Naturally, most of the space does not contain relevant images. In such regions, the score <span class="math inline">\psi(x)</span> is not defined. Secondly, in regions of low density, the score estimation will be less accurate.</p>
 </section>
 <section id="noise-conditional-score-networks-ncsn" class="level3">
 <h3 class="anchored" data-anchor-id="noise-conditional-score-networks-ncsn">Noise Conditional Score Networks (NCSN)</h3>
 <section id="noisy-samples" class="level4">
 <h4 class="anchored" data-anchor-id="noisy-samples">Noisy Samples</h4>
-<p>They work with gaussian distribution to inject noise. They start with standard deviation for these gaussian distributions <span class="math display">\[\{\sigma_i\}_{i=1}^L\]</span>. They define the perturbed data distribution as <span class="math display">\[q_\sigma(x) \overset{\Delta}{=}\int p_{data}(t) N(x\|t,\sigma^2I)dt\]</span></p>
-<p>With contraint that <span class="math inline">\(\sigma_i = \lambda*\sigma_{i+1}, \forall i\in[1,L]\)</span> with <span class="math inline">\(\lambda &gt;1\)</span>, they have a progressively less noisy distribution (<span class="math inline">\(q_{\sigma 1}(x)\)</span> is most noisy and <span class="math inline">\(q_{\sigma L}(x)\)</span> is least noisy).</p>
-<p>For generating a noisy sample from q_{k}, one starts with a clean image and adds a gaussian noise to it from <span class="math inline">\(N(0,\sigma_k^2)\)</span></p>
+<p>They work with gaussian distribution to inject noise. They start with standard deviation for these gaussian distributions <span class="math display">\{\sigma_i\}_{i=1}^L</span>. They define the perturbed data distribution as <span class="math display">q_\sigma(x) \overset{\Delta}{=}\int p_{data}(t) N(x\|t,\sigma^2I)dt</span></p>
+<p>With contraint that <span class="math inline">\sigma_i = \lambda*\sigma_{i+1}, \forall i\in[1,L]</span> with <span class="math inline">\lambda &gt;1</span>, they have a progressively less noisy distribution (<span class="math inline">q_{\sigma 1}(x)</span> is most noisy and <span class="math inline">q_{\sigma L}(x)</span> is least noisy).</p>
+<p>For generating a noisy sample from q_{k}, one starts with a clean image and adds a gaussian noise to it from <span class="math inline">N(0,\sigma_k^2)</span></p>
 </section>
 <section id="on-learning" class="level4">
 <h4 class="anchored" data-anchor-id="on-learning">On learning</h4>
-<p>For each <span class="math inline">\(\sigma_k\)</span>, they work with following denoising score matching objective <span class="math inline">\(l(\theta;\sigma)\)</span>: <img src="../../assets/images/score_matching/SMLD_obj.png" alt="drawing" title="Objective" style="max-width: 100%; height: auto;"> Note that since the conditional probablity here is modelled as a gaussian, its score can be analytically computed to <span class="math inline">\(\dfrac{\widetilde{x} - x }{\sigma^2}\)</span>. They use a unified objective over all <span class="math inline">\(\sigma\)</span>s <img src="../../assets/images/score_matching/SMLD_obj2.png" alt="drawing" title="Unified objective" style="max-width: 100%; height: auto;"></p>
+<p>For each <span class="math inline">\sigma_k</span>, they work with following denoising score matching objective <span class="math inline">l(\theta;\sigma)</span>: <img src="../../assets/images/score_matching/SMLD_obj.png" alt="drawing" title="Objective" style="max-width: 100%; height: auto;"> Note that since the conditional probablity here is modelled as a gaussian, its score can be analytically computed to <span class="math inline">\dfrac{\widetilde{x} - x }{\sigma^2}</span>. They use a unified objective over all <span class="math inline">\sigma</span>s <img src="../../assets/images/score_matching/SMLD_obj2.png" alt="drawing" title="Unified objective" style="max-width: 100%; height: auto;"></p>
 </section>
 <section id="ncsn-inference-via-annealed-langevin-dynamics" class="level4">
 <h4 class="anchored" data-anchor-id="ncsn-inference-via-annealed-langevin-dynamics">NCSN inference via annealed Langevin dynamics</h4>
-<p>They start with a random noise image and iteratively convert it to a realistic image. For doing this, they follow the same procedure for every <span class="math inline">\(\sigma_i\)</span>. At every noise level, they update the image in the direction of the score for T steps. When updating the image, they also add a noise component to it at every step. They then take this as the initial input for the next noise level and do the same procedure. <img src="../../assets/images/score_matching/SMLD_sample.png" alt="drawing" title="Iterative generation" style="max-width: 100%; height: auto;"></p>
+<p>They start with a random noise image and iteratively convert it to a realistic image. For doing this, they follow the same procedure for every <span class="math inline">\sigma_i</span>. At every noise level, they update the image in the direction of the score for T steps. When updating the image, they also add a noise component to it at every step. They then take this as the initial input for the next noise level and do the same procedure. <img src="../../assets/images/score_matching/SMLD_sample.png" alt="drawing" title="Iterative generation" style="max-width: 100%; height: auto;"></p>
 </section>
 </section>
 <section id="why-it-works" class="level3">
 <h3 class="anchored" data-anchor-id="why-it-works">Why it works</h3>
-<p>It has been proven in previous works that Denoising score matching objective makes the model predict score for <span class="math inline">\(q_\sigma(x)\)</span> and not for <span class="math inline">\(q_\sigma(\widetilde{x}\|x)\)</span>. So, if <span class="math inline">\(\sigma\)</span> is very small, then the model learns to predict score of <span class="math inline">\(q(x)\)</span>, the real data distribution. In this work, they keep the <span class="math inline">\(\sigma_L\)</span> to be super small so that above logic works. Also, they keep <span class="math inline">\(\sigma_1\)</span> to be super large so that it spans the whole space and one can easily sample from it.</p>
+<p>It has been proven in previous works that Denoising score matching objective makes the model predict score for <span class="math inline">q_\sigma(x)</span> and not for <span class="math inline">q_\sigma(\widetilde{x}\|x)</span>. So, if <span class="math inline">\sigma</span> is very small, then the model learns to predict score of <span class="math inline">q(x)</span>, the real data distribution. In this work, they keep the <span class="math inline">\sigma_L</span> to be super small so that above logic works. Also, they keep <span class="math inline">\sigma_1</span> to be super large so that it spans the whole space and one can easily sample from it.</p>
 
 
 </section>

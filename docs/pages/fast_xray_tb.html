@@ -67,8 +67,22 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
 
 <script type="text/javascript">
 const typesetMath = (el) => {
@@ -209,7 +223,7 @@ window.Quarto = {
 <h3 class="anchored" data-anchor-id="definitions">Definitions</h3>
 <ul>
 <li>Saliency Map: Derivative of output class score w.r.t input image. It has the same resolution as the input image. It shows relative importance of input pixels in the decision making.</li>
-<li>grad-CAMs: Derivative of output class score w.r.t a feature map from a deeper layer. It has lower resolution than input image but has better localization. ### Network Structure Architecture is shown below. <span class="math inline">\(a * b/c\)</span> format is used in multiple blocks shown below where a and be are the spatial kernel dimensions and c is the stride. <span class="math inline">\(\bigoplus\)</span> means addition and GAP is global average pooling.
+<li>grad-CAMs: Derivative of output class score w.r.t a feature map from a deeper layer. It has lower resolution than input image but has better localization. ### Network Structure Architecture is shown below. <span class="math inline">a * b/c</span> format is used in multiple blocks shown below where a and be are the spatial kernel dimensions and c is the stride. <span class="math inline">\bigoplus</span> means addition and GAP is global average pooling.
 <figure class="figure">
 <a href="../assets/images/fast_xray_tb.png"><img src="../assets/images/fast_xray_tb.png" style="max-width: 100%; height: auto;" class="figure-img"></a>
 <figcaption>

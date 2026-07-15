@@ -67,8 +67,22 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
 
 <script type="text/javascript">
 const typesetMath = (el) => {
@@ -227,7 +241,7 @@ Eye gaze estimation is formulated for both 2D as well as 3D case. For 2D case, r
 </section>
 <section id="distribution-based-calibration" class="level3">
 <h3 class="anchored" data-anchor-id="distribution-based-calibration">Distribution Based Calibration</h3>
-<p>We get the eye fixation map using RCNN (<span class="math inline">\(p_f(x,y\|I)\)</span>) and using the gaze estimation model (<span class="math inline">\(p_g(x,y\|I,\theta)\)</span>). For estimating the parameters of the gaze model, the paper minimizes the KL-divergence between these two fixation maps.</p>
+<p>We get the eye fixation map using RCNN (<span class="math inline">p_f(x,y\|I)</span>) and using the gaze estimation model (<span class="math inline">p_g(x,y\|I,\theta)</span>). For estimating the parameters of the gaze model, the paper minimizes the KL-divergence between these two fixation maps.</p>
 <div style="text-align:center">
 <img src="../assets/images/defm_2016_1.png" alt="drawing" title="KL-Divergence based optimization. (Credits: https://dl.acm.org/doi/10.1145/2857491.2857515) " style="max-width: 100%; height: auto;">
 </div>

@@ -67,8 +67,22 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
 
 <script type="text/javascript">
 const typesetMath = (el) => {
@@ -202,13 +216,13 @@ window.Quarto = {
 </ul>
 <section id="feature-extraction" class="level3">
 <h3 class="anchored" data-anchor-id="feature-extraction">Feature Extraction</h3>
-<p>A pretrained diagnostic view plane detection network is used for feature extraction. Its weights are not updated during training. Each frame is passed through the feature extraction network to yield feature maps. These are subsequently aggregated using a bi-LSTM module. ## RL setting * <strong>Input</strong>: Output of the bi-LSTM for each frame. * <strong>Action <span class="math inline">\(a_t\)</span></strong>: For every frame, a boolean decision is to be made: Whether to include it in the summary or not. * <strong>Reward</strong>: It has multiple components. <span class="math inline">\(R_{det}\)</span> determines the likelihood of a summary’s frame being a standard diagnostic plane. <span class="math inline">\(R_{rep}\)</span> defines how much summary frames are representative of the entire video. <span class="math inline">\(R_{div}\)</span> ensures diversity within the summary frames. * In <span class="math inline">\(R_{rep}\)</span>, for every frame of the video, it finds most similar frame present in the summary <span class="math inline">\(S\)</span> with which it finds the distance. This component is simply the average of the distance over all frames of the video.</p>
+<p>A pretrained diagnostic view plane detection network is used for feature extraction. Its weights are not updated during training. Each frame is passed through the feature extraction network to yield feature maps. These are subsequently aggregated using a bi-LSTM module. ## RL setting * <strong>Input</strong>: Output of the bi-LSTM for each frame. * <strong>Action <span class="math inline">a_t</span></strong>: For every frame, a boolean decision is to be made: Whether to include it in the summary or not. * <strong>Reward</strong>: It has multiple components. <span class="math inline">R_{det}</span> determines the likelihood of a summary’s frame being a standard diagnostic plane. <span class="math inline">R_{rep}</span> defines how much summary frames are representative of the entire video. <span class="math inline">R_{div}</span> ensures diversity within the summary frames. * In <span class="math inline">R_{rep}</span>, for every frame of the video, it finds most similar frame present in the summary <span class="math inline">S</span> with which it finds the distance. This component is simply the average of the distance over all frames of the video.</p>
 <pre><code>&gt; $R_{rep} = exp(-1/T \sum_{t=1}^T \underset{t'\in S}{min}||x_t - x_{t'}||)$
 
 * In $R_{div}$, diversity among the selected frames is maximized. Cosine similarity is used to measure the difference between two frames.
 * In $R_{det}$, inclusion of frames which are classified as diagnostic view plane are encouraged. Note that this depends upon the goodness of the classifier.</code></pre>
 <ul>
-<li>For supervised setting, another term <span class="math inline">\(L_{Pred}\)</span> is introduced in the loss. It is aimed to minimize the difference between ground truth importance scores and the predicted importance scores for each frame.</li>
+<li>For supervised setting, another term <span class="math inline">L_{Pred}</span> is introduced in the loss. It is aimed to minimize the difference between ground truth importance scores and the predicted importance scores for each frame.</li>
 </ul>
 
 

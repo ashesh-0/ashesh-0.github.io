@@ -67,8 +67,22 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
 
 <script type="text/javascript">
 const typesetMath = (el) => {
@@ -195,7 +209,7 @@ title: "PhD & Prior Research"
 <p>Semantic Unmixing, Quantitative analysis arising from segmentation and tracking, and tasks involving protein sequence (Alphafold family tasks) are planned to be pursued.</p>
 <section id="semantic-unmixing" class="level3">
 <h3 class="anchored" data-anchor-id="semantic-unmixing">Semantic Unmixing</h3>
-<p>In semantic unmixing, given a superimposed input image <span class="math inline">\(x=c_1 + c_2 +... c_k\)</span>, the objective is to extract individual constituents. The ultimate objective is to empower multi-color imaging in Fluorescence Microscopy. With semantic unmixing, one would capture a superimposed image containing multiple structures overlapped onto each other (like nucleus and mitochondria), and a deep-learning based setup would extract individual constituents, thereby enabling higher multiplexing and/or better photon efficiency. With self-supervised denoising baked into the setup, this approach promises working with lower SNR images, and in doing so, enables even better photon efficiency.</p>
+<p>In semantic unmixing, given a superimposed input image <span class="math inline">x=c_1 + c_2 +... c_k</span>, the objective is to extract individual constituents. The ultimate objective is to empower multi-color imaging in Fluorescence Microscopy. With semantic unmixing, one would capture a superimposed image containing multiple structures overlapped onto each other (like nucleus and mitochondria), and a deep-learning based setup would extract individual constituents, thereby enabling higher multiplexing and/or better photon efficiency. With self-supervised denoising baked into the setup, this approach promises working with lower SNR images, and in doing so, enables even better photon efficiency.</p>
 <p>There are currently two outstanding issues limiting the widespread use of this methodology, both related to generalizability of the trained models.</p>
 <ol type="1">
 <li><p>Generalizability (different microscope configurations): A deep learning model trained on data from one microscope acquisition may not perform optimally on images from a different acquisition with another microscope. To address this, self-supervised fine-tuning is essential. Note that users with their own images would typically only have superimposed versions, without separate structure images for supervision. Handling varying magnification levels would also be a valuable contribution. This approach addresses a key limitation: if superimposed inputs and individual targets can be imaged simultaneously, the method’s main benefit is improved photon efficiency. However, training on independently acquired target images—without paired superimposed inputs, and subsequently finetuning with just superimposed input images—enables much broader applications.</p></li>

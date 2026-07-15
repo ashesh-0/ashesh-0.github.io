@@ -67,8 +67,22 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
 
 <script type="text/javascript">
 const typesetMath = (el) => {
@@ -209,7 +223,7 @@ window.Quarto = {
 <p>As mentioned above, the focus is to learn a representation which captures the anatomy present in US frames. To do that in unsupervised way, they introduce spatial and temporal transformations. To unearth these transformations from the modified input would require the model to have an understanding of the anatomy of the content of US frames.</p>
 <section id="temporal-order-correction" class="level3">
 <h3 class="anchored" data-anchor-id="temporal-order-correction">Temporal-Order Correction</h3>
-<p>They use 4 video frames as input. The formulate it as a classification problem with <span class="math inline">\(4!/2 = 12\)</span> classes. Note that forward and backward video flow is considered to be same class. <img src="../assets/images/alison_noble1.png" alt="drawing" title="Credits: https://arxiv.org/abs/2003.00105 " style="max-width: 100%; height: auto;"></p>
+<p>They use 4 video frames as input. The formulate it as a classification problem with <span class="math inline">4!/2 = 12</span> classes. Note that forward and backward video flow is considered to be same class. <img src="../assets/images/alison_noble1.png" alt="drawing" title="Credits: https://arxiv.org/abs/2003.00105 " style="max-width: 100%; height: auto;"></p>
 </section>
 <section id="spatio-temporal-transform-prediction" class="level3">
 <h3 class="anchored" data-anchor-id="spatio-temporal-transform-prediction">Spatio-Temporal Transform Prediction</h3>

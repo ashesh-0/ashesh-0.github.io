@@ -67,8 +67,22 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
 
 <script type="text/javascript">
 const typesetMath = (el) => {
@@ -209,19 +223,19 @@ window.Quarto = {
 <section id="notations-and-definitions" class="level3">
 <h3 class="anchored" data-anchor-id="notations-and-definitions">Notations and Definitions</h3>
 <ul>
-<li>Annotator specific spatial confusion matrix (<span class="math inline">\(A^{(r)}_{\phi}\)</span>): For annotator <span class="math inline">\(r\)</span>, this is a confusion matrix for each pixel in the input image over <span class="math inline">\(L\)</span> target labels.</li>
-<li>Estimated True label distribution (<span class="math inline">\(\hat{p}_{\theta}(x)\)</span>): For every pixel, it contains the probablity distribution over labels.</li>
-<li>Estimated Annotator distribution (<span class="math inline">\(\hat{p}^{(r)}_{\theta}(x)\)</span>): It estimates the answer to the following question— If annotator <span class="math inline">\(r\)</span> had to segment the image <span class="math inline">\(x\)</span>, then what would his/her estimate of per-pixel true probablity distribution over labels be?</li>
-<li>Segmentation CNN: CNN network which predicts <span class="math inline">\(\hat{p}_{\theta}(x)\)</span> and takes MRI image as input.</li>
-<li>Annotation CNN: CNN network which predicts <span class="math inline">\(A^{(r)}_{\phi}\)</span> and takes as input a MRI image.</li>
+<li>Annotator specific spatial confusion matrix (<span class="math inline">A^{(r)}_{\phi}</span>): For annotator <span class="math inline">r</span>, this is a confusion matrix for each pixel in the input image over <span class="math inline">L</span> target labels.</li>
+<li>Estimated True label distribution (<span class="math inline">\hat{p}_{\theta}(x)</span>): For every pixel, it contains the probablity distribution over labels.</li>
+<li>Estimated Annotator distribution (<span class="math inline">\hat{p}^{(r)}_{\theta}(x)</span>): It estimates the answer to the following question— If annotator <span class="math inline">r</span> had to segment the image <span class="math inline">x</span>, then what would his/her estimate of per-pixel true probablity distribution over labels be?</li>
+<li>Segmentation CNN: CNN network which predicts <span class="math inline">\hat{p}_{\theta}(x)</span> and takes MRI image as input.</li>
+<li>Annotation CNN: CNN network which predicts <span class="math inline">A^{(r)}_{\phi}</span> and takes as input a MRI image.</li>
 </ul>
 </section>
 <section id="architecture-description" class="level3">
 <h3 class="anchored" data-anchor-id="architecture-description">Architecture Description</h3>
 <ul>
-<li>Input: An MRI image <span class="math inline">\(x\)</span>.</li>
-<li>Output: 1. <span class="math inline">\(\hat{p}_{\theta}(x)\)</span>, 2. $A^{(r)}_{} ~r $.</li>
-<li>Flow: <span class="math inline">\(x\)</span> is passed through the Segmentation CNN to yield segmentation probablities <span class="math inline">\(\hat{p}_{\theta}(x)\)</span>. At inference time, this is the final prediction. <span class="math inline">\(x\)</span> is also passed through Annotation CNN to get <span class="math inline">\(A^{(r)}_{\phi}\)</span> for each annotator <span class="math inline">\(r\)</span>. Using the confusion matrix and the label distribution, using matrix multiplication, it is straight forward to compute estimated annotator distribution: the label distribution as the annotator <span class="math inline">\(r\)</span> would have felt (<span class="math inline">\(\hat{p}^{(r)}_{\theta}(x)\)</span>). At training time, the loss is computed using them and not using <span class="math inline">\(\hat{p}_{\theta}(x)\)</span>. It makes sense becase in the training data, we donot have true label distribution. We only have labels annotated by specific annotators.
+<li>Input: An MRI image <span class="math inline">x</span>.</li>
+<li>Output: 1. <span class="math inline">\hat{p}_{\theta}(x)</span>, 2. $A^{(r)}_{} ~r $.</li>
+<li>Flow: <span class="math inline">x</span> is passed through the Segmentation CNN to yield segmentation probablities <span class="math inline">\hat{p}_{\theta}(x)</span>. At inference time, this is the final prediction. <span class="math inline">x</span> is also passed through Annotation CNN to get <span class="math inline">A^{(r)}_{\phi}</span> for each annotator <span class="math inline">r</span>. Using the confusion matrix and the label distribution, using matrix multiplication, it is straight forward to compute estimated annotator distribution: the label distribution as the annotator <span class="math inline">r</span> would have felt (<span class="math inline">\hat{p}^{(r)}_{\theta}(x)</span>). At training time, the loss is computed using them and not using <span class="math inline">\hat{p}_{\theta}(x)</span>. It makes sense becase in the training data, we donot have true label distribution. We only have labels annotated by specific annotators.
 <figure class="figure">
 <a href="../assets/images/DisHumErrGT_1.png"><img src="../assets/images/DisHumErrGT_1.png" style="max-width: 100%; height: auto;" class="figure-img"></a>
 <figcaption>
