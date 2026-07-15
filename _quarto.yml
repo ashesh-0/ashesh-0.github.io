@@ -4,7 +4,7 @@ project:
 
 website:
   title: "Ashesh"
-  description: "Recent paper's title is μSplit:efficient image decomposition for microscopy data."
+  description: ""
   site-url: "https://ashesh-0.github.io/"
   navbar:
     left:
@@ -17,7 +17,7 @@ website:
       - href: resume.md
         text: Resume
       - href: papers.md
-        text: Interesting Papers
+        text: Interesting Reads
     right:
       - icon: github
         href: https://github.com/ashesh-0/
